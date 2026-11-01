@@ -1,0 +1,69 @@
+/* ===== Gaya dasar bersama (fungsi, bukan tampilan tema) ===== */
+*, *::before, *::after { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; scroll-behavior: auto; }
+html.locked, html.locked body { overflow: hidden; height: 100%; }
+body { margin: 0; overflow-x: hidden; -webkit-font-smoothing: antialiased; }
+img { max-width: 100%; display: block; }
+button { font: inherit; color: inherit; cursor: pointer; }
+input, textarea, select { font: inherit; color: inherit; }
+[hidden] { display: none !important; }
+a { color: inherit; }
+:focus-visible { outline: 2px solid currentColor; outline-offset: 3px; }
+.sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+.pre { white-space: pre-line; }
+
+/* Slot foto: div dengan background-image. Bila kosong tampil placeholder. */
+.foto { background-size: cover; background-position: center; position: relative; max-width: 100%; }
+.foto[data-empty] { background: var(--ph-bg, #bbb); }
+.foto[data-empty]::after {
+  content: attr(data-ph); position: absolute; inset: 0; display: grid; place-items: center;
+  padding: 10px; text-align: center; color: var(--ph-fg, #fff);
+  font: 500 10px/1.4 var(--ph-font, system-ui, sans-serif); letter-spacing: .24em; text-transform: uppercase;
+}
+[data-zoom][data-url] { cursor: zoom-in; }
+
+/* Bagian utama tersembunyi sampai sampul dibuka */
+html.js.locked:not(.is-opening) .isi { visibility: hidden; }
+.isi { overflow-x: clip; }
+
+/* Reveal saat scroll */
+[data-reveal] { transition: opacity 1s cubic-bezier(.2,.7,.2,1), transform 1.2s cubic-bezier(.2,.7,.2,1), filter 1.2s ease; transition-delay: var(--d, 0ms); }
+.rv [data-reveal]:not(.in) { opacity: 0; }
+.rv [data-reveal="up"]:not(.in), .rv [data-reveal=""]:not(.in) { transform: translateY(28px); }
+.rv [data-reveal="down"]:not(.in) { transform: translateY(-24px); }
+.rv [data-reveal="left"]:not(.in) { transform: translateX(-36px); }
+.rv [data-reveal="right"]:not(.in) { transform: translateX(36px); }
+.rv [data-reveal="zoom"]:not(.in) { transform: scale(.92); }
+.rv [data-reveal="blur"]:not(.in) { filter: blur(8px); transform: scale(1.03); }
+
+/* Toast */
+.u-toast {
+  position: fixed; left: 50%; bottom: calc(24px + env(safe-area-inset-bottom, 0px)); z-index: 999;
+  transform: translate(-50%, 20px); opacity: 0; pointer-events: none;
+  max-width: calc(100% - 32px); padding: 11px 18px; border-radius: 999px;
+  background: var(--toast-bg, #1d1d1d); color: var(--toast-fg, #fff);
+  font: 500 13px/1.35 var(--toast-font, system-ui, sans-serif); text-align: center;
+  transition: opacity .3s, transform .3s; box-shadow: 0 8px 24px rgba(0,0,0,.2);
+}
+.u-toast.show { opacity: 1; transform: translate(-50%, 0); }
+
+/* Lightbox */
+.u-lightbox {
+  position: fixed; inset: 0; z-index: 998; display: grid; grid-template-columns: 48px 1fr 48px; align-items: center;
+  padding: max(16px, env(safe-area-inset-top, 0px)) max(8px, env(safe-area-inset-right, 0px)) max(16px, env(safe-area-inset-bottom, 0px)) max(8px, env(safe-area-inset-left, 0px));
+  background: rgba(10, 9, 8, .94); color: #f4f1ea; opacity: 0; transition: opacity .3s;
+}
+.u-lightbox.show { opacity: 1; }
+.u-lightbox figure { margin: 0; min-width: 0; display: grid; gap: 12px; justify-items: center; }
+.u-lightbox img { max-height: 80vh; max-height: 80dvh; width: auto; object-fit: contain; border-radius: 2px; }
+.u-lightbox figcaption { font: 12px/1.4 system-ui, sans-serif; letter-spacing: .12em; opacity: .7; text-align: center; }
+.u-lightbox button { background: none; border: 0; color: inherit; font-size: 40px; line-height: 1; padding: 8px; opacity: .75; }
+.u-lightbox button:hover { opacity: 1; }
+.u-lb-x { position: absolute; top: calc(8px + env(safe-area-inset-top, 0px)); right: calc(12px + env(safe-area-inset-right, 0px)); }
+
+/* Video */
+[data-video] iframe, [data-video] video { width: 100%; aspect-ratio: 16 / 9; border: 0; display: block; background: #000; }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
+}

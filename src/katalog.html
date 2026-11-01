@@ -1,0 +1,130 @@
+<title>Katalog Undangan</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Manrope:wght@400;500;600&display=swap">
+<style>
+/* Tata letak: etalase studio. Lima pratinjau berbentuk layar ponsel berjajar, catatan teknis di bawah. */
+:root {
+  --latar: #eceae6;
+  --kertas: #f8f7f4;
+  --tinta: #191816;
+  --tinta-2: #5e5a54;
+  --garis: #d6d2cb;
+  --aksen: #7a3b2e;
+  --f-judul: 'Instrument Serif', 'Times New Roman', serif;
+  --f-isi: 'Manrope', 'Helvetica Neue', Arial, sans-serif;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --latar: #151413; --kertas: #1e1d1b; --tinta: #efece6; --tinta-2: #a8a39b; --garis: #34312d; --aksen: #e09a84; color-scheme: dark; } }
+:root[data-theme="dark"] { --latar: #151413; --kertas: #1e1d1b; --tinta: #efece6; --tinta-2: #a8a39b; --garis: #34312d; --aksen: #e09a84; color-scheme: dark; }
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--latar); color: var(--tinta); font: 400 15px/1.6 var(--f-isi); }
+.wrap { max-width: 1180px; margin: 0 auto; padding-block: 48px 64px; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+header { display: grid; gap: 10px; max-width: 62ch; margin-bottom: 40px; }
+.eyebrow { font: 600 11px/1 var(--f-isi); letter-spacing: .2em; text-transform: uppercase; color: var(--aksen); }
+h1 { margin: 0; font: 400 clamp(44px, 8vw, 72px)/1 var(--f-judul); letter-spacing: -.01em; text-wrap: balance; }
+header p { margin: 0; color: var(--tinta-2); font-size: 16px; text-wrap: pretty; }
+
+.rak { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 210px), 1fr)); gap: 28px 20px; }
+.item { display: grid; grid-template-rows: auto 1fr; gap: 14px; min-width: 0; }
+.layar { position: relative; display: block; aspect-ratio: 390 / 760; max-width: 100%; border-radius: 22px; overflow: hidden; border: 6px solid #111; background: #111; box-shadow: 0 18px 40px rgba(20,18,16,.18); transition: transform .3s cubic-bezier(.2,.7,.2,1), box-shadow .3s; }
+.layar img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.layar:hover { transform: translateY(-4px); box-shadow: 0 26px 50px rgba(20,18,16,.25); }
+.layar:focus-visible { outline: 3px solid var(--aksen); outline-offset: 4px; }
+.info { display: grid; gap: 6px; align-content: start; }
+.info .no { font: 600 11px/1 var(--f-isi); letter-spacing: .16em; color: var(--tinta-2); }
+.info h2 { margin: 0; font: 400 30px/1 var(--f-judul); }
+.info p { margin: 0; color: var(--tinta-2); font-size: 14px; }
+.tag { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 4px; }
+.tag span { font: 500 11px/1 var(--f-isi); padding: 5px 8px; border: 1px solid var(--garis); border-radius: 99px; color: var(--tinta-2); }
+.buka { justify-self: start; margin-top: 8px; font: 600 13px/1 var(--f-isi); color: var(--tinta); text-underline-offset: 4px; }
+
+.panduan { margin-top: 64px; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr)); gap: 16px; }
+.kotak { background: var(--kertas); border: 1px solid var(--garis); border-radius: 14px; padding: 22px; min-width: 0; }
+.kotak h3 { margin: 0 0 8px; font: 400 26px/1.1 var(--f-judul); }
+.kotak p, .kotak li { color: var(--tinta-2); font-size: 14px; }
+.kotak ol, .kotak ul { margin: 0; padding-left: 18px; display: grid; gap: 6px; }
+code { font: 500 12.5px/1.5 ui-monospace, Menlo, monospace; background: var(--latar); border: 1px solid var(--garis); border-radius: 6px; padding: 1px 6px; overflow-wrap: anywhere; color: var(--tinta); }
+.fitur { margin-top: 16px; columns: 2 220px; column-gap: 28px; }
+.fitur li { break-inside: avoid; margin-bottom: 6px; }
+footer { margin-top: 48px; font-size: 12px; color: var(--tinta-2); }
+</style>
+
+<!--@BODY-->
+<div class="wrap">
+  <header>
+    <span class="eyebrow">Studio undangan digital</span>
+    <h1>Katalog Undangan</h1>
+    <p>Lima template undangan pernikahan, masing-masing dengan gaya dan animasi pembuka sendiri. Ketuk layar ponsel untuk membuka contohnya. Nama tamu di sampul diambil dari link.</p>
+  </header>
+
+  <section class="rak" aria-label="Pilihan template">
+    <article class="item">
+      <a class="layar" href="1-sekar-jagad/index.html#Bapak-Budi-Santoso" aria-label="Buka template Sekar Jagad"><img src="pratinjau/1-sekar-jagad.jpg" alt="Sampul Sekar Jagad: pintu gebyok kayu dengan gunungan emas"></a>
+      <div class="info"><span class="no">01 · Adat Jawa</span><h2>Sekar Jagad</h2><p>Batik sogan, motif kawung dan parang, aksara Jawa. Pintu gebyok terbuka saat tamu masuk.</p>
+        <div class="tag"><span>Pintu 3D</span><span>Gunungan</span><span>Kartu ATM</span></div>
+        <a class="buka" href="1-sekar-jagad/index.html#Bapak-Budi-Santoso">Lihat undangan</a></div>
+    </article>
+    <article class="item">
+      <a class="layar" href="2-rol-film/index.html#Bapak-Budi-Santoso" aria-label="Buka template Rol Film"><img src="pratinjau/2-rol-film.jpg" alt="Sampul Rol Film: kotak film kuning dengan nama pasangan"></a>
+      <div class="info"><span class="no">02 · Analog editorial</span><h2>Rol Film</h2><p>Hitung mundur proyektor, stempel tanggal kamera, tiket bioskop, dan meja polaroid yang bisa digeser.</p>
+        <div class="tag"><span>Proyektor 3-2-1</span><span>Polaroid geser</span><span>Mesin ketik</span></div>
+        <a class="buka" href="2-rol-film/index.html#Bapak-Budi-Santoso">Lihat undangan</a></div>
+    </article>
+    <article class="item">
+      <a class="layar" href="3-surat-kebun/index.html#Bapak-Budi-Santoso" aria-label="Buka template Surat Kebun"><img src="pratinjau/3-surat-kebun.jpg" alt="Sampul Surat Kebun: amplop hijau sage dengan segel lilin"></a>
+      <div class="info"><span class="no">03 · Botanikal</span><h2>Surat Kebun</h2><p>Amplop bersegel lilin, perangko dan cap pos. Ranting tergambar sendiri, daun berjatuhan pelan.</p>
+        <div class="tag"><span>Segel lilin</span><span>Karangan daun</span><span>Daun jatuh</span></div>
+        <a class="buka" href="3-surat-kebun/index.html#Bapak-Budi-Santoso">Lihat undangan</a></div>
+    </article>
+    <article class="item">
+      <a class="layar" href="4-mihrab/index.html#Bapak-Budi-Santoso" aria-label="Buka template Mihrab"><img src="pratinjau/4-mihrab.jpg" alt="Sampul Mihrab: lengkung hijau zamrud dengan basmalah"></a>
+      <div class="info"><span class="no">04 · Islami modern</span><h2>Mihrab</h2><p>Lengkung mihrab, pola bintang delapan, QS Ar-Rum 21, dan tanggal Hijriah yang dihitung otomatis.</p>
+        <div class="tag"><span>Masuk lengkung</span><span>Hijriah</span><span>Doa mempelai</span></div>
+        <a class="buka" href="4-mihrab/index.html#Bapak-Budi-Santoso">Lihat undangan</a></div>
+    </article>
+    <article class="item">
+      <a class="layar" href="5-rasi/index.html#Bapak-Budi-Santoso" aria-label="Buka template Rasi"><img src="pratinjau/5-rasi.jpg" alt="Sampul Rasi: langit malam dengan bulan separuh"></a>
+      <div class="info"><span class="no">05 · Langit malam</span><h2>Rasi</h2><p>Bintang hidup, fase bulan pada malam pernikahan, efek warp saat dibuka, dan bintang jatuh saat langit diketuk.</p>
+        <div class="tag"><span>Fase bulan</span><span>Bintang jatuh</span><span>Orbit</span></div>
+        <a class="buka" href="5-rasi/index.html#Bapak-Budi-Santoso">Lihat undangan</a></div>
+    </article>
+  </section>
+
+  <section class="panduan">
+    <div class="kotak">
+      <h3>Ada di semua template</h3>
+      <ul class="fitur">
+        <li>Sampul dengan nama tamu dari link</li>
+        <li>Musik latar dengan tombol putar/jeda</li>
+        <li>Hitung mundur ke hari H</li>
+        <li>Profil mempelai, orang tua, Instagram</li>
+        <li>Akad/pemberkatan dan resepsi, tombol peta dan simpan ke Google Calendar</li>
+        <li>Kisah cinta</li>
+        <li>Galeri foto dengan tampilan layar penuh</li>
+        <li>Video (YouTube atau .mp4)</li>
+        <li>RSVP dan buku ucapan</li>
+        <li>Amplop digital dengan tombol salin rekening</li>
+        <li>Alamat kirim kado</li>
+      </ul>
+    </div>
+    <div class="kotak">
+      <h3>Mengubah isi</h3>
+      <ol>
+        <li>Buka file template, cari blok <code>window.UNDANGAN</code> di bagian atas.</li>
+        <li>Ganti nama, tanggal, acara, rekening, dan teks lainnya.</li>
+        <li>Isi <code>foto</code>, <code>galeri</code>, <code>musik.url</code>, dan <code>video</code> dengan link file. Bagian yang dikosongkan otomatis disembunyikan.</li>
+        <li>Jalankan <code>node build.mjs</code>, lalu unggah folder <code>dist</code>.</li>
+      </ol>
+    </div>
+    <div class="kotak">
+      <h3>Link untuk tamu</h3>
+      <p>Tambahkan nama tamu di akhir link agar muncul di sampul:</p>
+      <p><code>undangan.com/galih-ratri/?to=Bapak+Budi+Santoso</code></p>
+      <p>Atau dengan pagar: <code>…/#Bapak-Budi-Santoso</code>. Tanda hubung dibaca sebagai spasi.</p>
+    </div>
+  </section>
+
+  <footer>Foto pada contoh masih berupa bingkai kosong. Isi dengan foto klien untuk melihat hasil akhirnya.</footer>
+</div>
