@@ -1,0 +1,648 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<title>Admin Undangan</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400;1,6..96,400&family=Karla:wght@400;500;600&display=swap">
+<style>
+/* Ruang kerja admin: bilah atas, formulir isi undangan di kiri, pratinjau ponsel di kanan. */
+:root {
+  --latar: #f4efed;
+  --panel: #fffdfc;
+  --tinta: #3b302f;
+  --redup: #6f605e;
+  --garis: #e2d6d3;
+  --aksen: #86696a;
+  --aksen-tua: #6b5253;
+  --bahaya: #a3453b;
+  --oke: #4f6b4a;
+  --f-judul: 'Bodoni Moda', Georgia, serif;
+  --f-isi: 'Karla', 'Helvetica Neue', Arial, sans-serif;
+  color-scheme: light;
+}
+* { box-sizing: border-box; }
+html, body { margin: 0; }
+body { background: var(--latar); color: var(--tinta); font: 400 15px/1.5 var(--f-isi); }
+button, input, select, textarea { font: inherit; color: inherit; }
+[hidden] { display: none !important; }
+a { color: var(--aksen-tua); }
+:focus-visible { outline: 2px solid var(--aksen); outline-offset: 2px; }
+
+.atas { position: sticky; top: 0; z-index: 20; display: flex; flex-wrap: wrap; align-items: center; gap: 10px 14px; padding: 12px max(16px, env(safe-area-inset-right, 0px)) 12px max(16px, env(safe-area-inset-left, 0px)); background: var(--panel); border-bottom: 1px solid var(--garis); }
+.merek { font: italic 400 20px/1 var(--f-judul); margin-right: auto; }
+.merek small { font: 500 11px/1 var(--f-isi); font-style: normal; letter-spacing: .14em; text-transform: uppercase; color: var(--redup); margin-left: 8px; }
+.atas select { min-height: 40px; padding: 0 10px; border: 1px solid var(--garis); border-radius: 8px; background: var(--panel); max-width: 220px; }
+.btn { display: inline-flex; align-items: center; justify-content: center; gap: 6px; min-height: 40px; padding: 0 16px; border: 1px solid var(--garis); border-radius: 8px; background: var(--panel); cursor: pointer; text-decoration: none; color: var(--tinta); font-weight: 500; white-space: nowrap; }
+.btn:hover { border-color: var(--aksen); }
+.btn.utama { background: var(--aksen); border-color: var(--aksen); color: #fff; }
+.btn.utama:hover { background: var(--aksen-tua); }
+.btn.kecil { min-height: 32px; padding: 0 10px; font-size: 13px; }
+.btn.hapus { color: var(--bahaya); }
+.btn:disabled { opacity: .5; cursor: default; }
+.status { width: 100%; font-size: 13px; color: var(--redup); min-height: 1.4em; }
+.status.oke { color: var(--oke); }
+.status.galat { color: var(--bahaya); }
+
+.wadah { max-width: 1320px; margin: 0 auto; padding: 20px max(16px, env(safe-area-inset-right, 0px)) 60px max(16px, env(safe-area-inset-left, 0px)); }
+.kartu { background: var(--panel); border: 1px solid var(--garis); border-radius: 12px; padding: 22px; }
+h1, h2 { font-family: var(--f-judul); font-weight: 400; margin: 0; }
+h1 { font-size: 30px; }
+h2 { font-size: 22px; }
+.redup { color: var(--redup); }
+
+/* Masuk */
+.masuk { max-width: 620px; margin: 40px auto; display: grid; gap: 18px; }
+.masuk ol { margin: 0; padding-left: 20px; display: grid; gap: 6px; color: var(--redup); }
+.masuk code { background: var(--latar); padding: 1px 6px; border-radius: 4px; font-size: 13px; }
+
+/* Tata letak kerja */
+.kerja { display: grid; gap: 20px; align-items: start; }
+@media (min-width: 1080px) { .kerja { grid-template-columns: minmax(0, 1fr) 400px; } .pratinjau-wrap { position: sticky; top: 90px; } }
+.tab { display: flex; gap: 4px; border-bottom: 1px solid var(--garis); margin-bottom: 16px; overflow-x: auto; }
+.tab button { border: 0; background: none; padding: 10px 14px; border-bottom: 2px solid transparent; color: var(--redup); font-weight: 500; cursor: pointer; white-space: nowrap; }
+.tab button[aria-selected="true"] { color: var(--tinta); border-bottom-color: var(--aksen); }
+
+details.bag { background: var(--panel); border: 1px solid var(--garis); border-radius: 12px; margin-bottom: 12px; }
+details.bag > summary { list-style: none; cursor: pointer; padding: 16px 20px; display: flex; justify-content: space-between; align-items: center; font: 400 19px/1.2 var(--f-judul); }
+details.bag > summary::-webkit-details-marker { display: none; }
+details.bag > summary::after { content: "+"; font: 400 22px/1 var(--f-isi); color: var(--redup); }
+details.bag[open] > summary::after { content: "–"; }
+.bag-isi { padding: 0 20px 20px; display: grid; gap: 14px; }
+.grid2 { display: grid; gap: 14px; }
+@media (min-width: 640px) { .grid2 { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+.medan { display: grid; gap: 6px; min-width: 0; }
+.medan > span { font-size: 12px; font-weight: 600; letter-spacing: .04em; color: var(--redup); }
+.medan small { font-size: 12px; color: var(--redup); }
+.medan input, .medan select, .medan textarea { width: 100%; min-height: 42px; padding: 9px 12px; border: 1px solid var(--garis); border-radius: 8px; background: #fff; }
+.medan textarea { min-height: 90px; resize: vertical; }
+.medan input:focus, .medan select:focus, .medan textarea:focus { outline: none; border-color: var(--aksen); box-shadow: 0 0 0 3px rgba(134,105,106,.15); }
+.gabung { display: grid; grid-template-columns: minmax(0, 1fr) 100px; gap: 8px; }
+
+.daftar { display: grid; gap: 12px; }
+.butir { border: 1px solid var(--garis); border-radius: 10px; padding: 14px; display: grid; gap: 12px; background: #fff; }
+.butir-atas { display: flex; align-items: center; gap: 6px; }
+.butir-atas b { margin-right: auto; font-weight: 600; font-size: 13px; color: var(--redup); }
+
+.foto-medan { display: grid; grid-template-columns: 84px minmax(0, 1fr); gap: 12px; align-items: center; }
+.foto-kotak { width: 84px; height: 84px; border-radius: 8px; border: 1px dashed var(--garis); background: var(--latar) center / cover no-repeat; display: grid; place-items: center; font-size: 11px; color: var(--redup); text-align: center; }
+.foto-aksi { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
+.foto-aksi input[type=file] { position: absolute; width: 1px; height: 1px; opacity: 0; }
+.foto-aksi .jalur { width: 100%; font-size: 12px; color: var(--redup); overflow-wrap: anywhere; }
+
+.pratinjau-wrap { display: grid; gap: 10px; justify-items: center; }
+.ponsel { width: 390px; max-width: 100%; height: 760px; border: 8px solid #2b2424; border-radius: 30px; overflow: hidden; background: #fff; }
+.ponsel iframe { width: 100%; height: 100%; border: 0; display: block; }
+@media (max-width: 1079px) { .pratinjau-wrap { position: fixed; inset: 0; z-index: 30; background: rgba(43,36,36,.85); padding: 16px; align-content: center; } .pratinjau-wrap:not(.buka) { display: none; } .ponsel { height: min(760px, calc(100vh - 110px)); } }
+@media (min-width: 1080px) { .tutup-pratinjau, .tombol-pratinjau { display: none !important; } }
+
+.tamu-baris { display: grid; grid-template-columns: minmax(0, 1fr) auto auto; gap: 8px; align-items: center; padding: 10px 0; border-bottom: 1px solid var(--garis); }
+.tamu-baris div { min-width: 0; }
+.tamu-baris code { display: block; font-size: 12px; color: var(--redup); overflow-wrap: anywhere; }
+
+.modal { position: fixed; inset: 0; z-index: 40; background: rgba(43,36,36,.5); display: grid; place-items: center; padding: 16px; }
+.modal .kartu { width: min(520px, 100%); display: grid; gap: 14px; }
+.baris-tombol { display: flex; flex-wrap: wrap; gap: 8px; justify-content: flex-end; }
+.toast { position: fixed; left: 50%; bottom: 24px; transform: translateX(-50%); background: var(--tinta); color: #fff; padding: 10px 16px; border-radius: 999px; font-size: 14px; z-index: 50; max-width: calc(100% - 32px); text-align: center; }
+</style>
+</head>
+<body>
+
+<header class="atas">
+  <div class="merek">Undangan <small>Admin</small></div>
+  <div id="kendali" hidden style="display:flex;flex-wrap:wrap;gap:8px;align-items:center">
+    <label class="sr" for="pilih-undangan" style="position:absolute;left:-9999px">Pilih undangan</label>
+    <select id="pilih-undangan"></select>
+    <button class="btn" type="button" id="btn-baru">Undangan baru</button>
+    <a class="btn" id="btn-lihat" target="_blank" rel="noopener">Lihat</a>
+    <button class="btn tombol-pratinjau" type="button" id="btn-pratinjau">Pratinjau</button>
+    <button class="btn utama" type="button" id="btn-simpan">Simpan</button>
+    <button class="btn" type="button" id="btn-keluar">Keluar</button>
+  </div>
+  <div class="status" id="status" role="status"></div>
+</header>
+
+<main class="wadah">
+  <!-- Masuk -->
+  <section class="masuk kartu" id="layar-masuk">
+    <h1>Masuk ke ruang admin</h1>
+    <p class="redup" style="margin:0">Halaman ini menyimpan perubahan langsung ke repositori GitHub Anda. Untuk itu diperlukan kunci akses (token) yang hanya tersimpan di perangkat ini.</p>
+    <ol>
+      <li>Buka <a href="https://github.com/settings/personal-access-tokens/new" target="_blank" rel="noopener">github.com/settings/personal-access-tokens/new</a></li>
+      <li>Isi nama token, misalnya <code>Admin Undangan</code>, dan pilih masa berlaku.</li>
+      <li>Pada <b>Repository access</b> pilih <b>Only select repositories</b>, lalu pilih repositori undangan.</li>
+      <li>Pada <b>Permissions → Repository permissions</b>, ubah <b>Contents</b> menjadi <b>Read and write</b>. Opsional: <b>Pages</b> menjadi <b>Read-only</b>.</li>
+      <li>Klik <b>Generate token</b>, salin, lalu tempel di bawah.</li>
+    </ol>
+    <div class="grid2">
+      <label class="medan"><span>Pemilik repositori</span><input id="m-owner" value="Ysisking" autocomplete="off"></label>
+      <label class="medan"><span>Nama repositori</span><input id="m-repo" value="undangan" autocomplete="off"></label>
+    </div>
+    <label class="medan"><span>Token GitHub</span><input id="m-token" type="password" autocomplete="off" placeholder="github_pat_..."></label>
+    <div class="baris-tombol"><button class="btn utama" type="button" id="btn-masuk">Masuk</button></div>
+  </section>
+
+  <!-- Kerja -->
+  <section id="layar-kerja" hidden>
+    <div class="kerja">
+      <div>
+        <div class="tab" role="tablist">
+          <button type="button" role="tab" aria-selected="true" data-tab="isi">Isi undangan</button>
+          <button type="button" role="tab" aria-selected="false" data-tab="tamu">Link tamu</button>
+          <button type="button" role="tab" aria-selected="false" data-tab="json">Lanjutan</button>
+        </div>
+        <div id="tab-isi"></div>
+        <div id="tab-tamu" hidden class="kartu" style="display:grid;gap:14px"></div>
+        <div id="tab-json" hidden class="kartu" style="display:grid;gap:12px">
+          <h2>Data mentah</h2>
+          <p class="redup" style="margin:0">Untuk kolom khusus yang tidak ada di formulir. Ubah dengan hati-hati, lalu klik Terapkan.</p>
+          <label class="medan"><span>data.js (JSON)</span><textarea id="json-teks" style="min-height:420px;font:13px/1.5 ui-monospace,Menlo,monospace"></textarea></label>
+          <div class="baris-tombol"><button class="btn" type="button" id="btn-json">Terapkan</button></div>
+        </div>
+      </div>
+      <aside class="pratinjau-wrap" id="pratinjau-wrap">
+        <div class="ponsel"><iframe id="pratinjau" title="Pratinjau undangan" sandbox="allow-scripts"></iframe></div>
+        <div class="baris-tombol" style="justify-content:center">
+          <button class="btn kecil" type="button" id="btn-segarkan">Segarkan pratinjau</button>
+          <button class="btn kecil tutup-pratinjau" type="button" id="btn-tutup-pratinjau">Tutup</button>
+        </div>
+      </aside>
+    </div>
+  </section>
+</main>
+
+<div class="modal" id="modal-baru" hidden>
+  <div class="kartu" role="dialog" aria-modal="true" aria-labelledby="judul-baru">
+    <h2 id="judul-baru">Undangan baru</h2>
+    <label class="medan"><span>Alamat link</span><input id="baru-slug" placeholder="andi-sari" autocomplete="off"><small id="baru-contoh"></small></label>
+    <label class="medan"><span>Template</span><select id="baru-template"></select></label>
+    <div class="baris-tombol"><button class="btn" type="button" id="baru-batal">Batal</button><button class="btn utama" type="button" id="baru-buat">Buat</button></div>
+  </div>
+</div>
+
+<script>
+(function () {
+  'use strict';
+  const $ = (s) => document.querySelector(s);
+  const FOLDER = 'docs';
+  const KHUSUS = ['admin', 'contoh'];
+  const S = { token: '', owner: '', repo: '', slug: '', data: null, html: '', situs: '', lokal: {}, ubah: false };
+  const simpanLokal = (k, v) => { try { v == null ? localStorage.removeItem(k) : localStorage.setItem(k, v); } catch (e) {} };
+  const bacaLokal = (k) => { try { return localStorage.getItem(k) || ''; } catch (e) { return ''; } };
+
+  /* ---------- pesan ---------- */
+  function status(teks, jenis) { const s = $('#status'); s.textContent = teks || ''; s.className = 'status' + (jenis ? ' ' + jenis : ''); }
+  let toastT;
+  function toast(teks) {
+    let t = document.querySelector('.toast');
+    if (!t) { t = document.createElement('div'); t.className = 'toast'; t.setAttribute('role', 'status'); document.body.appendChild(t); }
+    t.textContent = teks; t.hidden = false; clearTimeout(toastT); toastT = setTimeout(() => (t.hidden = true), 2600);
+  }
+
+  /* ---------- base64 aman untuk teks Indonesia ---------- */
+  function keB64(teks) { const b = new TextEncoder().encode(teks); let s = ''; for (let i = 0; i < b.length; i += 0x8000) s += String.fromCharCode.apply(null, b.subarray(i, i + 0x8000)); return btoa(s); }
+  function dariB64(b64) { const bin = atob(b64.replace(/\n/g, '')); const b = new Uint8Array(bin.length); for (let i = 0; i < bin.length; i++) b[i] = bin.charCodeAt(i); return new TextDecoder().decode(b); }
+
+  /* ---------- GitHub ---------- */
+  async function api(jalur, opsi = {}) {
+    const r = await fetch(`https://api.github.com/repos/${S.owner}/${S.repo}${jalur}`, {
+      ...opsi,
+      headers: { Authorization: `Bearer ${S.token}`, Accept: 'application/vnd.github+json', 'X-GitHub-Api-Version': '2022-11-28', ...(opsi.headers || {}) },
+    });
+    if (!r.ok) {
+      let pesan = r.status + '';
+      try { pesan = (await r.json()).message || pesan; } catch (e) {}
+      const err = new Error(pesan); err.status = r.status; throw err;
+    }
+    return r.status === 204 ? null : r.json();
+  }
+  const enc = (p) => p.split('/').map(encodeURIComponent).join('/');
+  async function ambilFile(p) { const j = await api(`/contents/${enc(p)}?ref=main&t=${Date.now()}`); return { teks: dariB64(j.content), sha: j.sha }; }
+  async function shaFile(p) { try { return (await api(`/contents/${enc(p)}?ref=main&t=${Date.now()}`)).sha; } catch (e) { if (e.status === 404) return null; throw e; } }
+  async function tulisFile(p, b64, pesan) {
+    const sha = await shaFile(p);
+    return api(`/contents/${enc(p)}`, { method: 'PUT', body: JSON.stringify({ message: pesan, content: b64, branch: 'main', ...(sha ? { sha } : {}) }) });
+  }
+  function jelaskanGalat(e) {
+    if (e.status === 401) return 'Token tidak valid atau sudah kedaluwarsa. Keluar, lalu masuk lagi dengan token baru.';
+    if (e.status === 403) return 'Token tidak punya izin menulis. Pastikan izin Contents diatur ke Read and write.';
+    if (e.status === 404) return 'Repositori atau file tidak ditemukan. Periksa nama pemilik dan repositori.';
+    return 'Gagal: ' + e.message;
+  }
+
+  /* ---------- jalur data ---------- */
+  function ambil(o, p) { return p.split('.').reduce((a, k) => (a == null ? undefined : a[k]), o); }
+  function pasang(o, p, v) { const k = p.split('.'); let a = o; for (let i = 0; i < k.length - 1; i++) { if (a[k[i]] == null || typeof a[k[i]] !== 'object') a[k[i]] = /^\d+$/.test(k[i + 1]) ? [] : {}; a = a[k[i]]; } a[k[k.length - 1]] = v; }
+
+  /* ---------- skema formulir ---------- */
+  const ZONA = [['WIB', '+07:00'], ['WITA', '+08:00'], ['WIT', '+09:00']];
+  const SKEMA = [
+    { judul: 'Sampul & tanggal', buka: true, isi: [
+      { k: 'tanggalUtama', l: 'Tanggal & jam acara utama', t: 'tglwaktu', b: 'Dipakai untuk hitung mundur.' },
+      { k: 'sampul.foto', l: 'Foto sampul', t: 'foto' },
+      { k: 'sampul.pembuka', l: 'Kalimat di atas foto sampul', t: 'teks' },
+      { k: 'sampul.label', l: 'Label di atas nama', t: 'teks' },
+      { k: 'tamuBawaan', l: 'Sapaan bila link tanpa nama tamu', t: 'teks' },
+    ] },
+    { judul: 'Mempelai', isi: [
+      { k: 'mempelai.urutan', l: 'Urutan nama', t: 'pilih', o: [['pria-dulu', 'Pria lebih dulu'], ['wanita-dulu', 'Wanita lebih dulu']] },
+      { grup: 'Mempelai pria', dasar: 'mempelai.pria' },
+      { grup: 'Mempelai wanita', dasar: 'mempelai.wanita' },
+    ] },
+    { judul: 'Kata pembuka', isi: [
+      { k: 'pembuka.kutipan', l: 'Kutipan / ayat', t: 'area' },
+      { k: 'pembuka.sumber', l: 'Sumber kutipan', t: 'teks' },
+      { k: 'pembuka.teks', l: 'Kalimat sebelum nama mempelai', t: 'area' },
+    ] },
+    { judul: 'Acara', isi: [
+      { k: 'acara', t: 'daftar', label: 'Acara', baru: { nama: 'Acara', tanggal: '', mulai: '08.00', selesai: '', zona: 'WIB', tempat: '', alamat: '', peta: '' }, field: [
+        { k: 'nama', l: 'Nama acara', t: 'teks' }, { k: 'tanggal', l: 'Tanggal', t: 'tanggal' },
+        { k: 'mulai', l: 'Jam mulai', t: 'teks', ph: '08.00' }, { k: 'selesai', l: 'Jam selesai', t: 'teks', ph: '10.00 atau kosong' },
+        { k: 'zona', l: 'Zona waktu', t: 'pilih', o: [['WIB', 'WIB'], ['WITA', 'WITA'], ['WIT', 'WIT']] }, { k: 'tempat', l: 'Nama tempat', t: 'teks' },
+        { k: 'alamat', l: 'Alamat', t: 'area', lebar: true }, { k: 'peta', l: 'Link Google Maps', t: 'teks', ph: 'https://maps.app.goo.gl/...', lebar: true },
+      ] },
+    ] },
+    { judul: 'Kisah cinta', isi: [
+      { k: 'kisah', t: 'daftar', label: 'Kisah', baru: { tahun: '', judul: '', cerita: '' }, field: [
+        { k: 'tahun', l: 'Tahun', t: 'teks' }, { k: 'judul', l: 'Judul', t: 'teks' }, { k: 'cerita', l: 'Cerita', t: 'area', lebar: true },
+      ] },
+    ] },
+    { judul: 'Galeri foto', isi: [
+      { k: 'galeri', t: 'daftar', label: 'Foto', baru: { src: '', ket: '' }, field: [
+        { k: 'src', l: 'Foto', t: 'foto', lebar: true }, { k: 'ket', l: 'Keterangan (opsional)', t: 'teks', lebar: true },
+      ] },
+    ] },
+    { judul: 'Musik & video', isi: [
+      { k: 'musik.url', l: 'Lagu (MP3)', t: 'audio', b: 'Kosongkan untuk memakai kotak musik bawaan.' },
+      { k: 'video', l: 'Link video YouTube (opsional)', t: 'teks', ph: 'https://youtu.be/...' },
+    ] },
+    { judul: 'Amplop digital & kado', isi: [
+      { k: 'hadiah.teks', l: 'Kalimat pengantar', t: 'area' },
+      { k: 'hadiah.rekening', t: 'daftar', label: 'Rekening', baru: { bank: '', nomor: '', atasNama: '' }, field: [
+        { k: 'bank', l: 'Bank / dompet digital', t: 'teks' }, { k: 'nomor', l: 'Nomor rekening', t: 'teks' }, { k: 'atasNama', l: 'Atas nama', t: 'teks', lebar: true },
+      ] },
+      { k: 'hadiah.alamat.penerima', l: 'Penerima kado', t: 'teks' },
+      { k: 'hadiah.alamat.alamat', l: 'Alamat kirim kado', t: 'area' },
+    ] },
+    { judul: 'RSVP & ucapan', isi: [
+      { k: 'rsvp.endpoint', l: 'Link Google Apps Script', t: 'teks', ph: 'https://script.google.com/macros/s/.../exec', b: 'Kosong = ucapan hanya tersimpan di ponsel tamu. Lihat PANDUAN.md.' },
+      { k: 'rsvp.contoh', t: 'daftar', label: 'Ucapan contoh', b: 'Hapus semua ucapan contoh sebelum undangan dibagikan ke tamu.', baru: { nama: '', hadir: 'ya', ucapan: '', waktu: '' }, field: [
+        { k: 'nama', l: 'Nama', t: 'teks' }, { k: 'hadir', l: 'Kehadiran', t: 'pilih', o: [['ya', 'Hadir'], ['tidak', 'Berhalangan'], ['ragu', 'Belum pasti']] }, { k: 'ucapan', l: 'Ucapan', t: 'area', lebar: true },
+      ] },
+    ] },
+    { judul: 'Penutup', isi: [
+      { k: 'penutup.teks', l: 'Kalimat penutup', t: 'area' },
+      { k: 'penutup.salam', l: 'Salam', t: 'teks' },
+      { k: 'penutup.keluarga', l: 'Nama keluarga', t: 'teks' },
+      { k: 'kredit', l: 'Tulisan kecil paling bawah', t: 'teks', b: 'Misalnya nama studio Anda.' },
+    ] },
+  ];
+  const ORANG = [
+    { k: 'panggilan', l: 'Nama panggilan', t: 'teks' }, { k: 'nama', l: 'Nama lengkap & gelar', t: 'teks' },
+    { k: 'keterangan', l: 'Keterangan', t: 'teks', ph: 'Putra kedua dari' }, { k: 'instagram', l: 'Instagram (tanpa @)', t: 'teks' },
+    { k: 'ayah', l: 'Nama ayah', t: 'teks' }, { k: 'ibu', l: 'Nama ibu', t: 'teks' },
+    { k: 'foto', l: 'Foto', t: 'foto', lebar: true },
+  ];
+
+  /* ---------- pembuat elemen ---------- */
+  function el(tag, at = {}, anak = []) {
+    const e = document.createElement(tag);
+    for (const [k, v] of Object.entries(at)) { if (k === 'teks') e.textContent = v; else if (k.startsWith('on')) e.addEventListener(k.slice(2), v); else if (v != null) e.setAttribute(k, v); }
+    (Array.isArray(anak) ? anak : [anak]).forEach((c) => c && e.appendChild(c));
+    return e;
+  }
+  let nomorId = 0;
+  const idBaru = () => 'f' + (++nomorId);
+  function berubah() { S.ubah = true; status('Ada perubahan yang belum disimpan.'); jadwalPratinjau(); }
+
+  function urlFoto(v) {
+    if (!v) return '';
+    if (S.lokal[v]) return S.lokal[v];
+    if (/^(https?:|data:)/.test(v)) return v;
+    return S.situs + S.slug + '/' + v;
+  }
+
+  function medan(f, jalur) {
+    const id = idBaru();
+    const nilai = ambil(S.data, jalur);
+    const bungkus = el('div', { class: 'medan' + (f.lebar ? '' : '') });
+    if (f.lebar) bungkus.style.gridColumn = '1 / -1';
+    bungkus.appendChild(el('span', { id: id + 'l', teks: f.l }));
+    let input;
+    if (f.t === 'area') {
+      input = el('textarea', { id, 'aria-labelledby': id + 'l', placeholder: f.ph || '' }); input.value = nilai ?? '';
+      input.addEventListener('input', () => { pasang(S.data, jalur, input.value); berubah(); });
+    } else if (f.t === 'pilih') {
+      input = el('select', { id, 'aria-labelledby': id + 'l' }, f.o.map(([v, l]) => el('option', { value: v, teks: l })));
+      input.value = nilai ?? f.o[0][0];
+      input.addEventListener('change', () => { pasang(S.data, jalur, input.value); berubah(); });
+    } else if (f.t === 'tanggal') {
+      input = el('input', { id, type: 'date', 'aria-labelledby': id + 'l' }); input.value = nilai ?? '';
+      input.addEventListener('input', () => { pasang(S.data, jalur, input.value); berubah(); });
+    } else if (f.t === 'tglwaktu') {
+      const m = /^(\d{4}-\d{2}-\d{2})T(\d{2}:\d{2})(?::\d{2})?([+-]\d{2}:\d{2})?/.exec(nilai || '') || [];
+      const w = el('input', { id, type: 'datetime-local', 'aria-labelledby': id + 'l' }); w.value = m[1] ? m[1] + 'T' + m[2] : '';
+      const z = el('select', { 'aria-label': 'Zona waktu' }, ZONA.map(([n, o]) => el('option', { value: o, teks: n }))); z.value = m[3] || '+07:00';
+      const tulis = () => { if (w.value) { pasang(S.data, jalur, w.value + ':00' + z.value); berubah(); } };
+      w.addEventListener('input', tulis); z.addEventListener('change', tulis);
+      input = el('div', { class: 'gabung' }, [w, z]);
+    } else if (f.t === 'foto' || f.t === 'audio') {
+      input = medanBerkas(f, jalur, id);
+    } else {
+      input = el('input', { id, type: 'text', 'aria-labelledby': id + 'l', placeholder: f.ph || '', autocomplete: 'off' }); input.value = nilai ?? '';
+      input.addEventListener('input', () => { pasang(S.data, jalur, input.value); berubah(); });
+    }
+    bungkus.appendChild(input);
+    if (f.b) bungkus.appendChild(el('small', { teks: f.b }));
+    return bungkus;
+  }
+
+  function medanBerkas(f, jalur, id) {
+    const audio = f.t === 'audio';
+    const kotak = el('div', { class: 'foto-kotak', 'aria-hidden': 'true' });
+    const jalurTeks = el('div', { class: 'jalur' });
+    const file = el('input', { type: 'file', id, accept: audio ? 'audio/mpeg,audio/mp3,audio/*' : 'image/*' });
+    const btnUnggah = el('label', { class: 'btn kecil', for: id, teks: audio ? 'Pilih lagu' : 'Pilih foto' });
+    const btnHapus = el('button', { class: 'btn kecil hapus', type: 'button', teks: 'Hapus' });
+    const tampil = () => {
+      const v = ambil(S.data, jalur) || '';
+      jalurTeks.textContent = v ? v : 'Belum ada ' + (audio ? 'lagu' : 'foto');
+      if (audio) { kotak.textContent = v ? 'MP3' : 'Musik'; kotak.style.backgroundImage = ''; }
+      else { const u = urlFoto(v); kotak.style.backgroundImage = u ? `url("${u}")` : ''; kotak.textContent = u ? '' : 'Foto'; }
+      btnHapus.hidden = !v;
+    };
+    btnHapus.addEventListener('click', () => { pasang(S.data, jalur, ''); tampil(); berubah(); });
+    file.addEventListener('change', async () => {
+      const berkas = file.files[0]; file.value = '';
+      if (!berkas) return;
+      try {
+        btnUnggah.classList.add('disabled');
+        let b64, nama, dataUrl;
+        if (audio) {
+          if (berkas.size > 15 * 1024 * 1024) { toast('Lagu terlalu besar. Maksimal 15 MB.'); return; }
+          status('Mengunggah lagu…');
+          dataUrl = await bacaDataUrl(berkas); b64 = dataUrl.split(',')[1];
+          nama = 'musik/' + Date.now().toString(36) + '.mp3';
+        } else {
+          status('Memperkecil dan mengunggah foto…');
+          dataUrl = await perkecil(berkas, 1600, 0.82); b64 = dataUrl.split(',')[1];
+          nama = 'foto/' + Date.now().toString(36) + Math.random().toString(36).slice(2, 5) + '.jpg';
+        }
+        await tulisFile(`${FOLDER}/${S.slug}/${nama}`, b64, `Unggah ${nama} untuk ${S.slug}`);
+        if (!audio) S.lokal[nama] = dataUrl;
+        pasang(S.data, jalur, nama); tampil(); berubah();
+        status((audio ? 'Lagu' : 'Foto') + ' terunggah. Klik Simpan agar tampil di undangan.', 'oke');
+      } catch (e) { status(jelaskanGalat(e), 'galat'); }
+      finally { btnUnggah.classList.remove('disabled'); }
+    });
+    tampil();
+    return el('div', { class: 'foto-medan' }, [kotak, el('div', { class: 'foto-aksi' }, [file, btnUnggah, btnHapus, jalurTeks])]);
+  }
+  function bacaDataUrl(f) { return new Promise((ok, gagal) => { const r = new FileReader(); r.onload = () => ok(r.result); r.onerror = gagal; r.readAsDataURL(f); }); }
+  async function perkecil(berkas, maks, mutu) {
+    const url = URL.createObjectURL(berkas);
+    try {
+      const img = await new Promise((ok, gagal) => { const i = new Image(); i.onload = () => ok(i); i.onerror = gagal; i.src = url; });
+      const s = Math.min(1, maks / Math.max(img.naturalWidth, img.naturalHeight));
+      const c = document.createElement('canvas'); c.width = Math.round(img.naturalWidth * s); c.height = Math.round(img.naturalHeight * s);
+      c.getContext('2d').drawImage(img, 0, 0, c.width, c.height);
+      return c.toDataURL('image/jpeg', mutu);
+    } finally { URL.revokeObjectURL(url); }
+  }
+
+  function daftar(f) {
+    const wadah = el('div', { class: 'daftar' });
+    const gambar = () => {
+      wadah.textContent = '';
+      let arr = ambil(S.data, f.k);
+      if (!Array.isArray(arr)) { arr = []; pasang(S.data, f.k, arr); }
+      arr.forEach((item, i) => {
+        const g = el('div', { class: 'grid2' }, f.field.map((ff) => medan(ff, `${f.k}.${i}.${ff.k}`)));
+        const naik = el('button', { class: 'btn kecil', type: 'button', teks: 'Naik', 'aria-label': `Naikkan ${f.label} ${i + 1}` });
+        const turun = el('button', { class: 'btn kecil', type: 'button', teks: 'Turun', 'aria-label': `Turunkan ${f.label} ${i + 1}` });
+        const hapus = el('button', { class: 'btn kecil hapus', type: 'button', teks: 'Hapus', 'aria-label': `Hapus ${f.label} ${i + 1}` });
+        naik.disabled = i === 0; turun.disabled = i === arr.length - 1;
+        naik.onclick = () => { [arr[i - 1], arr[i]] = [arr[i], arr[i - 1]]; gambar(); berubah(); };
+        turun.onclick = () => { [arr[i + 1], arr[i]] = [arr[i], arr[i + 1]]; gambar(); berubah(); };
+        hapus.onclick = () => { arr.splice(i, 1); gambar(); berubah(); };
+        wadah.appendChild(el('div', { class: 'butir' }, [el('div', { class: 'butir-atas' }, [el('b', { teks: `${f.label} ${i + 1}` }), naik, turun, hapus]), g]));
+      });
+      wadah.appendChild(el('div', {}, el('button', { class: 'btn kecil', type: 'button', teks: `Tambah ${f.label.toLowerCase()}`, onclick: () => { arr.push(JSON.parse(JSON.stringify(f.baru))); gambar(); berubah(); } })));
+    };
+    gambar();
+    const isi = [wadah];
+    if (f.b) isi.unshift(el('small', { class: 'redup', teks: f.b }));
+    return el('div', { style: 'display:grid;gap:10px' }, isi);
+  }
+
+  function gambarFormulir() {
+    const t = $('#tab-isi'); t.textContent = '';
+    if (Array.isArray(S.data.galeri)) S.data.galeri = S.data.galeri.map((g) => (typeof g === 'string' ? { src: g, ket: '' } : g));
+    SKEMA.forEach((bag) => {
+      const isi = el('div', { class: 'bag-isi' });
+      const biasa = [];
+      const siram = () => { if (biasa.length) { isi.appendChild(el('div', { class: 'grid2' }, biasa.splice(0))); } };
+      bag.isi.forEach((f) => {
+        if (f.grup) {
+          siram();
+          isi.appendChild(el('h3', { teks: f.grup, style: 'margin:8px 0 0;font:400 17px/1.2 var(--f-judul)' }));
+          isi.appendChild(el('div', { class: 'grid2' }, ORANG.map((o) => medan(o, `${f.dasar}.${o.k}`))));
+        } else if (f.t === 'daftar') { siram(); isi.appendChild(daftar(f)); }
+        else if (f.t === 'area' || f.t === 'foto' || f.t === 'audio') { siram(); isi.appendChild(medan(f, f.k)); }
+        else biasa.push(medan(f, f.k));
+      });
+      siram();
+      const d = el('details', { class: 'bag' }, [el('summary', { teks: bag.judul }), isi]);
+      if (bag.buka) d.open = true;
+      t.appendChild(d);
+    });
+  }
+
+  /* ---------- pratinjau ---------- */
+  let pratT;
+  function jadwalPratinjau() { clearTimeout(pratT); pratT = setTimeout(pratinjau, 700); }
+  function pratinjau() {
+    if (!S.html || !S.data) return;
+    const data = JSON.parse(JSON.stringify(S.data));
+    const ganti = (o) => { for (const k in o) { if (typeof o[k] === 'string' && S.lokal[o[k]]) o[k] = S.lokal[o[k]]; else if (o[k] && typeof o[k] === 'object') ganti(o[k]); } };
+    ganti(data);
+    const json = JSON.stringify(data).replace(/<\//g, '<\\/');
+    let h = S.html.replace('<script src="data.js"><\/script>', `<script>window.UNDANGAN = ${json};<\/script>`);
+    h = h.replace(/<head>/i, `<head><base href="${S.situs}${S.slug}/">`);
+    $('#pratinjau').srcdoc = h;
+  }
+
+  /* ---------- link tamu ---------- */
+  function gambarTamu() {
+    const t = $('#tab-tamu'); t.textContent = '';
+    const link = S.situs + S.slug + '/';
+    const daftarNama = el('textarea', { id: 'tamu-nama', placeholder: 'Satu nama per baris\nBapak Budi Santoso\nIbu Ratna & Keluarga' });
+    daftarNama.value = bacaLokal('tamu:' + S.slug);
+    const templatPesan = el('textarea', { id: 'tamu-pesan' });
+    templatPesan.value = bacaLokal('pesan:' + S.slug) || `Kepada Yth.\n{nama}\n\nTanpa mengurangi rasa hormat, perkenankan kami mengundang Bapak/Ibu/Saudara/i untuk menghadiri acara pernikahan kami.\n\nInfo lengkap acara:\n{link}\n\nMerupakan suatu kebahagiaan bagi kami apabila Bapak/Ibu/Saudara/i berkenan hadir dan memberikan doa restu.\n\nTerima kasih.`;
+    const hasil = el('div');
+    const buat = () => {
+      simpanLokal('tamu:' + S.slug, daftarNama.value); simpanLokal('pesan:' + S.slug, templatPesan.value);
+      hasil.textContent = '';
+      daftarNama.value.split('\n').map((n) => n.trim()).filter(Boolean).forEach((nama) => {
+        const url = link + '?to=' + encodeURIComponent(nama).replace(/%20/g, '+');
+        const pesan = templatPesan.value.replaceAll('{nama}', nama).replaceAll('{link}', url);
+        const salin = el('button', { class: 'btn kecil', type: 'button', teks: 'Salin pesan', onclick: () => salinTeks(pesan, 'Pesan untuk ' + nama + ' disalin') });
+        const wa = el('a', { class: 'btn kecil', href: 'https://wa.me/?text=' + encodeURIComponent(pesan), target: '_blank', rel: 'noopener', teks: 'WhatsApp' });
+        hasil.appendChild(el('div', { class: 'tamu-baris' }, [el('div', {}, [el('b', { teks: nama }), el('code', { teks: url })]), salin, wa]));
+      });
+    };
+    daftarNama.addEventListener('input', buat); templatPesan.addEventListener('input', buat);
+    t.append(
+      el('h2', { teks: 'Link untuk tamu' }),
+      el('p', { class: 'redup', style: 'margin:0', teks: 'Tulis nama tamu, satu per baris. Setiap tamu mendapat link dengan namanya di sampul undangan.' }),
+      el('label', { class: 'medan' }, [el('span', { teks: 'Daftar nama tamu' }), daftarNama]),
+      el('label', { class: 'medan' }, [el('span', { teks: 'Teks pesan' }), templatPesan, el('small', { teks: '{nama} dan {link} diganti otomatis.' })]),
+      hasil
+    );
+    buat();
+  }
+  function salinTeks(teks, pesan) {
+    if (navigator.clipboard) navigator.clipboard.writeText(teks).then(() => toast(pesan), () => cadangan());
+    else cadangan();
+    function cadangan() { const a = document.createElement('textarea'); a.value = teks; document.body.appendChild(a); a.select(); try { document.execCommand('copy'); toast(pesan); } catch (e) { toast('Gagal menyalin'); } a.remove(); }
+  }
+
+  /* ---------- memuat & menyimpan ---------- */
+  async function muatDaftar(pilih) {
+    const isi = await api(`/contents/${FOLDER}?ref=main&t=${Date.now()}`);
+    const slugs = isi.filter((x) => x.type === 'dir' && !KHUSUS.includes(x.name)).map((x) => x.name);
+    const sel = $('#pilih-undangan'); sel.textContent = '';
+    slugs.forEach((s) => sel.appendChild(el('option', { value: s, teks: s })));
+    if (!slugs.length) { status('Belum ada undangan. Klik "Undangan baru".'); return; }
+    const target = pilih && slugs.includes(pilih) ? pilih : (slugs.includes(bacaLokal('slug')) ? bacaLokal('slug') : slugs[0]);
+    sel.value = target;
+    await muatUndangan(target);
+  }
+  async function muatUndangan(slug) {
+    status('Memuat ' + slug + '…');
+    try {
+      const [d, h] = await Promise.all([ambilFile(`${FOLDER}/${slug}/data.js`), ambilFile(`${FOLDER}/${slug}/index.html`)]);
+      const json = d.teks.replace(/^[\s\S]*?window\.UNDANGAN\s*=\s*/, '').replace(/;\s*$/, '');
+      S.data = JSON.parse(json); S.html = h.teks; S.slug = slug; S.lokal = {}; S.ubah = false;
+      simpanLokal('slug', slug);
+      $('#btn-lihat').href = S.situs + slug + '/';
+      gambarFormulir(); gambarTamu(); $('#json-teks').value = JSON.stringify(S.data, null, 2);
+      pratinjau();
+      status('Siap. Ubah isi lalu klik Simpan.');
+    } catch (e) {
+      if (e instanceof SyntaxError) status('data.js undangan ini tidak bisa dibaca. Perbaiki lewat tab Lanjutan atau di GitHub.', 'galat');
+      else status(e.status === 404 ? `Undangan "${slug}" belum memakai data.js, jadi belum bisa diedit di sini.` : jelaskanGalat(e), 'galat');
+    }
+  }
+  function pasanganDari(D) {
+    const m = D.mempelai || {}; const a = m.urutan === 'wanita-dulu' ? m.wanita : m.pria; const b = a === m.pria ? m.wanita : m.pria;
+    return [a && a.panggilan, b && b.panggilan].filter(Boolean).join(' & ');
+  }
+  async function simpan() {
+    if (!S.data) return;
+    const btn = $('#btn-simpan'); btn.disabled = true; status('Menyimpan…');
+    try {
+      const teks = `window.UNDANGAN = ${JSON.stringify(S.data, null, 2)};\n`;
+      await tulisFile(`${FOLDER}/${S.slug}/data.js`, keB64(teks), `Perbarui isi undangan ${S.slug}`);
+      // judul & pratinjau link WhatsApp ikut nama pasangan
+      const p = pasanganDari(S.data);
+      if (p) {
+        const esc = (s) => s.replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;');
+        const judul = 'Undangan Pernikahan ' + p, desk = `Dengan penuh syukur, kami mengundang Anda di hari bahagia ${p}.`;
+        const baru = S.html
+          .replace(/<title>[\s\S]*?<\/title>/, `<title>${esc(judul)}</title>`)
+          .replace(/(<meta property="og:title" content=")[^"]*/, `$1${esc(judul)}`)
+          .replace(/(<meta property="og:description" content=")[^"]*/, `$1${esc(desk)}`)
+          .replace(/(<meta name="description" content=")[^"]*/, `$1${esc(desk)}`);
+        if (baru !== S.html) { await tulisFile(`${FOLDER}/${S.slug}/index.html`, keB64(baru), `Perbarui judul undangan ${S.slug}`); S.html = baru; }
+      }
+      S.ubah = false;
+      status('Tersimpan. Perubahan tampil di link undangan dalam 1–3 menit.', 'oke');
+      toast('Tersimpan');
+    } catch (e) { status(jelaskanGalat(e), 'galat'); }
+    finally { btn.disabled = false; }
+  }
+
+  async function buatBaru() {
+    const slug = $('#baru-slug').value.trim().toLowerCase();
+    const tpl = $('#baru-template').value;
+    if (!/^[a-z0-9]+(-[a-z0-9]+)*$/.test(slug)) { toast('Gunakan huruf kecil, angka, dan tanda hubung. Contoh: andi-sari'); return; }
+    if (KHUSUS.includes(slug)) { toast('Nama itu dipakai sistem. Pilih nama lain.'); return; }
+    const btn = $('#baru-buat'); btn.disabled = true;
+    try {
+      if (await shaFile(`${FOLDER}/${slug}/data.js`)) { toast('Undangan dengan alamat itu sudah ada.'); return; }
+      status('Membuat undangan ' + slug + '…');
+      const [h, d] = await Promise.all([ambilFile(`${FOLDER}/contoh/${tpl}/index.html`), ambilFile(`${FOLDER}/contoh/${tpl}/data.js`)]);
+      const data = JSON.parse(d.teks.replace(/^[\s\S]*?window\.UNDANGAN\s*=\s*/, '').replace(/;\s*$/, ''));
+      data.id = slug;
+      await tulisFile(`${FOLDER}/${slug}/index.html`, keB64(h.teks), `Undangan baru ${slug} dari template ${tpl}`);
+      await tulisFile(`${FOLDER}/${slug}/data.js`, keB64(`window.UNDANGAN = ${JSON.stringify(data, null, 2)};\n`), `Isi awal undangan ${slug}`);
+      $('#modal-baru').hidden = true;
+      await muatDaftar(slug);
+      status(`Undangan ${slug} dibuat dari template ${tpl}. Ganti isinya lalu Simpan.`, 'oke');
+    } catch (e) { status(jelaskanGalat(e), 'galat'); }
+    finally { btn.disabled = false; }
+  }
+
+  async function masuk() {
+    S.owner = $('#m-owner').value.trim(); S.repo = $('#m-repo').value.trim(); S.token = $('#m-token').value.trim() || S.token;
+    if (!S.owner || !S.repo || !S.token) { toast('Lengkapi pemilik, repositori, dan token.'); return; }
+    status('Memeriksa akses…');
+    try {
+      const repo = await api('');
+      if (repo.permissions && !repo.permissions.push) { status('Token ini hanya bisa membaca. Atur izin Contents ke Read and write.', 'galat'); return; }
+      S.repo = repo.name; S.owner = repo.owner.login;
+      S.situs = `https://${S.owner.toLowerCase()}.github.io/${S.repo}/`;
+      try { const pg = await api('/pages'); if (pg && pg.html_url) S.situs = pg.html_url.replace(/\/?$/, '/'); } catch (e) {}
+      simpanLokal('owner', S.owner); simpanLokal('repo', S.repo); simpanLokal('token', S.token);
+      $('#layar-masuk').hidden = true; $('#layar-kerja').hidden = false; $('#kendali').hidden = false;
+      await muatDaftar();
+      try {
+        const tpl = await api(`/contents/${FOLDER}/contoh?ref=main`);
+        const sel = $('#baru-template'); sel.textContent = '';
+        tpl.filter((x) => x.type === 'dir').forEach((x) => sel.appendChild(el('option', { value: x.name, teks: x.name.replace(/^\d+-/, '').replace(/-/g, ' ') })));
+        if ([...sel.options].some((o) => o.value === '6-dusty-rose')) sel.value = '6-dusty-rose';
+      } catch (e) {}
+    } catch (e) { status(jelaskanGalat(e), 'galat'); $('#layar-masuk').hidden = false; }
+  }
+
+  /* ---------- tombol ---------- */
+  $('#btn-masuk').onclick = masuk;
+  $('#m-token').addEventListener('keydown', (e) => { if (e.key === 'Enter') masuk(); });
+  $('#btn-simpan').onclick = simpan;
+  $('#btn-keluar').onclick = () => { simpanLokal('token', null); location.reload(); };
+  $('#pilih-undangan').onchange = (e) => {
+    if (S.ubah && !window.confirm('Perubahan belum disimpan dan akan hilang. Lanjutkan?')) { e.target.value = S.slug; return; }
+    muatUndangan(e.target.value);
+  };
+  $('#btn-baru').onclick = () => { $('#modal-baru').hidden = false; $('#baru-slug').focus(); };
+  $('#baru-batal').onclick = () => ($('#modal-baru').hidden = true);
+  $('#baru-buat').onclick = buatBaru;
+  $('#baru-slug').addEventListener('input', (e) => { $('#baru-contoh').textContent = e.target.value ? 'Link: ' + S.situs + e.target.value.trim().toLowerCase() + '/' : ''; });
+  $('#btn-segarkan').onclick = pratinjau;
+  $('#btn-pratinjau').onclick = () => { $('#pratinjau-wrap').classList.add('buka'); pratinjau(); };
+  $('#btn-tutup-pratinjau').onclick = () => $('#pratinjau-wrap').classList.remove('buka');
+  $('#btn-json').onclick = () => {
+    try { S.data = JSON.parse($('#json-teks').value); gambarFormulir(); berubah(); toast('Diterapkan. Klik Simpan untuk menyimpan.'); }
+    catch (e) { toast('Format JSON salah: ' + e.message); }
+  };
+  document.querySelectorAll('[data-tab]').forEach((b) => b.addEventListener('click', () => {
+    document.querySelectorAll('[data-tab]').forEach((x) => x.setAttribute('aria-selected', String(x === b)));
+    ['isi', 'tamu', 'json'].forEach((n) => ($('#tab-' + n).hidden = n !== b.dataset.tab));
+    if (b.dataset.tab === 'json') $('#json-teks').value = JSON.stringify(S.data, null, 2);
+  }));
+  window.addEventListener('beforeunload', (e) => { if (S.ubah) { e.preventDefault(); e.returnValue = ''; } });
+
+  /* ---------- mulai ---------- */
+  const tk = bacaLokal('token');
+  if (bacaLokal('owner')) $('#m-owner').value = bacaLokal('owner');
+  if (bacaLokal('repo')) $('#m-repo').value = bacaLokal('repo');
+  if (tk) { S.token = tk; masuk(); }
+})();
+</script>
+</body>
+</html>

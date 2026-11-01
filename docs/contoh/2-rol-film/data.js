@@ -1,0 +1,152 @@
+window.UNDANGAN = {
+  "id": "dimas-kirana",
+  "tamuBawaan": "Teman-teman terkasih",
+  "tanggalUtama": "2027-01-17T09:00:00+07:00",
+  "musik": {
+    "url": "",
+    "otomatis": true
+  },
+  "sampul": {
+    "label": "Rol 01 · 36 eksp · ISO 400",
+    "foto": ""
+  },
+  "pembuka": {
+    "teks": "Kami tidak menunggu momen yang sempurna. Kami memilih satu sama lain, lalu momen itu datang sendiri.",
+    "ajakan": "Dengan senang hati, kami mengajak Anda menjadi bagian dari bingkai berikutnya."
+  },
+  "mempelai": {
+    "urutan": "pria-dulu",
+    "pria": {
+      "panggilan": "Dimas",
+      "nama": "Dimas Arya Nugraha",
+      "keterangan": "Putra dari",
+      "ayah": "Bapak Ir. Teguh Nugraha",
+      "ibu": "Ibu Ratna Dewi",
+      "instagram": "dimasarya",
+      "foto": ""
+    },
+    "wanita": {
+      "panggilan": "Kirana",
+      "nama": "Kirana Putri Larasati",
+      "keterangan": "Putri dari",
+      "ayah": "Bapak Andi Larasati",
+      "ibu": "Ibu Melati Sari",
+      "instagram": "kiranaputri",
+      "foto": ""
+    }
+  },
+  "acara": [
+    {
+      "nama": "Akad Nikah",
+      "tanggal": "2027-01-17",
+      "mulai": "09.00",
+      "selesai": "10.30",
+      "zona": "WIB",
+      "tempat": "Kediaman Mempelai Wanita",
+      "alamat": "Jl. Kemang Timur Raya No. 18, Jakarta Selatan",
+      "peta": "https://maps.google.com/?q=Kemang+Timur+Raya+Jakarta",
+      "catatan": "Khusus keluarga"
+    },
+    {
+      "nama": "Resepsi",
+      "tanggal": "2027-01-17",
+      "mulai": "18.30",
+      "selesai": "21.00",
+      "zona": "WIB",
+      "tempat": "Rumah Kaca Senopati",
+      "alamat": "Jl. Senopati No. 62, Kebayoran Baru, Jakarta Selatan",
+      "peta": "https://maps.google.com/?q=Senopati+Jakarta",
+      "catatan": "Busana: hitam, putih, atau krem"
+    }
+  ],
+  "kisah": [
+    {
+      "tahun": "2017",
+      "judul": "Satu kamera untuk berdua",
+      "cerita": "Klub fotografi kampus hanya punya satu kamera analog. Kami harus berbagi, dan ternyata bukan hanya kamera."
+    },
+    {
+      "tahun": "2020",
+      "judul": "Rol yang tidak pernah dicuci",
+      "cerita": "Setahun berjauhan karena pandemi. Kami saling mengirim foto lewat pos, satu rol setiap bulan."
+    },
+    {
+      "tahun": "2025",
+      "judul": "Lamaran di kamar gelap",
+      "cerita": "Foto terakhir di rol itu bukan pemandangan. Isinya tulisan tangan: maukah kamu?"
+    },
+    {
+      "tahun": "2027",
+      "judul": "Frame berikutnya",
+      "cerita": "Yang ini akan kami ambil bersama Anda."
+    }
+  ],
+  "galeri": [
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    ""
+  ],
+  "video": "",
+  "hadiah": {
+    "teks": "Kehadiran Anda sudah lebih dari cukup. Bila ingin mengirim hadiah, berikut detailnya.",
+    "rekening": [
+      {
+        "bank": "BCA",
+        "nomor": "5271098812",
+        "atasNama": "Dimas Arya Nugraha"
+      },
+      {
+        "bank": "BNI",
+        "nomor": "0912334455",
+        "atasNama": "Kirana Putri Larasati"
+      }
+    ],
+    "alamat": {
+      "penerima": "Kirana Putri Larasati",
+      "alamat": "Jl. Kemang Timur Raya No. 18, Mampang Prapatan, Jakarta Selatan 12730"
+    }
+  },
+  "rsvp": {
+    "endpoint": "",
+    "contoh": [
+      {
+        "nama": "Raisa (klub foto)",
+        "hadir": "ya",
+        "ucapan": "Akhirnya! Aku bawa kamera, kalian tinggal senyum.",
+        "waktu": "2026-10-30T15:20:00+07:00"
+      },
+      {
+        "nama": "Om Herman",
+        "hadir": "ya",
+        "ucapan": "Selamat menempuh hidup baru. Semoga langgeng sampai rambut putih semua.",
+        "waktu": "2026-10-27T08:05:00+07:00"
+      }
+    ]
+  },
+  "penutup": {
+    "teks": "Terima kasih sudah menonton sampai akhir. Sampai jumpa di hari bahagia kami.",
+    "kredit": [
+      {
+        "peran": "Pemeran utama",
+        "nama": "Dimas & Kirana"
+      },
+      {
+        "peran": "Dengan restu",
+        "nama": "Kel. Bpk. Teguh Nugraha\nKel. Bpk. Andi Larasati"
+      },
+      {
+        "peran": "Sutradara",
+        "nama": "Waktu yang tepat"
+      },
+      {
+        "peran": "Penonton istimewa",
+        "nama": "Anda"
+      }
+    ]
+  },
+  "kredit": "Undangan digital oleh Studio Anda"
+};

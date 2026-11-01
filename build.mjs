@@ -51,7 +51,11 @@ for (const f of fs.readdirSync(path.join(SRC, 'templates')).filter((x) => x.ends
   const desc = `Dengan penuh syukur, kami mengundang Anda di hari bahagia ${pasangan}.`;
 
   fs.mkdirSync(path.join(DIST, slug), { recursive: true });
-  fs.writeFileSync(path.join(DIST, slug, 'index.html'), bungkus(head, body, title, desc));
+  // Versi hosting: isi undangan dipisah ke data.js supaya bisa diubah dari halaman admin
+  const dataJs = `window.UNDANGAN = ${JSON.stringify(D, null, 2)};\n`;
+  const pisah = (t) => t.replace(/<script id="data-undangan">[\s\S]*?<\/script>/, '<script src="data.js"></script>');
+  fs.writeFileSync(path.join(DIST, slug, 'index.html'), bungkus(pisah(head), pisah(body), title, desc));
+  fs.writeFileSync(path.join(DIST, slug, 'data.js'), dataJs);
   fs.writeFileSync(path.join(DIST, `${slug}.artifact.html`), s);
   daftar.push(slug);
   console.log('✓', slug, `(${(fs.statSync(path.join(DIST, slug, 'index.html')).size / 1024).toFixed(0)} KB)`);

@@ -18,7 +18,20 @@ undangan/
 └── dist/                  ← hasil siap unggah (jangan diedit langsung)
 ```
 
-## Alur kerja per klien
+## Ruang admin (tanpa coding)
+
+Buka `https://ysisking.github.io/Undangan/admin/` di browser.
+
+1. **Masuk sekali** dengan token GitHub (cara membuatnya tertulis di halaman masuk; izin yang dibutuhkan: *Contents: Read and write* untuk repositori ini saja). Token hanya tersimpan di perangkat Anda.
+2. **Pilih undangan** di bagian atas, ubah isi lewat formulir, unggah foto dan lagu. Pratinjau ponsel di kanan ikut berubah.
+3. Klik **Simpan**. Link undangan ikut berubah dalam 1–3 menit.
+4. **Undangan baru**: isi alamat link (misal `andi-sari`) dan pilih template. Undangan dibuat di `…/Undangan/andi-sari/`.
+5. Tab **Link tamu**: tempel daftar nama tamu, lalu salin pesan atau kirim langsung lewat WhatsApp.
+6. Tab **Lanjutan**: untuk kolom khusus template yang tidak ada di formulir.
+
+Foto otomatis diperkecil (maks. 1600 px) sebelum diunggah. Lagu maksimal 15 MB.
+
+## Alur kerja per klien (lewat kode)
 
 1. Salin template yang dipilih klien, beri nama sesuai pasangan:
    ```bash
