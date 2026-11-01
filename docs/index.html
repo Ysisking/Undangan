@@ -1,4 +1,50 @@
 <!doctype html>
-<html lang="id"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Undangan</title><meta http-equiv="refresh" content="0; url=raka-nadia/"></head>
-<body style="font-family:system-ui,sans-serif;padding:24px"><a href="raka-nadia/">Buka undangan</a></body></html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Undangan Pernikahan</title>
+<meta name="description" content="Dengan penuh syukur, kami mengundang Anda di hari bahagia kami.">
+<meta property="og:title" content="Undangan Pernikahan">
+<meta property="og:description" content="Dengan penuh syukur, kami mengundang Anda di hari bahagia kami.">
+<meta property="og:type" content="website">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="app/undangan.css">
+<style>
+  html, body { margin: 0; background: #f3ebe8; }
+  .pesan { min-height: 100vh; display: grid; place-content: center; gap: 8px; padding: 24px; text-align: center; font: 15px/1.6 'Helvetica Neue', Arial, sans-serif; color: #4b3c3c; }
+  .pesan b { font: italic 400 26px/1.3 Georgia, serif; }
+</style>
+</head>
+<body>
+<div id="undangan"><div class="pesan" role="status"><b>Memuat undangan…</b></div></div>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"></script>
+<script src="app/config.js"></script>
+<script src="app/store.js"></script>
+<script src="app/undangan.js"></script>
+<script>
+(async function () {
+  const q = new URLSearchParams(location.search);
+  const slug = (q.get('u') || '').trim().toLowerCase();
+  const tamu = (q.get('to') || '').trim().slice(0, 80);
+  const root = document.getElementById('undangan');
+  const pesan = (judul, teks) => { root.innerHTML = ''; const d = document.createElement('div'); d.className = 'pesan'; const b = document.createElement('b'); b.textContent = judul; const p = document.createElement('span'); p.textContent = teks; d.append(b, p); root.appendChild(d); };
+  let data = null;
+  if (!slug || slug === 'contoh') {
+    data = Undangan.contoh(q.get('t') || 'dusty-rose');
+  } else {
+    try {
+      const u = await Simpanan.ambil(slug);
+      if (!u || u.terbit === false) return pesan('Undangan tidak ditemukan', 'Periksa kembali link yang Anda terima.');
+      data = u.data;
+    } catch (e) { return pesan('Undangan belum bisa dibuka', 'Periksa koneksi internet Anda, lalu muat ulang halaman.'); }
+  }
+  const m = data.mempelai || {}; const a = m.urutan === 'wanita-dulu' ? m.wanita : m.pria; const b = a === m.pria ? m.wanita : m.pria;
+  const nama = [a && a.panggilan, b && b.panggilan].filter(Boolean).join(' & ');
+  if (nama) document.title = 'Undangan Pernikahan ' + nama;
+  Undangan.render(root, data, { tamu, slug: slug || 'contoh', store: slug && slug !== 'contoh' ? Simpanan : null });
+})();
+</script>
+</body>
+</html>
