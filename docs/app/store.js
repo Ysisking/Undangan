@@ -56,5 +56,10 @@
     };
   }
 
-  window.Simpanan = pakaiSupabase ? supabaseStore() : demoStore();
+  function gagalStore() {
+    const galat = () => { throw new Error('Tidak bisa terhubung ke server. Periksa koneksi internet, lalu muat ulang halaman.'); };
+    return { mode: 'galat', async sesi() { return null; }, masuk: galat, keluar: async () => {}, daftar: galat, ambil: galat, buat: galat, simpan: galat, hapus: galat, unggah: galat, ucapanDaftar: galat, ucapanKirim: galat, ucapanHapus: galat };
+  }
+  const adaKonfig = !!(K.supabaseUrl && K.supabaseKey);
+  window.Simpanan = pakaiSupabase ? supabaseStore() : adaKonfig ? gagalStore() : demoStore();
 })();

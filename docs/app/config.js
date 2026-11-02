@@ -1,6 +1,6 @@
-/* Isi dua nilai ini dari Supabase: Project Settings → API (atau Data API).
-   Selama masih kosong, editor berjalan dalam MODE DEMO (tersimpan di browser saja). */
+/* Kunci Supabase (Project URL + publishable key). Kunci ini memang untuk dipasang di website;
+   keamanan data dijaga oleh aturan di supabase/setup.sql. Kosongkan keduanya untuk kembali ke mode demo. */
 window.KONFIG = {
-  supabaseUrl: '',   // contoh: 'https://abcdxyz.supabase.co'
-  supabaseKey: '',   // "anon public" / "publishable" key, aman ditaruh di sini
+  supabaseUrl: 'https://whiwdmwseusrilhsqbbl.supabase.co',
+  supabaseKey: 'sb_publishable_WIbNYGqMaCKmryQt2BesDQ_7ekf3alR',
 };
