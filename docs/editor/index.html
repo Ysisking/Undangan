@@ -199,6 +199,9 @@ h1, h2, h3 { margin: 0; font-weight: 400; }
 <section id="layar-daftar" class="e-tengah" hidden>
   <h1 style="font:400 30px/1.2 var(--e-fj)">Undangan Anda</h1>
   <div class="e-grid-undangan" id="grid-undangan"></div>
+  <h2 style="font:400 26px/1.2 var(--e-fj);margin-top:44px">Template</h2>
+  <p class="e-redup" style="margin:6px 0 0">Pilih template untuk membuat undangan baru. Semua isi, foto, warna, huruf, ornamen, dan susunan bagiannya tetap bisa Anda ubah.</p>
+  <div class="e-grid-undangan" id="grid-template"></div>
 </section>
 
 <!-- EDIT -->
@@ -669,8 +672,11 @@ h1, h2, h3 { margin: 0; font-weight: 400; }
   async function bukaDaftar() {
     if (S.kotor) await simpan();
     layar('daftar');
+    const t = $('#grid-template'); t.textContent = '';
+    Object.entries(U.PRESET).forEach(([k, pr]) => t.appendChild(h('article', { class: 'e-u-kartu' }, warnaStrip(pr.warna), h('h3', { text: pr.nama }), h('div', { class: 'meta', text: pr.ket || '' }),
+      h('div', { class: 'e-baris' }, h('button', { class: 'e-btn kecil utama', type: 'button', text: 'Pakai template', onclick: () => modalBaru(null, k) }), h('a', { class: 'e-btn kecil', href: BASIS + '?u=contoh&t=' + k, target: '_blank', rel: 'noopener', text: 'Lihat contoh' })))));
     const g = $('#grid-undangan'); g.textContent = '';
-    g.appendChild(h('button', { class: 'e-u-baru', type: 'button', text: '+ Undangan baru', onclick: modalBaru }));
+    g.appendChild(h('button', { class: 'e-u-baru', type: 'button', text: '+ Undangan baru', onclick: () => modalBaru() }));
     let daftar = [];
     try { daftar = await DB.daftar(); } catch (e) { toast('Gagal memuat daftar: ' + pesanGalat(e)); }
     daftar.forEach((u) => {
@@ -683,9 +689,9 @@ h1, h2, h3 { margin: 0; font-weight: 400; }
           h('button', { class: 'e-btn kecil', type: 'button', text: 'Duplikat', onclick: () => modalBaru(u) }))));
     });
   }
-  function modalBaru(sumber) {
+  function modalBaru(sumber, presetAwal) {
     const dari = sumber && sumber.slug ? sumber : null;
-    let preset = 'dusty-rose';
+    let preset = presetAwal || 'dusty-rose';
     const slug = h('input', { type: 'text', placeholder: 'andi-sari', autocomplete: 'off', 'aria-describedby': 'contoh-link' });
     const contoh = h('small', { id: 'contoh-link', class: 'e-redup' });
     slug.addEventListener('input', () => { contoh.textContent = slug.value ? 'Link: ' + linkTamu(bersihSlug(slug.value)) : ''; });

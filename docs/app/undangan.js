@@ -35,12 +35,12 @@
 
   /* ---------------- template (preset tema) ---------------- */
   U.PRESET = {
-    'dusty-rose': { nama: 'Dusty Rose', warna: { latar: '#f3ebe8', kertas: '#f8f3f1', bingkai: '#e4d6d2', garis: '#d8c4c1', aksen: '#86696a', tinta: '#4b3c3c', redup: '#6f5b5b' }, font: { judul: 'Bodoni Moda', tulis: 'Mrs Saint Delafield', isi: 'Karla' }, animasi: 'angkat' },
-    'ivory': { nama: 'Ivory Minimal', warna: { latar: '#f5f2ec', kertas: '#fbf9f5', bingkai: '#e3ddd3', garis: '#cfc6ba', aksen: '#7f7264', tinta: '#3a352f', redup: '#6e665d' }, font: { judul: 'Cormorant Garamond', tulis: 'Pinyon Script', isi: 'Jost' }, animasi: 'pudar' },
-    'sage': { nama: 'Sage Eucalyptus', warna: { latar: '#edefe8', kertas: '#f4f5f0', bingkai: '#d5dbcf', garis: '#c6cdbe', aksen: '#5f6a58', tinta: '#3d4537', redup: '#5c6655' }, font: { judul: 'Gilda Display', tulis: 'Italianno', isi: 'Jost' }, animasi: 'lingkaran' },
-    'monokrom': { nama: 'Monokrom Editorial', warna: { latar: '#f8f7f5', kertas: '#ffffff', bingkai: '#d9d8d4', garis: '#d6d5d1', aksen: '#1c1c1c', tinta: '#1c1c1c', redup: '#5e5e5a' }, font: { judul: 'Libre Caslon Text', tulis: 'Italiana', isi: 'Karla' }, animasi: 'angkat' },
-    'pasir': { nama: 'Lengkung Pasir', warna: { latar: '#ece6dd', kertas: '#f3efe9', bingkai: '#ddd4c7', garis: '#c9bdac', aksen: '#62788a', tinta: '#3a4048', redup: '#5c6570' }, font: { judul: 'Marcellus', tulis: 'Pinyon Script', isi: 'Nunito Sans' }, animasi: 'perbesar' },
-    'malam': { nama: 'Langit Malam', warna: { latar: '#0f1428', kertas: '#182039', bingkai: '#232c4d', garis: '#39426a', aksen: '#d6b36a', tinta: '#eee7d4', redup: '#a8afca' }, font: { judul: 'Cormorant Garamond', tulis: 'Parisienne', isi: 'Jost' }, animasi: 'pudar' },
+    'dusty-rose': { nama: 'Dusty Rose', warna: { latar: '#f3ebe8', kertas: '#f8f3f1', bingkai: '#e4d6d2', garis: '#d8c4c1', aksen: '#86696a', tinta: '#4b3c3c', redup: '#6f5b5b' }, font: { judul: 'Bodoni Moda', tulis: 'Mrs Saint Delafield', isi: 'Karla' }, animasi: 'angkat', gaya: { sampul: 'oval', hero: 'lengkung', mempelai: 'lengkung', ornamen: '', tata: 'mozaik' }, ket: 'Mawar pudar, foto oval dan lengkung, ornamen mawar garis.' },
+    'ivory': { nama: 'Ivory Minimal', warna: { latar: '#f5f2ec', kertas: '#fbf9f5', bingkai: '#e3ddd3', garis: '#cfc6ba', aksen: '#7f7264', tinta: '#3a352f', redup: '#6e665d' }, font: { judul: 'Cormorant Garamond', tulis: 'Pinyon Script', isi: 'Jost' }, animasi: 'pudar', gaya: { sampul: 'kotak', hero: 'kotak', mempelai: 'oval', ornamen: '', tata: 'kotak' }, ket: 'Gading dan abu hangat, bingkai kotak, rapi dan lapang.' },
+    'sage': { nama: 'Sage Eucalyptus', warna: { latar: '#edefe8', kertas: '#f4f5f0', bingkai: '#d5dbcf', garis: '#c6cdbe', aksen: '#5f6a58', tinta: '#3d4537', redup: '#5c6655' }, font: { judul: 'Gilda Display', tulis: 'Italianno', isi: 'Jost' }, animasi: 'lingkaran', gaya: { sampul: 'lengkung', hero: 'lengkung', mempelai: 'bulat', ornamen: '', tata: 'mozaik' }, ket: 'Hijau sage lembut, foto bulat, kesan taman.' },
+    'monokrom': { nama: 'Monokrom Editorial', warna: { latar: '#f8f7f5', kertas: '#ffffff', bingkai: '#d9d8d4', garis: '#d6d5d1', aksen: '#1c1c1c', tinta: '#1c1c1c', redup: '#5e5e5a' }, font: { judul: 'Libre Caslon Text', tulis: 'Italiana', isi: 'Karla' }, animasi: 'angkat', gaya: { sampul: 'kotak', hero: 'kotak', mempelai: 'kotak', ornamen: 'none', tata: 'kotak' }, ket: 'Hitam putih ala majalah, tanpa ornamen.' },
+    'pasir': { nama: 'Lengkung Pasir', warna: { latar: '#ece6dd', kertas: '#f3efe9', bingkai: '#ddd4c7', garis: '#c9bdac', aksen: '#62788a', tinta: '#3a4048', redup: '#5c6570' }, font: { judul: 'Marcellus', tulis: 'Pinyon Script', isi: 'Nunito Sans' }, animasi: 'perbesar', gaya: { sampul: 'lengkung', hero: 'lengkung', mempelai: 'lengkung', ornamen: '', tata: 'geser' }, ket: 'Pasir dan biru kabut, bingkai lengkung, galeri geser.' },
+    'malam': { nama: 'Langit Malam', warna: { latar: '#0f1428', kertas: '#182039', bingkai: '#232c4d', garis: '#39426a', aksen: '#d6b36a', tinta: '#eee7d4', redup: '#a8afca' }, font: { judul: 'Cormorant Garamond', tulis: 'Parisienne', isi: 'Jost' }, animasi: 'pudar', gaya: { sampul: 'bulat', hero: 'oval', mempelai: 'bulat', ornamen: '', tata: 'geser' }, ket: 'Biru malam dan emas, foto bulat, nuansa elegan.' },
   };
   U.ANIMASI = { angkat: 'Sampul terangkat ke atas', pudar: 'Memudar', lingkaran: 'Lingkaran menutup', perbesar: 'Membesar lalu hilang' };
 
@@ -70,7 +70,8 @@
   /* ---------------- contoh isi ---------------- */
   U.contoh = function (preset) {
     const p = U.PRESET[preset] || U.PRESET['dusty-rose'];
-    return {
+    const g = p.gaya || {};
+    const D = {
       versi: 1,
       tema: { preset: preset || 'dusty-rose', warna: salinDalam(p.warna), font: salinDalam(p.font), animasi: p.animasi, ornamen: '', latar: '', musik: { url: '' } },
       tamuBawaan: 'Bapak/Ibu/Saudara/i',
@@ -105,6 +106,14 @@
       ],
       kredit: 'Undangan digital oleh Studio Anda',
     };
+    D.tema.ornamen = g.ornamen || '';
+    D.sampul.bentuk = g.sampul || 'oval';
+    D.bagian.forEach((b) => {
+      if (b.tipe === 'hero') b.bentuk = g.hero || b.bentuk;
+      if (b.tipe === 'mempelai') b.bentuk = g.mempelai || b.bentuk;
+      if (b.tipe === 'galeri') b.tata = g.tata || b.tata;
+    });
+    return D;
   };
 
   /* ---------------- alat bantu ---------------- */
