@@ -38,6 +38,10 @@
       const u = await Simpanan.ambil(slug);
       if (!u || u.terbit === false) return pesan('Undangan tidak ditemukan', 'Periksa kembali link yang Anda terima.');
       data = u.data;
+      if (data && data.jenis === 'klasik') {
+        location.replace(`klasik/${encodeURIComponent(data.template)}/?u=${encodeURIComponent(slug)}${tamu ? '&to=' + encodeURIComponent(tamu).replace(/%20/g, '+') : ''}`);
+        return;
+      }
     } catch (e) { return pesan('Undangan belum bisa dibuka', 'Periksa koneksi internet Anda, lalu muat ulang halaman.'); }
   }
   const m = data.mempelai || {}; const a = m.urutan === 'wanita-dulu' ? m.wanita : m.pria; const b = a === m.pria ? m.wanita : m.pria;

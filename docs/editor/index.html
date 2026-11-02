@@ -152,6 +152,10 @@ h1, h2, h3 { margin: 0; font-weight: 400; }
 .e-sibuk { position: fixed; inset: 0; z-index: 95; background: rgba(255,253,252,.6); display: grid; place-items: center; font-weight: 600; }
 
 .e-tombol-panel { display: none; }
+.e-u-kartu .sampul-kecil { width: 100%; aspect-ratio: 390 / 520; object-fit: cover; object-position: top; border-radius: 8px; background: var(--e-latar); }
+.e-u-kartu .sampul-kecil.pendek { aspect-ratio: 16 / 7; }
+.e-ponsel.klasik { width: 400px; overflow: hidden; }
+#bingkai { display: block; width: 100%; height: calc(100vh - 110px); height: calc(100dvh - 110px); border: 0; background: #fff; }
 @media (max-width: 899px) {
   .e-kerja { grid-template-columns: 1fr; }
   .e-panel { position: fixed; left: 0; right: 0; bottom: 0; height: 62vh; z-index: 70; border-right: 0; border-top: 1px solid var(--e-garis); border-radius: 16px 16px 0 0; box-shadow: 0 -12px 40px rgba(47,39,39,.18); transform: translateY(100%); transition: transform .3s; }
@@ -199,8 +203,11 @@ h1, h2, h3 { margin: 0; font-weight: 400; }
 <section id="layar-daftar" class="e-tengah" hidden>
   <h1 style="font:400 30px/1.2 var(--e-fj)">Undangan Anda</h1>
   <div class="e-grid-undangan" id="grid-undangan"></div>
-  <h2 style="font:400 26px/1.2 var(--e-fj);margin-top:44px">Template</h2>
-  <p class="e-redup" style="margin:6px 0 0">Pilih template untuk membuat undangan baru. Semua isi, foto, warna, huruf, ornamen, dan susunan bagiannya tetap bisa Anda ubah.</p>
+  <h2 style="font:400 26px/1.2 var(--e-fj);margin-top:44px">Template desain</h2>
+  <p class="e-redup" style="margin:6px 0 0">Template dengan animasi pembuka dan tata letak khas. Tulisan, foto, video, musik, warna, huruf, latar, dan urutan bagian bisa diubah.</p>
+  <div class="e-grid-undangan" id="grid-desain"></div>
+  <h2 style="font:400 26px/1.2 var(--e-fj);margin-top:44px">Template susun bebas</h2>
+  <p class="e-redup" style="margin:6px 0 0">Template sederhana yang bagiannya bisa ditambah dan disusun sesuka hati, termasuk ornamen dan bentuk bingkai foto.</p>
   <div class="e-grid-undangan" id="grid-template"></div>
 </section>
 
@@ -248,7 +255,7 @@ h1, h2, h3 { margin: 0; font-weight: 400; }
   function sibuk(t) { let e = $('.e-sibuk'); if (!t) { e && e.remove(); return; } if (!e) { e = h('div', { class: 'e-sibuk' }); document.body.appendChild(e); } e.textContent = t; }
   const pesanGalat = (e) => (e && (e.message || e.error_description)) || 'Terjadi kesalahan';
   function layar(n) { ['masuk', 'daftar', 'edit'].forEach((x) => ($('#layar-' + x).hidden = x !== n)); $('#aksi-edit').hidden = n !== 'edit'; $('#btn-keluar').hidden = n === 'masuk'; $('#petunjuk').hidden = n !== 'edit'; if (n !== 'edit') { $('#judul-undangan').textContent = ''; status(''); } }
-  function namaPasangan(D) { const m = (D && D.mempelai) || {}; const a = m.urutan === 'wanita-dulu' ? m.wanita : m.pria; const b = a === m.pria ? m.wanita : m.pria; return [a && a.panggilan, b && b.panggilan].filter(Boolean).join(' & ') || 'Tanpa nama'; }
+  function namaPasangan(D) { if (D && D.jenis === 'klasik') D = D.isi; const m = (D && D.mempelai) || {}; const a = m.urutan === 'wanita-dulu' ? m.wanita : m.pria; const b = a === m.pria ? m.wanita : m.pria; return [a && a.panggilan, b && b.panggilan].filter(Boolean).join(' & ') || 'Tanpa nama'; }
   function warnaStrip(w) { return h('div', { class: 'warna', 'aria-hidden': 'true' }, ['latar', 'bingkai', 'aksen', 'tinta'].map((k) => h('i', { style: { background: (w || {})[k] || '#ccc' } }))); }
   function konfirmasi(judul, teks, label, fn) {
     const m = h('div', { class: 'e-modal', role: 'dialog', 'aria-modal': 'true' }, h('div', { class: 'e-kartu' }, h('h2', { text: judul }), h('p', { class: 'e-redup', style: { margin: 0 }, text: teks }),
@@ -306,8 +313,22 @@ h1, h2, h3 { margin: 0; font-weight: 400; }
   /* =====================================================================
      KANVAS
      ===================================================================== */
+  // Ambil teks persis seperti diketik (innerText ikut huruf besar dari CSS, jadi tidak dipakai)
+  function teksMurni(el) {
+    let out = '';
+    el.childNodes.forEach((n) => {
+      if (n.nodeType === 3) out += n.nodeValue;
+      else if (n.nodeName === 'BR') out += '\n';
+      else if (n.nodeType === 1 && !n.classList.contains('e-alat') && !n.classList.contains('e-alat-item') && !n.classList.contains('e-k-alat')) {
+        const blok = /^(DIV|P)$/.test(n.nodeName);
+        out += (blok && out && !out.endsWith('\n') ? '\n' : '') + teksMurni(n);
+      }
+    });
+    return out;
+  }
   const SATU_BARIS = /(panggilan|nama|keterangan|ayah|ibu|instagram|judul|label|sumber|tahun|mulai|selesai|zona|tempat|bank|nomor|atasNama|penerima|tombol|kepada|salam|kredit|pembuka)$/;
   function gambar() {
+    if (S.klasik) { kMuat(); gambarPanel(); return; }
     const k = $('#kanvas'); const y = $('#kanvas-wadah').scrollTop;
     U.render(k, S.data, { edit: true, tamu: S.data.tamuBawaan });
     hiasKanvas(k);
@@ -352,7 +373,7 @@ h1, h2, h3 { margin: 0; font-weight: 400; }
   // ketik langsung
   $('#kanvas').addEventListener('input', (e) => {
     const el = e.target.closest('[data-edit]'); if (!el) return;
-    const path = el.dataset.edit; let v = el.innerText.replace(/ /g, ' ');
+    const path = el.dataset.edit; let v = teksMurni(el).replace(/ /g, ' ');
     if (SATU_BARIS.test(path)) v = v.replace(/\n+/g, ' ');
     v = v.replace(/\n$/, '');
     U.pasang(S.data, path, v);
@@ -527,7 +548,7 @@ h1, h2, h3 { margin: 0; font-weight: 400; }
   function gambarPanel() {
     document.querySelectorAll('[data-tab]').forEach((b) => b.setAttribute('aria-selected', String(b.dataset.tab === S.tab)));
     const p = $('#panel-isi'); const y = $('#panel').scrollTop; p.textContent = '';
-    ({ tema: panelTema, bagian: panelBagian, undangan: panelUndangan })[S.tab](p);
+    (S.klasik ? { tema: kPanelTema, bagian: kPanelBagian, undangan: panelUndangan } : { tema: panelTema, bagian: panelBagian, undangan: panelUndangan })[S.tab](p);
     $('#panel').scrollTop = y;
   }
   const grup = (judul, ...isi) => h('div', { class: 'e-grup' }, h('h3', { text: judul }), isi);
@@ -610,7 +631,7 @@ h1, h2, h3 { margin: 0; font-weight: 400; }
   }
 
   function panelUndangan(p) {
-    const D = S.data;
+    const D = isiData();
     const link = linkTamu(S.slug);
     p.appendChild(grup('Link undangan', h('code', { style: { fontSize: '12px', overflowWrap: 'anywhere' }, text: link }),
       h('div', { class: 'e-baris' }, h('button', { class: 'e-btn kecil', type: 'button', text: 'Salin link', onclick: () => salin(link, 'Link disalin') }), h('a', { class: 'e-btn kecil', href: link, target: '_blank', rel: 'noopener', text: 'Buka' })),
@@ -667,11 +688,283 @@ h1, h2, h3 { margin: 0; font-weight: 400; }
   }
 
   /* =====================================================================
+     TEMPLATE DESAIN (KLASIK): template dengan animasi & tata letak khusus.
+     Diedit langsung di dalam bingkai (iframe) halaman template itu sendiri.
+     ===================================================================== */
+  const KLASIK = {
+    '1-sekar-jagad': { nama: 'Sekar Jagad', ket: 'Adat Jawa: pintu gebyok terbuka, batik kawung, gunungan.' },
+    '2-rol-film': { nama: 'Rol Film', ket: 'Analog: hitung mundur proyektor, tiket bioskop, polaroid yang bisa digeser.' },
+    '3-surat-kebun': { nama: 'Surat Kebun', ket: 'Botanikal: amplop bersegel lilin, ranting tergambar, daun berjatuhan.' },
+    '4-mihrab': { nama: 'Mihrab', ket: 'Islami: masuk lewat lengkung mihrab, pola bintang, tanggal Hijriah.' },
+    '5-rasi': { nama: 'Rasi', ket: 'Langit malam: fase bulan, bintang jatuh, efek warp saat dibuka.' },
+    '6-dusty-rose': { nama: 'Dusty Rose', ket: 'Mawar pudar: sampul terangkat, mawar satu garis tergambar sendiri.' },
+  };
+  const FONT_KLASIK = Array.from(new Set([].concat(...Object.values(U.FONT).map(Object.keys), ['Marcellus SC', 'Crimson Pro', 'Newsreader', 'IBM Plex Mono', 'Figtree', 'Amiri', 'Tenor Sans', 'Lora', 'EB Garamond', 'Josefin Sans']))).sort();
+  const CSS_KLASIK = `
+  .mode-edit [data-tulis]{outline:1px dashed transparent;outline-offset:3px;cursor:text;border-radius:2px;min-width:1ch;transition:outline-color .15s}
+  .mode-edit [data-tulis]:hover{outline-color:rgba(47,111,214,.6)}
+  .mode-edit [data-tulis]:focus{outline:2px solid #2f6fd6}
+  .mode-edit [data-tulis]:empty::before{content:'Ketik di sini';opacity:.45}
+  .mode-edit [data-ubah],.mode-edit [data-abs][data-src],.mode-edit [data-video],.mode-edit a[data-href]{cursor:pointer}
+  .mode-edit [data-ubah]:hover,.mode-edit [data-abs][data-src]:hover,.mode-edit [data-video]:hover,.mode-edit a[data-href]:hover{outline:2px solid rgba(47,111,214,.65);outline-offset:2px}
+  .mode-edit .disembunyikan{opacity:.35}
+  .mode-edit [data-jalur]{position:relative}
+  .e-k-alat{position:absolute;top:-10px;right:-4px;z-index:30;display:none;gap:3px;font:600 11px/1 system-ui,sans-serif}
+  .mode-edit [data-jalur]:hover>.e-k-alat,.mode-edit [data-jalur]:focus-within>.e-k-alat{display:flex}
+  .e-k-alat button{min-height:24px;padding:0 7px;border:0;border-radius:5px;background:#2f2727;color:#fff;cursor:pointer;font:inherit;letter-spacing:0;text-transform:none}
+  .e-k-alat button.bahaya{background:#a3453b}
+  .e-k-tambah{display:block;grid-column:1/-1;margin:12px auto 0;min-height:32px;padding:0 14px;border:1.5px dashed #2f6fd6;border-radius:8px;background:rgba(239,244,253,.92);color:#2f6fd6;cursor:pointer;font:600 12px/1 system-ui,sans-serif;letter-spacing:0;text-transform:none;position:relative;z-index:5}
+  @media (hover:none){.mode-edit [data-jalur]>.e-k-alat{display:flex}}`;
+  const isiData = () => (S.klasik ? S.data.isi : S.data);
+  const kWin = () => { const f = $('#bingkai'); return f && f.contentWindow; };
+  const kDoc = () => { const f = $('#bingkai'); return f && f.contentDocument; };
+  let kBuka = false, kGulir = 0;
+
+  function kMuat(buka) {
+    let f = $('#bingkai');
+    if (f) { try { kGulir = f.contentWindow.scrollY; kBuka = f.contentDocument.documentElement.classList.contains('is-open'); } catch (e) { /* abaikan */ } }
+    if (buka != null) { kBuka = buka; kGulir = 0; }
+    window.__klasik = S.data;
+    const url = `../klasik/${S.data.template}/?edit=1${kBuka ? '&buka=1' : ''}`;
+    if (!f) {
+      f = h('iframe', { id: 'bingkai', title: 'Undangan yang sedang diedit' });
+      f.addEventListener('load', () => {
+        const w = f.contentWindow; if (!w) return;
+        const siap = () => { kHias(); if (kBuka && kGulir) w.scrollTo(0, kGulir); gambarPanel(); };
+        if (w.Undangan) siap(); else w.document.addEventListener('undangan:siap', siap, { once: true });
+      });
+      const k = $('#kanvas'); k.textContent = ''; k.appendChild(f);
+    }
+    f.src = url;
+  }
+
+  function kRect(el) {
+    return { getBoundingClientRect() { const a = $('#bingkai').getBoundingClientRect(), b = el.getBoundingClientRect(); return { left: a.left + b.left, right: a.left + b.right, top: a.top + b.top, bottom: a.top + b.bottom, width: b.width, height: b.height }; } };
+  }
+  function kAbs(el, p) {
+    const M = S.data.isi.mempelai || {};
+    const A = M.urutan === 'wanita-dulu' ? 'wanita' : 'pria', B = A === 'pria' ? 'wanita' : 'pria';
+    p = String(p).split('|')[0].trim();
+    if (p.startsWith('$.a.')) return `mempelai.${A}.` + p.slice(4);
+    if (p.startsWith('$.b.')) return `mempelai.${B}.` + p.slice(4);
+    if (p.startsWith('$')) return null;
+    if (p.startsWith('.')) { const j = el.closest('[data-jalur]'); return j ? j.dataset.jalur + p : null; }
+    return p;
+  }
+
+  function kHias() {
+    const d = kDoc(); if (!d || !d.body) return;
+    if (!d.getElementById('gaya-editor')) { const st = d.createElement('style'); st.id = 'gaya-editor'; st.textContent = CSS_KLASIK; d.head.appendChild(st); }
+    d.querySelectorAll('[data-k]').forEach((el) => {
+      if (el.closest('[data-wishes]')) return;
+      const a = kAbs(el, el.dataset.k); if (!a) return;
+      el.dataset.abs = a;
+      if (el.dataset.k.includes('|') || el.children.length) { el.dataset.ubah = '1'; return; }
+      try { el.contentEditable = 'plaintext-only'; } catch (e) { /* abaikan */ }
+      if (el.contentEditable !== 'plaintext-only') el.contentEditable = 'true';
+      el.spellcheck = false; el.dataset.tulis = '1';
+    });
+    d.querySelectorAll('[data-src]').forEach((el) => { const a = kAbs(el, el.dataset.src); if (a) el.dataset.abs = a; });
+    d.querySelectorAll('[data-href]').forEach((el) => { const a = kAbs(el, el.dataset.href); if (a) el.dataset.absHref = a; });
+    // butir daftar
+    d.querySelectorAll('[data-jalur]').forEach((it) => {
+      const k = it.dataset.jalur.split('.'); const idx = +k.pop(); const arrPath = k.join('.');
+      const arr = U.ambil(S.data.isi, arrPath); if (!Array.isArray(arr)) return;
+      const bar = d.createElement('div'); bar.className = 'e-k-alat'; bar.contentEditable = 'false';
+      const tb = (t, fn, cls) => { const b = d.createElement('button'); b.type = 'button'; b.textContent = t; if (cls) b.className = cls; b.addEventListener('click', (e) => { e.preventDefault(); e.stopPropagation(); fn(); }); bar.appendChild(b); };
+      if (idx > 0) tb('↑', () => { [arr[idx - 1], arr[idx]] = [arr[idx], arr[idx - 1]]; berubah(); kMuat(); });
+      if (idx < arr.length - 1) tb('↓', () => { [arr[idx + 1], arr[idx]] = [arr[idx], arr[idx + 1]]; berubah(); kMuat(); });
+      tb('Duplikat', () => { arr.splice(idx + 1, 0, U.salinDalam(arr[idx])); berubah(); kMuat(); });
+      tb('Hapus', () => { arr.splice(idx, 1); berubah(); kMuat(); }, 'bahaya');
+      it.appendChild(bar);
+    });
+    d.querySelectorAll('[data-daftar-jalur]').forEach((l) => {
+      const p = l.dataset.daftarJalur; const b = d.createElement('button'); b.type = 'button'; b.className = 'e-k-tambah';
+      b.textContent = '+ Tambah ' + ({ acara: 'acara', kisah: 'cerita', galeri: 'foto', rekening: 'rekening', kredit: 'baris' }[p.split('.').pop()] || 'item');
+      b.addEventListener('click', (e) => {
+        e.preventDefault(); e.stopPropagation();
+        let arr = U.ambil(S.data.isi, p); if (!Array.isArray(arr)) { arr = []; U.pasang(S.data.isi, p, arr); }
+        const akhir = p.split('.').pop();
+        const baru = arr.length ? U.salinDalam(arr[arr.length - 1]) : (akhir === 'galeri' ? { src: '', ket: '' } : U.BARU[akhir === 'kisah' ? 'kisah' : akhir === 'rekening' ? 'rekening' : 'acara']());
+        if (akhir === 'galeri') arr.push(typeof baru === 'string' ? '' : { src: '', ket: '' }); else arr.push(baru);
+        berubah(); kMuat();
+      });
+      l.appendChild(b);
+    });
+    if (!d.__dipasang) {
+      d.__dipasang = true;
+      d.addEventListener('mousedown', () => tutupPop());
+      d.addEventListener('submit', (e) => e.preventDefault(), true);
+      d.addEventListener('click', (e) => {
+        const t = e.target;
+        if (t.closest('.e-k-alat, .e-k-tambah')) return;
+        const img = t.closest('[data-abs][data-src]') || (t.querySelector && t.querySelector(':scope > [data-abs][data-src]'));
+        const vid = t.closest('[data-video]');
+        const ubah = t.closest('[data-ubah]');
+        const link = t.closest('a');
+        if (img) { e.preventDefault(); e.stopPropagation(); kPopGambar(img); return; }
+        if (vid) { e.preventDefault(); e.stopPropagation(); kPopVideo(vid); return; }
+        if (ubah) { e.preventDefault(); e.stopPropagation(); kPopNilai(ubah); return; }
+        if (link) { e.preventDefault(); if (link.dataset.absHref) { e.stopPropagation(); kPopLink(link); } else if (link.hasAttribute('data-gcal')) e.stopPropagation(); }
+      }, true);
+      d.addEventListener('input', (e) => {
+        const el = e.target.closest && e.target.closest('[data-tulis]'); if (!el) return;
+        let v = teksMurni(el).replace(/ /g, ' ');
+        if (SATU_BARIS.test(el.dataset.abs)) v = v.replace(/\n+/g, ' ');
+        v = v.replace(/\n$/, '');
+        U.pasang(S.data.isi, el.dataset.abs, v);
+        d.querySelectorAll('[data-tulis]').forEach((x) => { if (x !== el && x.dataset.abs === el.dataset.abs) x.textContent = v; });
+        berubah();
+      });
+      d.addEventListener('keydown', (e) => {
+        const el = e.target.closest && e.target.closest('[data-tulis]'); if (!el) return;
+        if (e.key === 'Enter' && SATU_BARIS.test(el.dataset.abs)) { e.preventDefault(); el.blur(); }
+        const mod = e.ctrlKey || e.metaKey;
+        if (mod && e.key.toLowerCase() === 's') { e.preventDefault(); $('#btn-simpan').click(); }
+      });
+      d.addEventListener('focusout', (e) => { const el = e.target.closest && e.target.closest('[data-tulis]'); if (el && /panggilan$|urutan$/.test(el.dataset.abs) && S.kotor) kMuat(); });
+    }
+  }
+
+  function kPopGambar(el) {
+    const path = el.dataset.abs, v = U.ambil(S.data.isi, path) || '';
+    const pasangGambar = (u) => {
+      U.pasang(S.data.isi, path, u);
+      kDoc().querySelectorAll('[data-abs]').forEach((x) => {
+        if (x.dataset.abs !== path || !x.hasAttribute('data-src')) return;
+        if (u) { x.removeAttribute('data-empty'); x.dataset.url = u; if (x.tagName === 'IMG') x.src = u; else x.style.backgroundImage = `url("${u}")`; }
+        else { x.setAttribute('data-empty', ''); x.style.backgroundImage = ''; delete x.dataset.url; }
+      });
+      tutupPop(); berubah();
+    };
+    const link = h('input', { type: 'url', placeholder: 'https://… (link gambar)', value: /^https?:/.test(v) ? v : '' });
+    pop(kRect(el), 'Foto', [
+      h('div', { class: 'pratinjau', style: v ? { backgroundImage: `url("${v}")` } : null, text: v ? '' : 'Belum ada foto' }),
+      h('button', { class: 'e-btn utama penuh', type: 'button', text: v ? 'Ganti dari perangkat' : 'Unggah dari perangkat', onclick: async () => { const u = await unggahGambar(); if (u) pasangGambar(u); } }),
+      h('div', { class: 'e-medan' }, h('span', { text: 'Atau tempel link gambar' }), h('div', { class: 'e-baris', style: { flexWrap: 'nowrap' } }, link, h('button', { class: 'e-btn kecil', type: 'button', text: 'Pakai', onclick: () => { if (link.value.trim()) pasangGambar(link.value.trim()); } }))),
+      v ? h('button', { class: 'e-btn bahaya penuh', type: 'button', text: 'Hapus foto', onclick: () => pasangGambar('') }) : null,
+    ]);
+  }
+  function kPopVideo(el) {
+    const path = kAbs(el, el.dataset.video || 'video'); const v = U.ambil(S.data.isi, path) || '';
+    const link = h('input', { type: 'url', placeholder: 'https://youtu.be/… atau link .mp4', value: v });
+    const set = (u) => { U.pasang(S.data.isi, path, u); tutupPop(); berubah(); kMuat(); };
+    pop(kRect(el), 'Video', [h('div', { class: 'e-medan' }, h('span', { text: 'Link YouTube atau MP4' }), link),
+      h('button', { class: 'e-btn utama penuh', type: 'button', text: 'Pakai link', onclick: () => set(link.value.trim()) }),
+      h('button', { class: 'e-btn penuh', type: 'button', text: 'Unggah video MP4 (maks. 50 MB)', onclick: async () => { const u = await unggahBerkas('video/mp4,video/*', 'mp4', 50, 'Video'); if (u) set(u); } }),
+      v ? h('button', { class: 'e-btn bahaya penuh', type: 'button', text: 'Hapus video', onclick: () => set('') }) : null]);
+  }
+  function kPopNilai(el) {
+    const path = el.dataset.abs; const v = U.ambil(S.data.isi, path);
+    const set = (nilai) => { U.pasang(S.data.isi, path, nilai); tutupPop(); berubah(); kMuat(); };
+    if (path === 'tanggalUtama') {
+      const t = inputTglWaktu(v);
+      pop(kRect(el), 'Tanggal & jam acara utama', [t.el, h('button', { class: 'e-btn utama penuh', type: 'button', text: 'Terapkan', onclick: () => { const x = t.nilai(); if (x) set(x); } })]);
+      return;
+    }
+    if (/tanggal$/.test(path)) {
+      const i = h('input', { type: 'date', value: v || '' });
+      pop(kRect(el), 'Tanggal', [i, h('button', { class: 'e-btn utama penuh', type: 'button', text: 'Terapkan', onclick: () => set(i.value) })]);
+      return;
+    }
+    const panjang = String(v || '').length > 60 || /teks|kutipan|cerita|arti|ayat|alamat|isi$/.test(path);
+    const i = panjang ? h('textarea', {}) : h('input', { type: 'text' }); i.value = v == null ? '' : String(v);
+    pop(kRect(el), 'Ubah tulisan', [h('label', { class: 'e-medan' }, h('span', { text: 'Isi' }), i), h('button', { class: 'e-btn utama penuh', type: 'button', text: 'Terapkan', onclick: () => set(i.value) })]);
+  }
+  function kPopLink(el) {
+    const path = el.dataset.absHref; const v = U.ambil(S.data.isi, path) || '';
+    const ig = /instagram$/.test(path);
+    const i = h('input', { type: ig ? 'text' : 'url', value: v, placeholder: ig ? 'nama akun tanpa @' : 'https://maps.app.goo.gl/…' });
+    pop(kRect(el), ig ? 'Akun Instagram' : 'Link', [h('label', { class: 'e-medan' }, h('span', { text: ig ? 'Nama akun' : 'Alamat link (misal Google Maps)' }), i),
+      h('button', { class: 'e-btn utama penuh', type: 'button', text: 'Terapkan', onclick: () => { U.pasang(S.data.isi, path, ig ? i.value.trim().replace(/^@/, '').replace(/^https?:\/\/(www\.)?instagram\.com\//, '').replace(/\/$/, '') : i.value.trim()); tutupPop(); berubah(); kMuat(); } })]);
+  }
+
+  /* ---------- panel template desain ---------- */
+  function kVariabel() {
+    const d = kDoc(); const out = []; if (!d) return out;
+    for (const sh of Array.from(d.styleSheets)) {
+      let rules; try { rules = sh.cssRules; } catch (e) { continue; }
+      for (const r of Array.from(rules || [])) {
+        if (r.selectorText !== ':root' || !r.style) continue;
+        for (let i = 0; i < r.style.length; i++) { const k = r.style[i]; if (k.startsWith('--') && !out.some((x) => x.k === k)) out.push({ k, v: r.style.getPropertyValue(k).trim() }); }
+      }
+      if (out.length) break;
+    }
+    return out;
+  }
+  const namaVar = (k) => k.replace(/^--(f-)?/, '').replace(/-/g, ' ').replace(/^./, (c) => c.toUpperCase());
+  function kTerapkanGaya() { const w = kWin(); if (w && w.terapkanGayaKlasik) w.terapkanGayaKlasik(S.data.gaya); }
+
+  function kPanelTema(p) {
+    const G = S.data.gaya || (S.data.gaya = {}); G.vars = G.vars || {};
+    const sel = h('select', {}, Object.entries(KLASIK).map(([k, x]) => h('option', { value: k, text: x.nama }))); sel.value = S.data.template;
+    sel.addEventListener('change', () => { S.data.template = sel.value; G.vars = {}; berubah(); kMuat(false); });
+    p.appendChild(grup('Template desain', sel, h('small', { class: 'e-redup', text: 'Mengganti template mempertahankan isi undangan. Warna dan huruf kembali ke bawaan template baru.' })));
+    const vars = kVariabel();
+    const warna = vars.filter((x) => /^#[\da-f]{3,8}$/i.test(x.v));
+    if (warna.length) p.appendChild(grup('Warna', warna.map(({ k, v }) => {
+      const id = uid('w'); const nilai = G.vars[k] || v; const code = h('code', { text: nilai });
+      const inp = h('input', { type: 'color', id, value: /^#[\da-f]{6}$/i.test(nilai) ? nilai : '#000000' });
+      inp.addEventListener('input', () => { G.vars[k] = inp.value; code.textContent = inp.value; const d = kDoc(); if (d) d.documentElement.style.setProperty(k, inp.value); berubah(); });
+      return h('div', { class: 'e-warna-baris' }, inp, h('label', { for: id, text: namaVar(k) }), code);
+    }), h('button', { class: 'e-btn kecil', type: 'button', text: 'Kembalikan warna asli', onclick: () => { Object.keys(G.vars).filter((k) => !k.startsWith('--f-')).forEach((k) => delete G.vars[k]); kTerapkanGaya(); berubah(); gambarPanel(); } })));
+    const huruf = vars.filter((x) => x.k.startsWith('--f-'));
+    if (huruf.length) p.appendChild(grup('Huruf', huruf.map(({ k, v }) => {
+      const asli = (/^'([^']+)'/.exec(v) || [])[1] || v;
+      const s = h('select', {}, h('option', { value: '', text: 'Bawaan (' + asli + ')' }), FONT_KLASIK.map((f) => h('option', { value: f, text: f })));
+      s.value = (/^'([^']+)'/.exec(G.vars[k] || '') || [])[1] || '';
+      s.addEventListener('change', () => { if (s.value) G.vars[k] = `'${s.value}', ${v.split(',').slice(1).join(',') || 'serif'}`; else delete G.vars[k]; kTerapkanGaya(); berubah(); });
+      return h('label', { class: 'e-medan' }, h('span', { text: namaVar(k) }), s);
+    })));
+    const M = S.data.isi.musik || (S.data.isi.musik = { url: '' });
+    const linkMusik = h('input', { type: 'url', placeholder: 'atau tempel link MP3', value: M.url && !M.url.startsWith('data:') ? M.url : '' });
+    p.appendChild(grup('Musik latar',
+      berkasBaris('Belum ada lagu (memakai kotak musik bawaan)', M.url, 'musik', async () => { const u = await unggahBerkas('audio/mpeg,audio/mp4,audio/*', 'mp3', 15, 'Lagu'); if (u) { M.url = u; gambarPanel(); berubah(); kMuat(); } }, () => { M.url = ''; gambarPanel(); berubah(); kMuat(); }),
+      h('div', { class: 'e-baris', style: { flexWrap: 'nowrap' } }, linkMusik, h('button', { class: 'e-btn kecil', type: 'button', text: 'Pakai', onclick: () => { M.url = linkMusik.value.trim(); gambarPanel(); berubah(); kMuat(); } })),
+      h('small', { class: 'e-redup', text: 'Musik mulai saat tamu menekan tombol buka undangan. Maksimal 15 MB.' })));
+  }
+
+  function kPanelBagian(p) {
+    const G = S.data.gaya || (S.data.gaya = {}); G.sembunyi = G.sembunyi || []; G.latar = G.latar || {};
+    const w = kWin(); const daftar = w && w.daftarBagianKlasik ? w.daftarBagianKlasik() : [];
+    p.appendChild(h('div', { class: 'e-baris' }, h('button', { class: 'e-btn kecil', type: 'button', text: 'Lihat sampul', onclick: () => kMuat(false) }), h('button', { class: 'e-btn kecil', type: 'button', text: 'Lihat isi undangan', onclick: () => kMuat(true) })));
+    p.appendChild(h('p', { class: 'e-redup', style: { margin: 0 }, text: 'Urutkan, sembunyikan, atau beri gambar latar pada setiap bagian. Untuk menambah acara, cerita, foto, atau rekening, gunakan tombol + Tambah langsung di undangan.' }));
+    const isi = daftar.filter((el) => el.dataset.kunci !== 'sampul').map((el) => el.dataset.kunci);
+    daftar.forEach((el) => {
+      const k = el.dataset.kunci; const i = isi.indexOf(k);
+      const label = k === 'sampul' ? 'Sampul' : (((el.querySelector('.kecil, .judul, .mata span:last-child, .label, h2, .judul-besar') || {}).textContent || '').trim().slice(0, 40) || k);
+      const sembunyi = G.sembunyi.includes(k);
+      const pindah = (arah) => { const urut = isi.slice(); const j = i + arah; [urut[i], urut[j]] = [urut[j], urut[i]]; G.urutan = urut; kTerapkanGaya(); berubah(); gambarPanel(); };
+      p.appendChild(h('div', { class: 'e-bag-baris' + (sembunyi ? ' mati' : '') },
+        h('button', { class: 'nama', type: 'button', text: label, onclick: () => { if (k === 'sampul') kMuat(false); else el.scrollIntoView({ behavior: 'smooth', block: 'start' }); } }),
+        h('div', { class: 'e-ikon' },
+          k === 'sampul' ? null : h('button', { type: 'button', text: '↑', 'aria-label': 'Naikkan ' + label, disabled: i <= 0 || null, onclick: () => pindah(-1) }),
+          k === 'sampul' ? null : h('button', { type: 'button', text: '↓', 'aria-label': 'Turunkan ' + label, disabled: i === isi.length - 1 || null, onclick: () => pindah(1) }),
+          k === 'sampul' ? null : h('button', { type: 'button', text: sembunyi ? 'Tampil' : 'Sembunyi', onclick: () => { G.sembunyi = sembunyi ? G.sembunyi.filter((x) => x !== k) : G.sembunyi.concat(k); kTerapkanGaya(); berubah(); gambarPanel(); } }),
+          h('button', { type: 'button', text: 'Latar', onclick: (e) => kPopLatar(e.currentTarget, k) }))));
+    });
+  }
+  function kPopLatar(anchor, k) {
+    const G = S.data.gaya; const lt = G.latar[k] || {};
+    const redup = h('input', { type: 'range', min: '0', max: '0.95', step: '0.05', value: String(lt.redup ?? 0.55), 'aria-label': 'Pudarkan gambar' });
+    redup.addEventListener('input', () => { if (G.latar[k]) { G.latar[k].redup = +redup.value; kTerapkanGaya(); berubah(); } });
+    pop(anchor, 'Gambar latar bagian', [
+      h('div', { class: 'pratinjau', style: lt.url ? { backgroundImage: `url("${lt.url}")` } : null, text: lt.url ? '' : 'Memakai latar bawaan template' }),
+      h('button', { class: 'e-btn utama penuh', type: 'button', text: 'Unggah gambar latar', onclick: async () => { const u = await unggahGambar(2000); if (u) { G.latar[k] = { url: u, redup: +redup.value }; kTerapkanGaya(); berubah(); tutupPop(); } } }),
+      lt.url ? h('label', { class: 'e-medan' }, h('span', { text: 'Pudarkan gambar agar tulisan terbaca' }), redup) : null,
+      lt.url ? h('button', { class: 'e-btn bahaya penuh', type: 'button', text: 'Kembali ke latar bawaan', onclick: () => { delete G.latar[k]; kTerapkanGaya(); berubah(); tutupPop(); } }) : null,
+    ]);
+  }
+
+  /* =====================================================================
      DAFTAR UNDANGAN
      ===================================================================== */
   async function bukaDaftar() {
     if (S.kotor) await simpan();
     layar('daftar');
+    const td = $('#grid-desain'); td.textContent = '';
+    Object.entries(KLASIK).forEach(([k, x]) => td.appendChild(h('article', { class: 'e-u-kartu' }, h('img', { class: 'sampul-kecil', src: `../klasik/pratinjau/${k}.jpg`, alt: 'Sampul ' + x.nama, loading: 'lazy' }), h('h3', { text: x.nama }), h('div', { class: 'meta', text: x.ket }),
+      h('div', { class: 'e-baris' }, h('button', { class: 'e-btn kecil utama', type: 'button', text: 'Pakai template', onclick: () => modalBaru(null, null, k) }), h('a', { class: 'e-btn kecil', href: `../klasik/${k}/`, target: '_blank', rel: 'noopener', text: 'Lihat contoh' })))));
     const t = $('#grid-template'); t.textContent = '';
     Object.entries(U.PRESET).forEach(([k, pr]) => t.appendChild(h('article', { class: 'e-u-kartu' }, warnaStrip(pr.warna), h('h3', { text: pr.nama }), h('div', { class: 'meta', text: pr.ket || '' }),
       h('div', { class: 'e-baris' }, h('button', { class: 'e-btn kecil utama', type: 'button', text: 'Pakai template', onclick: () => modalBaru(null, k) }), h('a', { class: 'e-btn kecil', href: BASIS + '?u=contoh&t=' + k, target: '_blank', rel: 'noopener', text: 'Lihat contoh' })))));
@@ -680,8 +973,9 @@ h1, h2, h3 { margin: 0; font-weight: 400; }
     let daftar = [];
     try { daftar = await DB.daftar(); } catch (e) { toast('Gagal memuat daftar: ' + pesanGalat(e)); }
     daftar.forEach((u) => {
-      const d = U.tanggal(u.data && u.data.tanggalUtama);
-      g.appendChild(h('article', { class: 'e-u-kartu' }, warnaStrip(u.data && u.data.tema && u.data.tema.warna), h('h3', { text: namaPasangan(u.data) }),
+      const d = U.tanggal(u.data && (u.data.jenis === 'klasik' ? (u.data.isi || {}).tanggalUtama : u.data.tanggalUtama));
+      const kl = u.data && u.data.jenis === 'klasik';
+      g.appendChild(h('article', { class: 'e-u-kartu' }, kl ? h('img', { class: 'sampul-kecil pendek', src: `../klasik/pratinjau/${u.data.template}.jpg`, alt: '' }) : warnaStrip(u.data && u.data.tema && u.data.tema.warna), h('h3', { text: namaPasangan(u.data) }),
         h('div', { class: 'meta', text: `${u.slug} · ${d ? d.toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' }) : 'tanpa tanggal'}${u.terbit === false ? ' · belum terbit' : ''}` }),
         h('div', { class: 'e-baris' },
           h('button', { class: 'e-btn kecil utama', type: 'button', text: 'Edit', onclick: () => bukaEdit(u.slug) }),
@@ -689,9 +983,10 @@ h1, h2, h3 { margin: 0; font-weight: 400; }
           h('button', { class: 'e-btn kecil', type: 'button', text: 'Duplikat', onclick: () => modalBaru(u) }))));
     });
   }
-  function modalBaru(sumber, presetAwal) {
+  function modalBaru(sumber, presetAwal, klasikAwal) {
     const dari = sumber && sumber.slug ? sumber : null;
     let preset = presetAwal || 'dusty-rose';
+    const klasik = klasikAwal || null;
     const slug = h('input', { type: 'text', placeholder: 'andi-sari', autocomplete: 'off', 'aria-describedby': 'contoh-link' });
     const contoh = h('small', { id: 'contoh-link', class: 'e-redup' });
     slug.addEventListener('input', () => { contoh.textContent = slug.value ? 'Link: ' + linkTamu(bersihSlug(slug.value)) : ''; });
@@ -703,14 +998,17 @@ h1, h2, h3 { margin: 0; font-weight: 400; }
       if (!/^[a-z0-9]+(-[a-z0-9]+)*$/.test(s)) { toast('Alamat link: huruf kecil, angka, dan tanda hubung. Contoh: andi-sari'); return; }
       sibuk('Membuat undangan…');
       try {
-        const data = dari ? U.salinDalam(dari.data) : U.contoh(preset);
+        let data;
+        if (dari) data = U.salinDalam(dari.data);
+        else if (klasik) { const r = await fetch(`../klasik/${klasik}/data.json`, { cache: 'no-cache' }); const isi = await r.json(); isi.id = s; data = { jenis: 'klasik', template: klasik, isi, gaya: {} }; }
+        else data = U.contoh(preset);
         await DB.buat(s, data); m.remove(); await bukaEdit(s);
       } catch (x) { toast(/duplicate|sudah/i.test(pesanGalat(x)) ? 'Alamat link itu sudah dipakai. Pilih yang lain.' : pesanGalat(x)); }
       finally { sibuk(); }
     } },
-      h('h2', { text: dari ? 'Duplikat undangan ' + dari.slug : 'Undangan baru' }),
+      h('h2', { text: dari ? 'Duplikat undangan ' + dari.slug : klasik ? 'Undangan baru · ' + KLASIK[klasik].nama : 'Undangan baru' }),
       h('label', { class: 'e-medan' }, h('span', { text: 'Alamat link (biasanya nama pasangan)' }), slug, contoh),
-      dari ? null : h('div', { class: 'e-medan' }, h('span', { text: 'Mulai dari template' }), grid),
+      dari || klasik ? null : h('div', { class: 'e-medan' }, h('span', { text: 'Mulai dari template' }), grid),
       h('div', { class: 'e-baris', style: { justifyContent: 'flex-end' } }, h('button', { class: 'e-btn', type: 'button', text: 'Batal', onclick: () => m.remove() }), h('button', { class: 'e-btn utama', type: 'submit', text: 'Buat' }))));
     document.body.appendChild(m); slug.focus();
   }
@@ -721,10 +1019,20 @@ h1, h2, h3 { margin: 0; font-weight: 400; }
     try {
       const u = await DB.ambil(slug); if (!u) { toast('Undangan tidak ditemukan'); return bukaDaftar(); }
       S.slug = slug; S.data = u.data || U.contoh(); S.terbit = u.terbit !== false; S.pilih = null; S.kotor = false; S.riwayat = [JSON.stringify(S.data)]; S.maju = [];
-      if (!Array.isArray(S.data.bagian)) S.data.bagian = [];
-      S.data.tema = S.data.tema || {}; S.data.sampul = S.data.sampul || {}; S.data.mempelai = S.data.mempelai || { pria: {}, wanita: {} };
+      S.klasik = S.data.jenis === 'klasik';
+      if (S.klasik) {
+        S.data.isi = S.data.isi || {}; S.data.gaya = S.data.gaya || {};
+        if (Array.isArray(S.data.isi.galeri)) S.data.isi.galeri = S.data.isi.galeri.map((g) => (typeof g === 'string' ? { src: g, ket: '' } : g));
+        S.data.isi.mempelai = S.data.isi.mempelai || { pria: {}, wanita: {} };
+        $('#kanvas').textContent = ''; $('#ponsel').classList.add('klasik'); kBuka = false; kGulir = 0;
+      } else {
+        $('#ponsel').classList.remove('klasik');
+        if (!Array.isArray(S.data.bagian)) S.data.bagian = [];
+        S.data.tema = S.data.tema || {}; S.data.sampul = S.data.sampul || {}; S.data.mempelai = S.data.mempelai || { pria: {}, wanita: {} };
+      }
       layar('edit'); $('#judul-undangan').textContent = namaPasangan(S.data) + ' · ' + slug;
       $('#btn-lihat').href = linkTamu(slug);
+      $('#btn-lebar').hidden = S.klasik;
       gambar(); tombolRiwayat(); status('Tersimpan', 'oke');
       try { history.replaceState(null, '', '#' + slug); } catch (e) {}
     } catch (e) { toast(pesanGalat(e)); } finally { sibuk(); }

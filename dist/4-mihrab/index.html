@@ -450,7 +450,7 @@ html.musik-on .musik .cahaya { animation: nyala 2s ease-in-out infinite; }
    ===================================================================== */
 (function () {
   'use strict';
-
+  function mesin() {
   const D = window.UNDANGAN || {};
   const T = window.TEMA || {};
   const html = document.documentElement;
@@ -590,9 +590,11 @@ html.musik-on .musik .cahaya { animation: nyala 2s ease-in-out infinite; }
       const arr = nilai(el.dataset.each, scope, i) || [];
       const tpl = el.querySelector(':scope > template');
       if (!tpl || !Array.isArray(arr)) return;
+      const dasar = el.dataset.each.startsWith('.') ? null : el.dataset.each.split('|')[0].trim();
+      if (dasar) el.dataset.daftarJalur = dasar;
       arr.forEach((item, j) => {
         const frag = tpl.content.cloneNode(true);
-        Array.from(frag.children).forEach((c) => { c.style.setProperty('--i', j); c.dataset.index = j; });
+        Array.from(frag.children).forEach((c) => { c.style.setProperty('--i', j); c.dataset.index = j; if (dasar) c.dataset.jalur = dasar + '.' + j; });
         ikat(frag, item, j);
         el.appendChild(frag);
       });
@@ -768,7 +770,7 @@ html.musik-on .musik .cahaya { animation: nyala 2s ease-in-out infinite; }
   /* ---------- reveal saat scroll ---------- */
   let io;
   function siapkanReveal() {
-    if (reduceMotion || !('IntersectionObserver' in window)) return;
+    if (reduceMotion || T.tanpaReveal || !('IntersectionObserver' in window)) return;
     html.classList.add('rv');
     io = new IntersectionObserver((es) => es.forEach((e) => {
       if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
@@ -877,8 +879,11 @@ html.musik-on .musik .cahaya { animation: nyala 2s ease-in-out infinite; }
       $$('[data-rsvp-tidak]').forEach((el) => (el.textContent = hit('tidak')));
     };
     const lokal = () => { try { return JSON.parse(localStorage.getItem(kunci) || '[]'); } catch (e) { return []; } };
+    const ext = window.UNDANGAN_STORE;
     const muat = () => {
-      if (cfg.endpoint) {
+      if (ext) {
+        ext.store.ucapanDaftar(ext.slug).then((rows) => { semua = rows || []; render(); }).catch(() => { semua = []; render(); });
+      } else if (cfg.endpoint) {
         fetch(cfg.endpoint + (cfg.endpoint.includes('?') ? '&' : '?') + 'aksi=daftar')
           .then((r) => r.json())
           .then((rows) => { semua = (Array.isArray(rows) ? rows : rows.data || []).reverse(); render(); })
@@ -908,7 +913,7 @@ html.musik-on .musik .cahaya { animation: nyala 2s ease-in-out infinite; }
       if (btn) btn.disabled = true;
       const selesai = () => {
         semua.unshift(data);
-        if (!cfg.endpoint) {
+        if (!cfg.endpoint && !ext) {
           try { localStorage.setItem(kunci, JSON.stringify([data].concat(lokal()).slice(0, 100))); } catch (er) { /* abaikan */ }
         }
         render();
@@ -918,7 +923,10 @@ html.musik-on .musik .cahaya { animation: nyala 2s ease-in-out infinite; }
         toast(cfg.pesanTerkirim || 'Terima kasih, konfirmasi Anda sudah tercatat');
         document.dispatchEvent(new CustomEvent('undangan:rsvp', { detail: data }));
       };
-      if (cfg.endpoint) {
+      if (ext) {
+        ext.store.ucapanKirim(ext.slug, { ...data, jumlah: +data.jumlah || 1 }).then(selesai)
+          .catch(() => { if (btn) btn.disabled = false; toast('Gagal mengirim. Periksa koneksi lalu coba lagi.'); });
+      } else if (cfg.endpoint) {
         fetch(cfg.endpoint, { method: 'POST', mode: 'no-cors', body: JSON.stringify(data), headers: { 'Content-Type': 'text/plain;charset=utf-8' } })
           .then(selesai)
           .catch(() => { if (btn) btn.disabled = false; toast('Gagal mengirim. Periksa koneksi lalu coba lagi.'); });
@@ -964,6 +972,9 @@ html.musik-on .musik .cahaya { animation: nyala 2s ease-in-out infinite; }
   }
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init);
   else init();
+  }
+  // Tunggu isi undangan (mis. dari server) bila ada, lalu jalankan setelah skrip template terpasang
+  Promise.resolve(window.UNDANGAN_TUNGGU).catch(() => {}).then(() => setTimeout(mesin, 0));
 })();
 </script>
 

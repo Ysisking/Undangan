@@ -35,7 +35,8 @@ fs.mkdirSync(DIST, { recursive: true });
 const daftar = [];
 for (const f of fs.readdirSync(path.join(SRC, 'templates')).filter((x) => x.endsWith('.html')).sort()) {
   const slug = f.replace(/\.html$/, '');
-  let s = fs.readFileSync(path.join(SRC, 'templates', f), 'utf8');
+  const mentah = fs.readFileSync(path.join(SRC, 'templates', f), 'utf8');
+  let s = mentah;
   s = s.replace('/*@BASE*/', () => base).replace('<!--@ENGINE-->', () => `<script>\n${engine}</script>`);
   const [head, body] = s.split('<!--@BODY-->');
   if (!body) throw new Error(`${f}: penanda <!--@BODY--> tidak ada`);
@@ -57,6 +58,23 @@ for (const f of fs.readdirSync(path.join(SRC, 'templates')).filter((x) => x.ends
   fs.writeFileSync(path.join(DIST, slug, 'index.html'), bungkus(pisah(head), pisah(body), title, desc));
   fs.writeFileSync(path.join(DIST, slug, 'data.js'), dataJs);
   fs.writeFileSync(path.join(DIST, `${slug}.artifact.html`), s);
+  // Versi template desain untuk editor & tamu (docs/klasik/<slug>/)
+  {
+    const [sebelum, sesudah = ''] = mentah.replace('/*@BASE*/', () => base).split('<!--@ENGINE-->');
+    const bungkusSkrip = (t) => t.replace(/<script>([\s\S]*?)<\/script>/g, (m, js) => `<script>\nPromise.resolve(window.UNDANGAN_TUNGGU).catch(function () {}).then(function () {\n${js}\n});\n</script>`);
+    const pemuat = `<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.49.4/dist/umd/supabase.min.js"></script>
+<script src="../../app/config.js"></script>
+<script src="../../app/store.js"></script>
+<script src="../muat.js"></script>
+<script>
+${engine}</script>`;
+    const k = sebelum + pemuat + bungkusSkrip(sesudah);
+    const [kh, kb] = k.split('<!--@BODY-->');
+    const KLASIK = path.join(ROOT, 'docs', 'klasik', slug);
+    fs.mkdirSync(KLASIK, { recursive: true });
+    fs.writeFileSync(path.join(KLASIK, 'index.html'), bungkus(kh, kb, title, desc));
+    fs.writeFileSync(path.join(KLASIK, 'data.json'), JSON.stringify(D, null, 2));
+  }
   daftar.push(slug);
   console.log('✓', slug, `(${(fs.statSync(path.join(DIST, slug, 'index.html')).size / 1024).toFixed(0)} KB)`);
 }

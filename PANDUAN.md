@@ -8,6 +8,13 @@
 | Undangan tamu | `https://ysisking.github.io/Undangan/?u=NAMA-LINK&to=Nama+Tamu` |
 | Contoh template | `https://ysisking.github.io/Undangan/?u=contoh&t=sage` (`dusty-rose`, `ivory`, `sage`, `monokrom`, `pasir`, `malam`) |
 
+## Dua jenis template
+
+- **Template desain** (Sekar Jagad, Rol Film, Surat Kebun, Mihrab, Rasi, Dusty Rose): animasi pembuka dan tata letak khas. Di editor bisa diubah: semua tulisan, foto, video, musik, warna, huruf, gambar latar tiap bagian, urutan bagian, sembunyikan bagian, serta tambah/hapus acara, cerita, foto galeri, dan rekening (tombol *+ Tambah* di undangan).
+- **Template susun bebas**: bagian bisa ditambah dan disusun sesuka hati, termasuk ornamen dan bentuk bingkai foto.
+
+Contoh template desain: `https://ysisking.github.io/Undangan/klasik/1-sekar-jagad/` (ganti nama foldernya).
+
 ## Cara mengedit
 
 Semua diedit langsung di atas undangan, seperti di Canva:
