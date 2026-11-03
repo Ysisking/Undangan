@@ -1,0 +1,160 @@
+window.UNDANGAN = {
+  "id": "fajar-salsabila",
+  "tamuBawaan": "Bapak/Ibu/Saudara/i",
+  "tanggalUtama": "2027-02-13T08:00:00+07:00",
+  "musik": {
+    "url": "",
+    "otomatis": true,
+    "judul": "Kampuang Nan Jauh di Mato",
+    "artis": "Instrumen saluang"
+  },
+  "sampul": {
+    "label": "Baralek Gadang",
+    "pembuka": "The Wedding of",
+    "foto": ""
+  },
+  "pembuka": {
+    "salam": "Assalamu'alaikum Warahmatullahi Wabarakatuh",
+    "kutipan": "Dan di antara tanda-tanda kebesaran-Nya ialah Dia menciptakan pasangan-pasangan untukmu dari jenismu sendiri, agar kamu merasa tenteram kepadanya, dan Dia menjadikan di antaramu rasa kasih dan sayang.",
+    "sumber": "QS. Ar-Rum : 21",
+    "teks": "Dengan memohon rahmat dan ridha Allah SWT, kami bermaksud menyelenggarakan pernikahan putra-putri kami:"
+  },
+  "mempelai": {
+    "urutan": "wanita-dulu",
+    "pria": {
+      "panggilan": "Fajar",
+      "nama": "Fajar Ramadhan Putra, S.T.",
+      "keterangan": "Putra kedua dari",
+      "ayah": "Bapak H. Syamsul Bahri",
+      "ibu": "Ibu Hj. Rosmaniar",
+      "instagram": "fajarramadhan",
+      "foto": ""
+    },
+    "wanita": {
+      "panggilan": "Salsabila",
+      "nama": "Salsabila Annisa, S.Ked.",
+      "keterangan": "Putri pertama dari",
+      "ayah": "Bapak Dt. Rajo Mangkuto",
+      "ibu": "Ibu Nurhayati",
+      "instagram": "salsabilaannisa",
+      "foto": ""
+    }
+  },
+  "acara": [
+    {
+      "nama": "Akad Nikah",
+      "tanggal": "2027-02-13",
+      "mulai": "08.00",
+      "selesai": "10.00",
+      "zona": "WIB",
+      "tempat": "Masjid Raya Sumatera Barat",
+      "alamat": "Jl. Khatib Sulaiman, Padang Utara, Kota Padang",
+      "peta": "https://maps.google.com/?q=Masjid+Raya+Sumatera+Barat"
+    },
+    {
+      "nama": "Resepsi Baralek",
+      "tanggal": "2027-02-14",
+      "mulai": "11.00",
+      "selesai": "",
+      "zona": "WIB",
+      "tempat": "Rumah Gadang Keluarga",
+      "alamat": "Nagari Pariangan, Kabupaten Tanah Datar",
+      "peta": "https://maps.google.com/?q=Pariangan+Tanah+Datar"
+    }
+  ],
+  "rundown": [
+    {
+      "jam": "08.00",
+      "acara": "Akad nikah",
+      "ikon": "cincin"
+    },
+    {
+      "jam": "09.30",
+      "acara": "Manjapuik marapulai",
+      "ikon": "pasangan"
+    },
+    {
+      "jam": "11.00",
+      "acara": "Basandiang di pelaminan",
+      "ikon": "bintang"
+    },
+    {
+      "jam": "12.00",
+      "acara": "Makan bajamba",
+      "ikon": "makan"
+    }
+  ],
+  "kisah": [
+    {
+      "tahun": "2020",
+      "judul": "Kenal di rantau",
+      "cerita": "Sama-sama merantau ke Jakarta, kami bertemu di acara ikatan keluarga Minang."
+    },
+    {
+      "tahun": "2025",
+      "judul": "Maminang",
+      "cerita": "Keluarga besar Salsabila datang meminang sesuai adat, diterima dengan sirih dan doa."
+    }
+  ],
+  "galeri": [
+    {
+      "src": "",
+      "ket": ""
+    },
+    {
+      "src": "",
+      "ket": ""
+    },
+    {
+      "src": "",
+      "ket": ""
+    },
+    {
+      "src": "",
+      "ket": ""
+    }
+  ],
+  "video": "",
+  "hadiah": {
+    "teks": "Doa restu Anda adalah karunia yang sangat berarti. Bila ingin memberi tanda kasih, dapat melalui:",
+    "rekening": [
+      {
+        "bank": "BSI",
+        "nomor": "7123456789",
+        "atasNama": "Salsabila Annisa"
+      },
+      {
+        "bank": "BRI",
+        "nomor": "052901012345509",
+        "atasNama": "Fajar Ramadhan Putra"
+      }
+    ],
+    "alamat": {
+      "penerima": "Salsabila Annisa",
+      "alamat": "Jl. Sudirman No. 21, Bukittinggi, Sumatera Barat"
+    }
+  },
+  "rsvp": {
+    "endpoint": "",
+    "contoh": [
+      {
+        "nama": "Mak Etek Ros",
+        "hadir": "ya",
+        "ucapan": "Selamat baralek, Salsa jo Fajar. Samoga jadi keluarga nan sakinah.",
+        "waktu": "2026-10-30T09:12:00+07:00"
+      },
+      {
+        "nama": "Uda Rizal",
+        "hadir": "ya",
+        "ucapan": "Insya Allah hadir. Barakallahu lakuma!",
+        "waktu": "2026-10-29T20:41:00+07:00"
+      }
+    ]
+  },
+  "penutup": {
+    "teks": "Merupakan suatu kehormatan dan kebahagiaan bagi kami apabila Bapak/Ibu/Saudara/i berkenan hadir dan memberikan doa restu.",
+    "salam": "Wassalamu'alaikum Warahmatullahi Wabarakatuh",
+    "keluarga": "Kel. Bpk. Dt. Rajo Mangkuto & Kel. Bpk. H. Syamsul Bahri"
+  },
+  "kredit": "Undangan digital oleh Studio Anda"
+};
