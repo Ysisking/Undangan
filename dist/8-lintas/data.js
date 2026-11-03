@@ -1,0 +1,201 @@
+window.UNDANGAN = {
+  "id": "arya-kanya",
+  "tamuBawaan": "Bapak/Ibu/Saudara/i",
+  "tanggalUtama": "2027-06-19T16:00:00+08:00",
+  "musik": {
+    "url": "",
+    "otomatis": true,
+    "judul": "Terbang Bersamamu",
+    "artis": "Lagu perjalanan kami"
+  },
+  "sampul": {
+    "label": "Boarding pass pernikahan",
+    "foto": "",
+    "tombol": "Boarding sekarang"
+  },
+  "perjalanan": {
+    "kode": "AK 1906",
+    "kelas": "Tamu kehormatan",
+    "tujuan": "Labuan Bajo",
+    "tujuanDetail": "Nusa Tenggara Timur",
+    "lokasi": "Bukit Sylvia",
+    "gerbang": "Pintu 06",
+    "slogan": "Naik ke perjalanan cinta kami"
+  },
+  "pembuka": {
+    "judul": "Para penumpang yang terhormat",
+    "teks": "Dengan penuh syukur, kami mengajak Anda ikut dalam perjalanan terindah kami. Doa dan kehadiran Anda adalah tiket paling berharga bagi kami.",
+    "kutipan": "Sejauh apa pun kita pergi, rumah adalah tempat di mana kita bersama."
+  },
+  "mempelai": {
+    "urutan": "pria-dulu",
+    "pria": {
+      "panggilan": "Arya",
+      "nama": "Arya Wicaksana",
+      "keterangan": "Putra dari",
+      "ayah": "Bapak I Made Wicaksana",
+      "ibu": "Ibu Ni Luh Sekar",
+      "instagram": "aryawicaksana",
+      "foto": ""
+    },
+    "wanita": {
+      "panggilan": "Kanya",
+      "nama": "Kanya Maheswari",
+      "keterangan": "Putri dari",
+      "ayah": "Bapak Bayu Prakoso",
+      "ibu": "Ibu Dewi Maheswari",
+      "instagram": "kanyamaheswari",
+      "foto": ""
+    }
+  },
+  "acara": [
+    {
+      "nama": "Pemberkatan",
+      "tanggal": "2027-06-19",
+      "mulai": "16.00",
+      "selesai": "17.00",
+      "zona": "WITA",
+      "tempat": "Bukit Sylvia",
+      "alamat": "Jl. Pantai Pede, Labuan Bajo, Manggarai Barat",
+      "peta": "https://maps.google.com/?q=Labuan+Bajo"
+    },
+    {
+      "nama": "Resepsi Senja",
+      "tanggal": "2027-06-19",
+      "mulai": "18.00",
+      "selesai": "21.00",
+      "zona": "WITA",
+      "tempat": "Dermaga Kanawa",
+      "alamat": "Kawasan Pelabuhan, Labuan Bajo, Manggarai Barat",
+      "peta": "https://maps.google.com/?q=Labuan+Bajo+Pelabuhan"
+    }
+  ],
+  "rundown": [
+    {
+      "jam": "15.30",
+      "acara": "Tamu berkumpul"
+    },
+    {
+      "jam": "16.00",
+      "acara": "Pemberkatan"
+    },
+    {
+      "jam": "17.15",
+      "acara": "Foto saat matahari terbenam"
+    },
+    {
+      "jam": "18.00",
+      "acara": "Resepsi & makan malam"
+    },
+    {
+      "jam": "21.00",
+      "acara": "Penutup"
+    }
+  ],
+  "dresscode": {
+    "label": "Formal pantai",
+    "teks": "Busana formal yang nyaman untuk pantai, dalam nuansa warna berikut:",
+    "warna": [
+      {
+        "nama": "Gading",
+        "warna": "#ece4d6"
+      },
+      {
+        "nama": "Pasir",
+        "warna": "#d6c6a8"
+      },
+      {
+        "nama": "Abu hangat",
+        "warna": "#9c948a"
+      },
+      {
+        "nama": "Navy",
+        "warna": "#13213a"
+      },
+      {
+        "nama": "Hitam",
+        "warna": "#141414"
+      }
+    ]
+  },
+  "kisah": [
+    {
+      "tahun": "2016",
+      "judul": "Bandung",
+      "cerita": "Bertemu di observatorium saat karyawisata sekolah. Kanya tidak bisa menemukan Saturnus."
+    },
+    {
+      "tahun": "2019",
+      "judul": "Denpasar",
+      "cerita": "Bertemu lagi di kantor yang sama. Arya masih ingat soal Saturnus."
+    },
+    {
+      "tahun": "2024",
+      "judul": "Labuan Bajo",
+      "cerita": "Di atas kapal kecil saat senja, sebuah cincin dikeluarkan dari saku jaket."
+    }
+  ],
+  "galeri": [
+    {
+      "src": "",
+      "ket": ""
+    },
+    {
+      "src": "",
+      "ket": ""
+    },
+    {
+      "src": "",
+      "ket": ""
+    },
+    {
+      "src": "",
+      "ket": ""
+    }
+  ],
+  "video": "",
+  "hadiah": {
+    "teks": "Kehadiran Anda adalah hadiah terbaik. Bila ingin menitipkan tanda kasih, dapat melalui:",
+    "rekening": [
+      {
+        "bank": "BCA",
+        "nomor": "8730445512",
+        "atasNama": "Arya Wicaksana"
+      },
+      {
+        "bank": "Jago",
+        "nomor": "102938475610",
+        "atasNama": "Kanya Maheswari"
+      }
+    ],
+    "alamat": {
+      "penerima": "Kanya Maheswari",
+      "alamat": "Jl. Tukad Badung No. 30, Renon, Denpasar 80226"
+    }
+  },
+  "rsvp": {
+    "endpoint": "",
+    "batas": "Mohon konfirmasi sebelum 1 Juni 2027",
+    "contoh": [
+      {
+        "nama": "Gek Ayu",
+        "hadir": "ya",
+        "ucapan": "Sudah pesan tiket ke Labuan Bajo! Bahagia selalu, Arya & Kanya.",
+        "waktu": "2026-10-30T21:10:00+08:00"
+      },
+      {
+        "nama": "Pak Wayan",
+        "hadir": "tidak",
+        "ucapan": "Mohon maaf belum bisa ikut terbang. Doa terbaik untuk kalian.",
+        "waktu": "2026-10-29T07:30:00+08:00"
+      }
+    ]
+  },
+  "penutup": {
+    "foto": "",
+    "judul": "Sampai jumpa di tujuan",
+    "teks": "Merupakan suatu kebahagiaan bagi kami apabila Bapak/Ibu/Saudara/i berkenan hadir dan memberikan doa restu.",
+    "keluarga": "Kel. Bpk. I Made Wicaksana & Kel. Bpk. Bayu Prakoso"
+  },
+  "kredit": "Undangan digital oleh Studio Anda"
+};
