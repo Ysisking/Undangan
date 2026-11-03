@@ -12,14 +12,17 @@ a { color: inherit; }
 .sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
 .pre { white-space: pre-line; }
 
-/* Slot foto: div dengan background-image. Bila kosong tampil placeholder. */
+/* Slot foto: div dengan background-image.
+   Bila kosong, tamu melihat monogram (inisial) bergaya template; di editor tampil ajakan menambah foto. */
 .foto { background-size: cover; background-position: center; position: relative; max-width: 100%; }
-.foto[data-empty] { background: var(--ph-bg, #bbb); }
+.foto[data-empty] { background: var(--ph-bg, #bbb); overflow: hidden; container-type: inline-size; }
+.foto[data-empty]::before { content: ""; position: absolute; inset: 9px; border: 1px solid var(--ph-fg, #fff); opacity: .28; border-radius: inherit; pointer-events: none; }
 .foto[data-empty]::after {
-  content: attr(data-ph); position: absolute; inset: 0; display: grid; place-items: center;
-  padding: 10px; text-align: center; color: var(--ph-fg, #fff);
-  font: 500 10px/1.4 var(--ph-font, system-ui, sans-serif); letter-spacing: .24em; text-transform: uppercase;
+  content: attr(data-mono); position: absolute; inset: 0; display: grid; place-items: center;
+  padding: 10px; text-align: center; color: var(--ph-fg, #fff); opacity: .75;
+  font: italic 400 clamp(22px, 30cqi, 64px)/1 var(--ph-mono, var(--ph-font, Georgia, serif)); letter-spacing: .02em; text-transform: none;
 }
+html.mode-edit .foto[data-empty]::after { content: "Ketuk untuk menambah foto"; font: 500 10px/1.5 var(--ph-font, system-ui, sans-serif); letter-spacing: .2em; text-transform: uppercase; opacity: .85; }
 [data-zoom][data-url] { cursor: zoom-in; }
 
 /* Bagian utama tersembunyi sampai sampul dibuka */

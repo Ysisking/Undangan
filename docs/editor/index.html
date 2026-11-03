@@ -698,14 +698,16 @@ h1, h2, h3 { margin: 0; font-weight: 400; }
     '4-mihrab': { nama: 'Mihrab', ket: 'Islami: masuk lewat lengkung mihrab, pola bintang, tanggal Hijriah.' },
     '5-rasi': { nama: 'Rasi', ket: 'Langit malam: fase bulan, bintang jatuh, efek warp saat dibuka.' },
     '6-dusty-rose': { nama: 'Dusty Rose', ket: 'Mawar pudar: sampul terangkat, mawar satu garis tergambar sendiri.' },
+    '7-zamrud': { nama: 'Zamrud', ket: 'Hijau zamrud & emas: monogram laurel, ikon acara, susunan acara, kalender, dress code, pemutar musik.' },
   };
+  const IKON = { cincin: 'Cincin', gelas: 'Bersulang', kamera: 'Kamera', makan: 'Makan', musik: 'Musik', bintang: 'Bintang', mobil: 'Mobil', kasur: 'Penginapan', masjid: 'Masjid', hati: 'Hati', kado: 'Kado', peta: 'Lokasi' };
   const FONT_KLASIK = Array.from(new Set([].concat(...Object.values(U.FONT).map(Object.keys), ['Marcellus SC', 'Crimson Pro', 'Newsreader', 'IBM Plex Mono', 'Figtree', 'Amiri', 'Tenor Sans', 'Lora', 'EB Garamond', 'Josefin Sans']))).sort();
   const CSS_KLASIK = `
   .mode-edit [data-tulis]{outline:1px dashed transparent;outline-offset:3px;cursor:text;border-radius:2px;min-width:1ch;transition:outline-color .15s}
   .mode-edit [data-tulis]:hover{outline-color:rgba(47,111,214,.6)}
   .mode-edit [data-tulis]:focus{outline:2px solid #2f6fd6}
   .mode-edit [data-tulis]:empty::before{content:'Ketik di sini';opacity:.45}
-  .mode-edit [data-ubah],.mode-edit [data-abs][data-src],.mode-edit [data-video],.mode-edit a[data-href]{cursor:pointer}
+  .mode-edit [data-ubah],.mode-edit [data-ubah-k],.mode-edit [data-abs][data-src],.mode-edit [data-video],.mode-edit a[data-href]{cursor:pointer}
   .mode-edit [data-ubah]:hover,.mode-edit [data-abs][data-src]:hover,.mode-edit [data-video]:hover,.mode-edit a[data-href]:hover{outline:2px solid rgba(47,111,214,.65);outline-offset:2px}
   .mode-edit .disembunyikan{opacity:.35}
   .mode-edit [data-jalur]{position:relative}
@@ -765,6 +767,7 @@ h1, h2, h3 { margin: 0; font-weight: 400; }
       el.spellcheck = false; el.dataset.tulis = '1';
     });
     d.querySelectorAll('[data-src]').forEach((el) => { const a = kAbs(el, el.dataset.src); if (a) el.dataset.abs = a; });
+    d.querySelectorAll('[data-ubah-k]').forEach((el) => { const a = kAbs(el, el.dataset.ubahK); if (a) { el.dataset.abs = a; el.dataset.ubah = '1'; } });
     d.querySelectorAll('[data-href]').forEach((el) => { const a = kAbs(el, el.dataset.href); if (a) el.dataset.absHref = a; });
     // butir daftar
     d.querySelectorAll('[data-jalur]').forEach((it) => {
@@ -780,7 +783,7 @@ h1, h2, h3 { margin: 0; font-weight: 400; }
     });
     d.querySelectorAll('[data-daftar-jalur]').forEach((l) => {
       const p = l.dataset.daftarJalur; const b = d.createElement('button'); b.type = 'button'; b.className = 'e-k-tambah';
-      b.textContent = '+ Tambah ' + ({ acara: 'acara', kisah: 'cerita', galeri: 'foto', rekening: 'rekening', kredit: 'baris' }[p.split('.').pop()] || 'item');
+      b.textContent = '+ Tambah ' + ({ acara: 'acara', kisah: 'cerita', galeri: 'foto', rekening: 'rekening', kredit: 'baris', rundown: 'susunan acara', warna: 'warna', infoTamu: 'info' }[p.split('.').pop()] || 'item');
       b.addEventListener('click', (e) => {
         e.preventDefault(); e.stopPropagation();
         let arr = U.ambil(S.data.isi, p); if (!Array.isArray(arr)) { arr = []; U.pasang(S.data.isi, p, arr); }
@@ -860,6 +863,15 @@ h1, h2, h3 { margin: 0; font-weight: 400; }
     if (path === 'tanggalUtama') {
       const t = inputTglWaktu(v);
       pop(kRect(el), 'Tanggal & jam acara utama', [t.el, h('button', { class: 'e-btn utama penuh', type: 'button', text: 'Terapkan', onclick: () => { const x = t.nilai(); if (x) set(x); } })]);
+      return;
+    }
+    if (/\.warna$/.test(path)) {
+      const i = h('input', { type: 'color', value: /^#[\da-f]{6}$/i.test(v || '') ? v : '#888888', style: { width: '100%', height: '44px', padding: 0, border: 0, background: 'none' } });
+      pop(kRect(el), 'Warna', [i, h('button', { class: 'e-btn utama penuh', type: 'button', text: 'Terapkan', onclick: () => set(i.value) })]);
+      return;
+    }
+    if (/\.ikon$/.test(path)) {
+      pop(kRect(el), 'Pilih ikon', h('div', { class: 'grid-jenis' }, Object.entries(IKON).map(([k, n]) => h('button', { type: 'button', text: n, 'aria-pressed': String(v === k), style: v === k ? { borderColor: 'var(--e-sorot)' } : null, onclick: () => set(k) }))));
       return;
     }
     if (/tanggal$/.test(path)) {
@@ -963,7 +975,7 @@ h1, h2, h3 { margin: 0; font-weight: 400; }
     if (S.kotor) await simpan();
     layar('daftar');
     const td = $('#grid-desain'); td.textContent = '';
-    Object.entries(KLASIK).forEach(([k, x]) => td.appendChild(h('article', { class: 'e-u-kartu' }, h('img', { class: 'sampul-kecil', src: `../klasik/pratinjau/${k}.jpg`, alt: 'Sampul ' + x.nama, loading: 'lazy' }), h('h3', { text: x.nama }), h('div', { class: 'meta', text: x.ket }),
+    Object.entries(KLASIK).reverse().forEach(([k, x]) => td.appendChild(h('article', { class: 'e-u-kartu' }, h('img', { class: 'sampul-kecil', src: `../klasik/pratinjau/${k}.jpg`, alt: 'Sampul ' + x.nama, loading: 'lazy' }), h('h3', { text: x.nama }), h('div', { class: 'meta', text: x.ket }),
       h('div', { class: 'e-baris' }, h('button', { class: 'e-btn kecil utama', type: 'button', text: 'Pakai template', onclick: () => modalBaru(null, null, k) }), h('a', { class: 'e-btn kecil', href: `../klasik/${k}/`, target: '_blank', rel: 'noopener', text: 'Lihat contoh' })))));
     const t = $('#grid-template'); t.textContent = '';
     Object.entries(U.PRESET).forEach(([k, pr]) => t.appendChild(h('article', { class: 'e-u-kartu' }, warnaStrip(pr.warna), h('h3', { text: pr.nama }), h('div', { class: 'meta', text: pr.ket || '' }),

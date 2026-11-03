@@ -108,14 +108,17 @@ a { color: inherit; }
 .sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
 .pre { white-space: pre-line; }
 
-/* Slot foto: div dengan background-image. Bila kosong tampil placeholder. */
+/* Slot foto: div dengan background-image.
+   Bila kosong, tamu melihat monogram (inisial) bergaya template; di editor tampil ajakan menambah foto. */
 .foto { background-size: cover; background-position: center; position: relative; max-width: 100%; }
-.foto[data-empty] { background: var(--ph-bg, #bbb); }
+.foto[data-empty] { background: var(--ph-bg, #bbb); overflow: hidden; container-type: inline-size; }
+.foto[data-empty]::before { content: ""; position: absolute; inset: 9px; border: 1px solid var(--ph-fg, #fff); opacity: .28; border-radius: inherit; pointer-events: none; }
 .foto[data-empty]::after {
-  content: attr(data-ph); position: absolute; inset: 0; display: grid; place-items: center;
-  padding: 10px; text-align: center; color: var(--ph-fg, #fff);
-  font: 500 10px/1.4 var(--ph-font, system-ui, sans-serif); letter-spacing: .24em; text-transform: uppercase;
+  content: attr(data-mono); position: absolute; inset: 0; display: grid; place-items: center;
+  padding: 10px; text-align: center; color: var(--ph-fg, #fff); opacity: .75;
+  font: italic 400 clamp(22px, 30cqi, 64px)/1 var(--ph-mono, var(--ph-font, Georgia, serif)); letter-spacing: .02em; text-transform: none;
 }
+html.mode-edit .foto[data-empty]::after { content: "Ketuk untuk menambah foto"; font: 500 10px/1.5 var(--ph-font, system-ui, sans-serif); letter-spacing: .2em; text-transform: uppercase; opacity: .85; }
 [data-zoom][data-url] { cursor: zoom-in; }
 
 /* Bagian utama tersembunyi sampai sampul dibuka */
@@ -270,7 +273,6 @@ html.is-opening .sampul-dalam { opacity: 0; transform: translateY(-20px); }
 .galeri .foto:nth-of-type(1) { grid-row: span 2; aspect-ratio: auto; border-radius: 999px 999px 0 0; }
 .galeri .foto:nth-of-type(4) { border-radius: 50%; }
 .galeri .foto:nth-of-type(6n) { grid-column: span 2; aspect-ratio: 16 / 10; }
-.galeri .foto[data-empty]::after { content: "Foto " attr(data-ph); }
 .video-bingkai { margin-top: 18px; padding: 6px; border: 1px solid var(--garis); }
 
 /* RSVP */
@@ -566,6 +568,10 @@ html.musik-on .musik::after { opacity: 0; }
     return isNaN(d) ? null : d;
   }
 
+  function romawi(n) {
+    const t = [[1000, 'M'], [900, 'CM'], [500, 'D'], [400, 'CD'], [100, 'C'], [90, 'XC'], [50, 'L'], [40, 'XL'], [10, 'X'], [9, 'IX'], [5, 'V'], [4, 'IV'], [1, 'I']];
+    let o = ''; for (const [v, r] of t) while (n >= v) { o += r; n -= v; } return o;
+  }
   /* ---------- filter tampilan:  data-k="acara.0.tanggal|panjang" ---------- */
   const FD = {
     hari: (d) => HARI[d.getDay()],
@@ -578,6 +584,7 @@ html.musik-on .musik::after { opacity: 0; }
     panjang: (d) => `${HARI[d.getDay()]}, ${d.getDate()} ${BULAN[d.getMonth()]} ${d.getFullYear()}`,
     sedang: (d) => `${d.getDate()} ${BULAN[d.getMonth()]} ${d.getFullYear()}`,
     titik: (d) => `${pad(d.getDate())} . ${pad(d.getMonth() + 1)} . ${d.getFullYear()}`,
+    romawi: (d) => `${d.getDate()} · ${romawi(d.getMonth() + 1)} · ${romawi(d.getFullYear())}`,
     stempel: (d) => `'${String(d.getFullYear()).slice(2)}  ${pad(d.getMonth() + 1)}  ${pad(d.getDate())}`,
     hijriah: (d) => {
       try {
@@ -626,7 +633,12 @@ html.musik-on .musik::after { opacity: 0; }
     });
     $$('[data-src]', root).forEach((el) => {
       const v = nilai(el.dataset.src, scope, i);
-      if (kosong(v)) { el.setAttribute('data-empty', ''); return; }
+      if (kosong(v)) {
+        el.setAttribute('data-empty', '');
+        const sp = el.dataset.src || '';
+        el.dataset.mono = sp.includes('$.a.') ? D.$.inisialA : sp.includes('$.b.') ? D.$.inisialB : `${D.$.inisialA}\u2009&\u2009${D.$.inisialB}`;
+        return;
+      }
       el.removeAttribute('data-empty');
       el.dataset.url = v;
       if (el.tagName === 'IMG') el.src = v;
@@ -1024,6 +1036,15 @@ html.musik-on .musik::after { opacity: 0; }
     html.classList.add('locked', 'js');
     if (D.$.pasangan && T.judulDinamis !== false) document.title = (T.awalanJudul || 'Undangan Pernikahan ') + D.$.pasangan;
     ikat(document.body, D, 0);
+    // Foto galeri yang belum diisi tidak ditampilkan ke tamu (di editor tetap terlihat)
+    if (!html.classList.contains('mode-edit')) {
+      $$('[data-each]').forEach((l) => {
+        const butir = Array.from(l.children).filter((c) => c.tagName !== 'TEMPLATE' && c.dataset.index != null);
+        let terlihat = 0;
+        butir.forEach((c) => { const f = c.matches('[data-src]') ? c : c.querySelector('[data-src]'); if (f && f.hasAttribute('data-empty') && f.hasAttribute('data-zoom')) c.hidden = true; else terlihat++; });
+        if (butir.length && !terlihat) { const sec = l.closest('section'); if (sec) sec.hidden = true; }
+      });
+    }
     siapkanReveal();
     hitungMundur();
     galeri();

@@ -57,6 +57,10 @@
     return isNaN(d) ? null : d;
   }
 
+  function romawi(n) {
+    const t = [[1000, 'M'], [900, 'CM'], [500, 'D'], [400, 'CD'], [100, 'C'], [90, 'XC'], [50, 'L'], [40, 'XL'], [10, 'X'], [9, 'IX'], [5, 'V'], [4, 'IV'], [1, 'I']];
+    let o = ''; for (const [v, r] of t) while (n >= v) { o += r; n -= v; } return o;
+  }
   /* ---------- filter tampilan:  data-k="acara.0.tanggal|panjang" ---------- */
   const FD = {
     hari: (d) => HARI[d.getDay()],
@@ -69,6 +73,7 @@
     panjang: (d) => `${HARI[d.getDay()]}, ${d.getDate()} ${BULAN[d.getMonth()]} ${d.getFullYear()}`,
     sedang: (d) => `${d.getDate()} ${BULAN[d.getMonth()]} ${d.getFullYear()}`,
     titik: (d) => `${pad(d.getDate())} . ${pad(d.getMonth() + 1)} . ${d.getFullYear()}`,
+    romawi: (d) => `${d.getDate()} · ${romawi(d.getMonth() + 1)} · ${romawi(d.getFullYear())}`,
     stempel: (d) => `'${String(d.getFullYear()).slice(2)}  ${pad(d.getMonth() + 1)}  ${pad(d.getDate())}`,
     hijriah: (d) => {
       try {
@@ -117,7 +122,12 @@
     });
     $$('[data-src]', root).forEach((el) => {
       const v = nilai(el.dataset.src, scope, i);
-      if (kosong(v)) { el.setAttribute('data-empty', ''); return; }
+      if (kosong(v)) {
+        el.setAttribute('data-empty', '');
+        const sp = el.dataset.src || '';
+        el.dataset.mono = sp.includes('$.a.') ? D.$.inisialA : sp.includes('$.b.') ? D.$.inisialB : `${D.$.inisialA}\u2009&\u2009${D.$.inisialB}`;
+        return;
+      }
       el.removeAttribute('data-empty');
       el.dataset.url = v;
       if (el.tagName === 'IMG') el.src = v;
@@ -515,6 +525,15 @@
     html.classList.add('locked', 'js');
     if (D.$.pasangan && T.judulDinamis !== false) document.title = (T.awalanJudul || 'Undangan Pernikahan ') + D.$.pasangan;
     ikat(document.body, D, 0);
+    // Foto galeri yang belum diisi tidak ditampilkan ke tamu (di editor tetap terlihat)
+    if (!html.classList.contains('mode-edit')) {
+      $$('[data-each]').forEach((l) => {
+        const butir = Array.from(l.children).filter((c) => c.tagName !== 'TEMPLATE' && c.dataset.index != null);
+        let terlihat = 0;
+        butir.forEach((c) => { const f = c.matches('[data-src]') ? c : c.querySelector('[data-src]'); if (f && f.hasAttribute('data-empty') && f.hasAttribute('data-zoom')) c.hidden = true; else terlihat++; });
+        if (butir.length && !terlihat) { const sec = l.closest('section'); if (sec) sec.hidden = true; }
+      });
+    }
     siapkanReveal();
     hitungMundur();
     galeri();
