@@ -47,7 +47,7 @@
   const m = data.mempelai || {}; const a = m.urutan === 'wanita-dulu' ? m.wanita : m.pria; const b = a === m.pria ? m.wanita : m.pria;
   const nama = [a && a.panggilan, b && b.panggilan].filter(Boolean).join(' & ');
   if (nama) document.title = 'Undangan Pernikahan ' + nama;
-  Undangan.render(root, data, { tamu, slug: slug || 'contoh', store: slug && slug !== 'contoh' ? Simpanan : null });
+  Undangan.render(root, data, { tamu, slug: slug || 'contoh', store: slug && slug !== 'contoh' && data.peran !== 'template' ? Simpanan : null });
 })();
 </script>
 </body>

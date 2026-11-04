@@ -145,7 +145,8 @@ h1, h2, h3 { margin: 0; font-weight: 400; }
 .e-pop .grid-jenis { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 6px; }
 .e-pop .grid-jenis button { min-height: 40px; border: 1px solid var(--e-garis); border-radius: 8px; background: #fff; cursor: pointer; text-align: left; padding: 6px 10px; font-size: 13px; }
 .e-pop .grid-jenis button:hover { border-color: var(--e-sorot); }
-.e-modal { position: fixed; inset: 0; z-index: 90; background: rgba(47,39,39,.45); display: grid; place-items: center; padding: 16px; overflow-y: auto; }
+.e-modal { position: fixed; inset: 0; z-index: 90; background: rgba(47,39,39,.45); display: grid; place-items: start center; padding: 16px; overflow-y: auto; }
+.e-modal > .e-kartu { margin-block: auto; }
 .e-modal .e-kartu { width: min(640px, 100%); display: grid; gap: 14px; }
 .e-modal h2 { font: 400 24px/1.2 var(--e-fj); }
 .e-toast { position: fixed; left: 50%; bottom: 24px; transform: translateX(-50%); z-index: 99; background: var(--e-tinta); color: #fff; padding: 10px 16px; border-radius: 999px; font-size: 13.5px; max-width: calc(100% - 32px); text-align: center; }
@@ -183,6 +184,7 @@ h1, h2, h3 { margin: 0; font-weight: 400; }
     <button class="e-btn kecil" type="button" id="btn-desain" aria-pressed="false" hidden>Mode desain</button>
     <button class="e-btn kecil e-tombol-panel" type="button" id="btn-panel">Panel</button>
     <a class="e-btn kecil" id="btn-lihat" target="_blank" rel="noopener">Lihat sebagai tamu</a>
+    <button class="e-btn kecil" type="button" id="btn-bagikan">Bagikan</button>
     <button class="e-btn kecil utama" type="button" id="btn-simpan">Simpan</button>
   </span>
   <button class="e-btn kecil" type="button" id="btn-keluar" hidden>Keluar</button>
@@ -1219,6 +1221,62 @@ h1, h2, h3 { margin: 0; font-weight: 400; }
   }
 
   /* =====================================================================
+     BAGIKAN: link, teks promosi (untuk etalase seperti lynk.id), QR, gambar sampul
+     ===================================================================== */
+  function muatSkrip(src) {
+    return new Promise((ok, gagal) => {
+      if (document.querySelector(`script[src="${src}"]`)) return ok();
+      const s = document.createElement('script'); s.src = src; s.onload = ok; s.onerror = gagal; document.head.appendChild(s);
+    });
+  }
+  const absolut = (u) => new URL(u, location.href).href;
+  function modalBagikan(o) {
+    // o: { judul, link, jenis: 'undangan'|'template', publik, aturPublik(bool), gambar, nama }
+    let publik = o.publik !== false;
+    const teksPromo = o.jenis === 'template'
+      ? `Undangan Digital "${o.nama}"\n\nUndangan pernikahan digital yang dibuka lewat link: sampul dengan nama tamu, musik latar, hitung mundur, lokasi acara dengan peta, galeri foto, RSVP & ucapan, serta amplop digital. Semua isi bisa disesuaikan.\n\nLihat demo: ${o.link}`
+      : `Undangan Pernikahan ${o.nama}\n\nDengan penuh syukur, kami mengundang Anda di hari bahagia kami. Info lengkap acara:\n${o.link}`;
+    const status = h('small', { class: 'e-redup' });
+    const kotakLink = h('code', { style: { display: 'block', padding: '10px 12px', borderRadius: '8px', background: 'var(--e-latar)', fontSize: '12.5px', overflowWrap: 'anywhere' }, text: o.link });
+    const qr = h('div', { style: { width: '168px', height: '168px', padding: '8px', background: '#fff', borderRadius: '10px', border: '1px solid var(--e-garis)' } });
+    const unduhQr = h('a', { class: 'e-btn kecil', download: 'qr-' + (o.berkas || 'undangan') + '.png', text: 'Unduh QR' });
+    const promo = h('textarea', { rows: '7', style: { width: '100%', padding: '10px', border: '1px solid var(--e-garis)', borderRadius: '8px', font: '13px/1.5 var(--e-f)' } }); promo.value = teksPromo;
+    const tombolPublik = o.aturPublik ? h('label', { class: 'e-baris', style: { gap: '8px' } }, (() => {
+      const c = h('input', { type: 'checkbox', checked: publik || null });
+      c.addEventListener('change', async () => {
+        c.disabled = true;
+        try { await o.aturPublik(c.checked); publik = c.checked; tampilStatus(); toast(c.checked ? 'Link demo aktif' : 'Link demo dimatikan'); }
+        catch (e) { c.checked = !c.checked; toast(pesanGalat(e)); } finally { c.disabled = false; }
+      });
+      return c;
+    })(), o.jenis === 'template' ? 'Aktifkan link demo publik (bisa dibuka siapa saja yang punya link)' : 'Terbitkan (tamu bisa membuka link)') : null;
+    const tampilStatus = () => { status.textContent = publik ? '' : (o.jenis === 'template' ? 'Link demo belum aktif. Centang kotak di atas agar link bisa dibuka dari etalase.' : 'Undangan belum diterbitkan. Centang kotak di atas agar tamu bisa membukanya.'); };
+    tampilStatus();
+    const bisaShare = !!navigator.share;
+    const m = h('div', { class: 'e-modal', role: 'dialog', 'aria-modal': 'true', 'aria-label': 'Bagikan' }, h('div', { class: 'e-kartu', style: { width: 'min(620px, 100%)' } },
+      h('h2', { text: 'Bagikan · ' + o.judul }),
+      tombolPublik, status,
+      h('div', { class: 'e-medan' }, h('span', { text: 'Link' }), kotakLink,
+        h('div', { class: 'e-baris' },
+          h('button', { class: 'e-btn kecil utama', type: 'button', text: 'Salin link', onclick: () => salin(o.link, 'Link disalin') }),
+          h('a', { class: 'e-btn kecil', href: o.link, target: '_blank', rel: 'noopener', text: 'Buka' }),
+          h('a', { class: 'e-btn kecil', href: 'https://wa.me/?text=' + encodeURIComponent(teksPromo), target: '_blank', rel: 'noopener', text: 'WhatsApp' }),
+          bisaShare ? h('button', { class: 'e-btn kecil', type: 'button', text: 'Bagikan…', onclick: () => navigator.share({ title: o.judul, text: teksPromo, url: o.link }).catch(() => {}) }) : null)),
+      h('div', { class: 'e-medan' }, h('span', { text: o.jenis === 'template' ? 'Teks promosi untuk etalase (lynk.id, Instagram, katalog)' : 'Teks untuk dibagikan' }), promo,
+        h('div', { class: 'e-baris' }, h('button', { class: 'e-btn kecil', type: 'button', text: 'Salin teks', onclick: () => salin(promo.value, 'Teks disalin') }))),
+      h('div', { style: { display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))', gap: '16px', alignItems: 'start' } },
+        h('div', { class: 'e-medan' }, h('span', { text: 'Kode QR' }), qr, h('div', { class: 'e-baris' }, unduhQr)),
+        o.gambar ? h('div', { class: 'e-medan' }, h('span', { text: 'Gambar sampul (foto produk)' }), h('img', { src: o.gambar, alt: 'Sampul', style: { width: '140px', borderRadius: '10px', border: '1px solid var(--e-garis)' } }), h('div', { class: 'e-baris' }, h('a', { class: 'e-btn kecil', href: o.gambar, download: 'sampul-' + (o.berkas || 'undangan') + '.jpg', target: '_blank', rel: 'noopener', text: 'Unduh gambar' }))) : null),
+      h('small', { class: 'e-redup', text: o.jenis === 'template' ? 'Di lynk.id: buat produk atau tautan baru, tempel teks promosi sebagai deskripsi, pasang link demo, dan unggah gambar sampul sebagai foto produk.' : 'Untuk link per tamu (dengan nama di sampul), gunakan tab Undangan → Link untuk tamu di editor.' }),
+      h('div', { class: 'e-baris', style: { justifyContent: 'flex-end' } }, h('button', { class: 'e-btn', type: 'button', text: 'Tutup', onclick: () => m.remove() }))));
+    document.body.appendChild(m);
+    muatSkrip('https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js').then(() => {
+      new window.QRCode(qr, { text: o.link, width: 168, height: 168, colorDark: '#2f2727', colorLight: '#ffffff', correctLevel: window.QRCode.CorrectLevel.M });
+      setTimeout(() => { const c = qr.querySelector('canvas'); if (c) unduhQr.href = c.toDataURL('image/png'); }, 60);
+    }).catch(() => { qr.textContent = 'QR tidak bisa dibuat (periksa koneksi).'; unduhQr.hidden = true; });
+  }
+
+  /* =====================================================================
      DAFTAR UNDANGAN
      ===================================================================== */
   async function bukaDaftar() {
@@ -1232,12 +1290,17 @@ h1, h2, h3 { margin: 0; font-weight: 400; }
     const kartuTemplate = (key, nama, ket, visual, contohUrl) => {
       const ubahan = peta[kunciInduk(key)];
       const sumber = async () => (ubahan ? ubahan.data : dataAsli(key));
+      const gambar = key.startsWith('studio-') ? null : absolut(`../klasik/pratinjau/${key}.jpg`);
+      const bagikan = () => (ubahan
+        ? modalBagikan({ judul: nama + ' (versi Anda)', nama, jenis: 'template', link: linkTamu(ubahan.slug), publik: ubahan.terbit !== false, aturPublik: async (v) => { await DB.simpan(ubahan.slug, ubahan.data, v); ubahan.terbit = v; }, gambar, berkas: key })
+        : modalBagikan({ judul: nama, nama, jenis: 'template', link: absolut(contohUrl), publik: true, gambar, berkas: key }));
       return h('article', { class: 'e-u-kartu' }, visual, h('h3', { text: nama }), ubahan ? h('span', { class: 'lencana-ubah', text: 'Versi Anda' }) : null, h('div', { class: 'meta', text: ket }),
         h('div', { class: 'e-baris' },
           h('button', { class: 'e-btn kecil utama', type: 'button', text: 'Pakai', onclick: async () => { try { modalBaru(null, null, null, await sumber(), nama); } catch (e) { toast(pesanGalat(e)); } } }),
           h('button', { class: 'e-btn kecil', type: 'button', text: 'Edit template', onclick: () => bukaTemplateInduk(key, nama) }),
           h('button', { class: 'e-btn kecil', type: 'button', text: 'Duplikat', onclick: () => modalDuplikatTemplate(sumber, nama, key) }),
           h('a', { class: 'e-btn kecil', href: contohUrl, target: '_blank', rel: 'noopener', text: 'Contoh' }),
+          h('button', { class: 'e-btn kecil', type: 'button', text: 'Bagikan', onclick: bagikan }),
           ubahan ? h('button', { class: 'e-btn kecil bahaya', type: 'button', text: 'Kembalikan ke asli', onclick: () => hapusDgnKonfirmasi('Kembalikan ke asli?', `Perubahan Anda pada template ${nama} akan dibuang. Undangan yang sudah dibuat tidak terpengaruh.`, ubahan.slug, 'Kembalikan') }) : null));
     };
     // template milik sendiri
@@ -1252,6 +1315,7 @@ h1, h2, h3 { margin: 0; font-weight: 400; }
         h('div', { class: 'e-baris' },
           h('button', { class: 'e-btn kecil utama', type: 'button', text: 'Pakai', onclick: () => modalBaru(null, null, null, u.data, u.data.nama) }),
           h('button', { class: 'e-btn kecil', type: 'button', text: 'Edit', onclick: () => bukaEdit(u.slug) }),
+          h('button', { class: 'e-btn kecil', type: 'button', text: 'Bagikan', onclick: () => modalBagikan({ judul: u.data.nama || 'Template saya', nama: u.data.nama || 'Template saya', jenis: 'template', link: linkTamu(u.slug), publik: u.terbit !== false, aturPublik: async (v) => { await DB.simpan(u.slug, u.data, v); u.terbit = v; }, gambar: kl ? absolut(`../klasik/pratinjau/${u.data.template}.jpg`) : null, berkas: u.slug }) }),
           h('button', { class: 'e-btn kecil', type: 'button', text: 'Duplikat', onclick: () => modalDuplikatTemplate(async () => u.data, u.data.nama || 'Template', u.data.asal) }),
           h('button', { class: 'e-btn kecil bahaya', type: 'button', text: 'Hapus', onclick: () => hapusDgnKonfirmasi('Hapus template?', `Template "${u.data.nama || ''}" akan dihapus. Undangan yang sudah dibuat darinya tidak terpengaruh.`, u.slug) }))));
     });
@@ -1271,6 +1335,7 @@ h1, h2, h3 { margin: 0; font-weight: 400; }
         h('div', { class: 'e-baris' },
           h('button', { class: 'e-btn kecil utama', type: 'button', text: 'Edit', onclick: () => bukaEdit(u.slug) }),
           h('a', { class: 'e-btn kecil', href: linkTamu(u.slug), target: '_blank', rel: 'noopener', text: 'Lihat' }),
+          h('button', { class: 'e-btn kecil', type: 'button', text: 'Bagikan', onclick: () => modalBagikan({ judul: namaPasangan(u.data), nama: namaPasangan(u.data), jenis: 'undangan', link: linkTamu(u.slug), publik: u.terbit !== false, aturPublik: async (v) => { await DB.simpan(u.slug, u.data, v); u.terbit = v; }, gambar: (kl ? (u.data.isi.sampul || {}).foto : (u.data.sampul || {}).foto) || (kl ? absolut(`../klasik/pratinjau/${u.data.template}.jpg`) : null), berkas: u.slug }) }),
           h('button', { class: 'e-btn kecil', type: 'button', text: 'Duplikat', onclick: () => modalBaru(u) }),
           h('button', { class: 'e-btn kecil bahaya', type: 'button', text: 'Hapus', onclick: () => hapusDgnKonfirmasi('Hapus undangan?', `Undangan "${namaPasangan(u.data)}" (${u.slug}) dan link-nya tidak bisa dibuka lagi. Tindakan ini tidak bisa dibatalkan.`, u.slug) }))));
     });
@@ -1338,6 +1403,13 @@ h1, h2, h3 { margin: 0; font-weight: 400; }
   $('#btn-simpan').onclick = async () => { S.kotor = true; await simpan(); if (!S.kotor) toast('Tersimpan'); };
   $('#btn-kembali').onclick = () => { try { history.replaceState(null, '', location.pathname); } catch (e) {} bukaDaftar(); };
   $('#btn-urung').onclick = urungkan; $('#btn-ulang').onclick = ulangi;
+  $('#btn-bagikan').onclick = async () => {
+    if (S.kotor) await simpan();
+    const tpl = S.data.peran === 'template';
+    const nama = tpl ? (S.data.nama || 'Template') : namaPasangan(S.data);
+    const foto = S.klasik ? ((S.data.isi.sampul || {}).foto) : ((S.data.sampul || {}).foto);
+    modalBagikan({ judul: nama, nama, jenis: tpl ? 'template' : 'undangan', link: linkTamu(S.slug), publik: S.terbit, aturPublik: async (v) => { S.terbit = v; S.kotor = true; await simpan(); }, gambar: (!tpl && foto) || (S.klasik ? absolut(`../klasik/pratinjau/${S.data.template}.jpg`) : null), berkas: S.slug });
+  };
   $('#btn-desain').onclick = () => { S.desain = !S.desain; kAturDesain(); if (S.desain) { S.tab = 'elemen'; bukaPanel(); } gambarPanel(); };
   $('#btn-lebar').onclick = (e) => { const p = $('#ponsel'); p.classList.toggle('lebar'); e.currentTarget.textContent = p.classList.contains('lebar') ? 'Tampilan ponsel' : 'Tampilan lebar'; };
   $('#btn-lihat').addEventListener('click', () => { if (S.kotor) simpan(); });

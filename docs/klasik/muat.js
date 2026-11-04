@@ -42,7 +42,7 @@
         const u = await window.Simpanan.ambil(slug);
         if (!u || u.terbit === false || !u.data || !u.data.isi) { pesan('Undangan tidak ditemukan', 'Periksa kembali link yang Anda terima.'); return new Promise(() => {}); }
         window.UNDANGAN = u.data.isi; gaya = u.data.gaya || {};
-        window.UNDANGAN_STORE = { slug, store: window.Simpanan };
+        if (u.data.peran !== 'template') window.UNDANGAN_STORE = { slug, store: window.Simpanan };
       } catch (e) { pesan('Undangan belum bisa dibuka', 'Periksa koneksi internet Anda, lalu muat ulang halaman.'); return new Promise(() => {}); }
     })();
     document.addEventListener('undangan:siap', () => html.classList.remove('memuat'));
