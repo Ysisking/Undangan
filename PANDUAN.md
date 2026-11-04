@@ -15,6 +15,14 @@
 
 Contoh template desain: `https://ysisking.github.io/Undangan/klasik/1-sekar-jagad/` (ganti nama foldernya).
 
+## Template induk, Template saya, dan Mode desain
+
+- **Edit template**: mengubah template bawaan menjadi versi Anda. Undangan baru dari template itu langsung memakai versi Anda. Tombol **Kembalikan ke asli** membuang perubahan.
+- **Duplikat**: membuat salinan template di bagian **Template saya** untuk diubah sesuka hati (bisa diedit, dipakai, diduplikat lagi, atau dihapus).
+- **Mode desain** (template desain): klik tombol *Mode desain*, ketuk elemen apa pun di undangan, lalu **seret** untuk memindah. Di tab **Elemen** atur skala, ukuran huruf, lebar, jarak atas/bawah, perataan, warna, atau **hapus elemen**. Elemen yang dihapus bisa ditampilkan lagi dari daftar di tab yang sama.
+- **Tambah bagian baru** (tab Bagian): teks, gambar, video, kutipan, atau jarak kosong. Bagian tambahan bisa dihapus.
+- **Hapus**: undangan dan template punya tombol Hapus di halaman utama; isi daftar (acara, foto, rekening, dsb.) punya tombol Hapus saat kursor diarahkan ke butirnya.
+
 ## Cara mengedit
 
 Semua diedit langsung di atas undangan, seperti di Canva:
