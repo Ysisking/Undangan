@@ -20,9 +20,10 @@
     "foto": ""
   },
   "wayang": {
-    "pria": "",
-    "putri": "",
-    "kayon": ""
+    "pria": "../aset/wayang-arjuna.webp",
+    "putri": "../aset/wayang-sumbadra.webp",
+    "kayon": "../aset/wayang-gunungan.webp",
+    "kredit": "Foto wayang Arjuna & Sumbadra: Tropenmuseum, CC BY-SA 3.0"
   },
   "narasi": {
     "jawa": "Kocap kacarita, ing tlatah Surakarta wonten satriya bagus Damar lan putri ayu Kinanthi. Sinawang saking tebih, katingal kados sekar kaliyan kumbang ingkang tansah manunggal.",
