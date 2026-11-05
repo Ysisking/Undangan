@@ -19,6 +19,11 @@ window.UNDANGAN = {
   "sampul": {
     "foto": ""
   },
+  "wayang": {
+    "pria": "",
+    "putri": "",
+    "kayon": ""
+  },
   "narasi": {
     "jawa": "Kocap kacarita, ing tlatah Surakarta wonten satriya bagus Damar lan putri ayu Kinanthi. Sinawang saking tebih, katingal kados sekar kaliyan kumbang ingkang tansah manunggal.",
     "terjemah": "Alkisah, di tanah Surakarta hiduplah seorang ksatria bernama Damar dan seorang putri bernama Kinanthi. Dari kejauhan, keduanya bagai bunga dan kumbang yang tak terpisahkan."
