@@ -1,0 +1,221 @@
+{
+  "id": "bima-laras",
+  "tamuBawaan": "Bapak/Ibu/Saudara/i",
+  "tanggalUtama": "2027-03-20T09:00:00+07:00",
+  "musik": {
+    "url": "",
+    "otomatis": true,
+    "judul": "Lagu kenangan kami",
+    "artis": "Radio Kabar Bahagia"
+  },
+  "koran": {
+    "nama": "Kabar Bahagia",
+    "edisi": "Edisi Khusus Pernikahan",
+    "harga": "Harga: doa restu",
+    "kota": "Yogyakarta",
+    "cuaca": "Cerah berawan, peluang bahagia 100%",
+    "judul": "Bima & Laras Resmi Melangkah ke Pelaminan",
+    "subjudul": "Setelah tujuh tahun saling menunggu, dua sahabat dari bangku kuliah akhirnya mengikat janji. Keluarga besar menyambut kabar ini dengan sukacita.",
+    "keterangan": "Bima dan Laras di sudut kota yang mempertemukan mereka.",
+    "penulis": "Redaksi: kedua keluarga"
+  },
+  "sampul": {
+    "foto": ""
+  },
+  "pembuka": {
+    "salam": "Assalamu'alaikum Warahmatullahi Wabarakatuh",
+    "teks": "Dengan memohon rahmat dan ridha Allah SWT, kami bermaksud mengabarkan dan mengundang Bapak/Ibu/Saudara/i ke pernikahan putra-putri kami.",
+    "kutipan": "Dan di antara tanda-tanda kebesaran-Nya ialah Dia menciptakan pasangan-pasangan untukmu dari jenismu sendiri, agar kamu merasa tenteram kepadanya.",
+    "sumber": "QS. Ar-Rum : 21"
+  },
+  "mempelai": {
+    "urutan": "pria-dulu",
+    "pria": {
+      "panggilan": "Bima",
+      "nama": "Bima Aryasatya",
+      "keterangan": "Putra kedua dari",
+      "ayah": "Bapak Suryo Atmojo",
+      "ibu": "Ibu Wahyuni",
+      "instagram": "bimaaryasatya",
+      "foto": "",
+      "profil": "Arsitek yang bisa menggambar denah rumah dalam lima menit, tapi butuh lima tahun untuk berani melamar."
+    },
+    "wanita": {
+      "panggilan": "Laras",
+      "nama": "Larasati Pramesti",
+      "keterangan": "Putri bungsu dari",
+      "ayah": "Bapak Hartono",
+      "ibu": "Ibu Sri Rahayu",
+      "instagram": "larasatipramesti",
+      "foto": "",
+      "profil": "Penulis lepas dan pecinta kopi tubruk. Selalu tahu buku apa yang harus dibaca Bima berikutnya."
+    }
+  },
+  "acara": [
+    {
+      "nama": "Akad Nikah",
+      "tanggal": "2027-03-20",
+      "mulai": "09.00",
+      "selesai": "10.30",
+      "zona": "WIB",
+      "tempat": "Masjid Gedhe Kauman",
+      "alamat": "Jl. Kauman, Ngupasan, Gondomanan, Yogyakarta",
+      "peta": "https://maps.google.com/?q=Masjid+Gedhe+Kauman"
+    },
+    {
+      "nama": "Resepsi",
+      "tanggal": "2027-03-20",
+      "mulai": "12.00",
+      "selesai": "15.00",
+      "zona": "WIB",
+      "tempat": "Pendopo Taman Siswa",
+      "alamat": "Jl. Taman Siswa No. 25, Wirogunan, Yogyakarta",
+      "peta": "https://maps.google.com/?q=Taman+Siswa+Yogyakarta"
+    }
+  ],
+  "rundown": [
+    {
+      "jam": "09.00",
+      "acara": "Akad nikah"
+    },
+    {
+      "jam": "10.30",
+      "acara": "Sungkeman dan foto keluarga"
+    },
+    {
+      "jam": "12.00",
+      "acara": "Resepsi dan jamuan"
+    },
+    {
+      "jam": "13.30",
+      "acara": "Lagu dari para sahabat"
+    },
+    {
+      "jam": "15.00",
+      "acara": "Penutup"
+    }
+  ],
+  "kisah": [
+    {
+      "tahun": "2019",
+      "judul": "Satu kelompok tugas",
+      "cerita": "Dosen membagi kelompok secara acak. Nama kami muncul berdampingan di papan pengumuman."
+    },
+    {
+      "tahun": "2022",
+      "judul": "Berpisah kota",
+      "cerita": "Bima bekerja di Jakarta, Laras tetap di Yogyakarta. Surat dan telepon malam jadi rutinitas."
+    },
+    {
+      "tahun": "2026",
+      "judul": "Lamaran",
+      "cerita": "Di angkringan tempat kami pertama makan bersama, Bima menyerahkan cincin yang dibungkus kertas koran."
+    }
+  ],
+  "galeri": [
+    {
+      "src": "",
+      "ket": ""
+    },
+    {
+      "src": "",
+      "ket": ""
+    },
+    {
+      "src": "",
+      "ket": ""
+    },
+    {
+      "src": "",
+      "ket": ""
+    }
+  ],
+  "video": "",
+  "dresscode": {
+    "label": "Batik & nuansa kalem",
+    "teks": "Redaksi menyarankan batik atau busana formal dalam warna berikut:",
+    "warna": [
+      {
+        "nama": "Hitam",
+        "warna": "#1d1b18"
+      },
+      {
+        "nama": "Abu",
+        "warna": "#8a857c"
+      },
+      {
+        "nama": "Krem",
+        "warna": "#e6dccb"
+      },
+      {
+        "nama": "Cokelat",
+        "warna": "#7a5a3c"
+      }
+    ]
+  },
+  "kuis": [
+    {
+      "tanya": "Di mana Bima dan Laras pertama kali bertemu?",
+      "a": "Kelompok tugas kuliah",
+      "b": "Konser musik",
+      "c": "Antre kopi",
+      "benar": "a"
+    },
+    {
+      "tanya": "Minuman favorit Laras?",
+      "a": "Teh manis",
+      "b": "Kopi tubruk",
+      "c": "Jus alpukat",
+      "benar": "b"
+    },
+    {
+      "tanya": "Cincin lamaran dibungkus dengan apa?",
+      "a": "Kotak beludru",
+      "b": "Sapu tangan",
+      "c": "Kertas koran",
+      "benar": "c"
+    }
+  ],
+  "hadiah": {
+    "teks": "Doa restu Anda adalah hadiah terindah. Bagi yang ingin memberi tanda kasih, redaksi menerima melalui:",
+    "rekening": [
+      {
+        "bank": "BCA",
+        "nomor": "4450123987",
+        "atasNama": "Bima Aryasatya"
+      },
+      {
+        "bank": "BNI",
+        "nomor": "0298765432",
+        "atasNama": "Larasati Pramesti"
+      }
+    ],
+    "alamat": {
+      "penerima": "Larasati Pramesti",
+      "alamat": "Jl. Kaliurang Km 5, Gg. Pandega No. 7, Sleman, Yogyakarta"
+    }
+  },
+  "rsvp": {
+    "endpoint": "",
+    "contoh": [
+      {
+        "nama": "Pak RT Darmo",
+        "hadir": "ya",
+        "ucapan": "Sudah lama kami tunggu kabar ini. Selamat, Nak Bima dan Nak Laras!",
+        "waktu": "2026-10-30T09:12:00+07:00"
+      },
+      {
+        "nama": "Teman satu kelompok",
+        "hadir": "ya",
+        "ucapan": "Akhirnya tugas kelompok kalian lulus dengan nilai sempurna.",
+        "waktu": "2026-10-29T20:41:00+07:00"
+      }
+    ]
+  },
+  "penutup": {
+    "judul": "Terima kasih telah membaca",
+    "teks": "Merupakan suatu kehormatan dan kebahagiaan bagi kami apabila Bapak/Ibu/Saudara/i berkenan hadir dan memberikan doa restu.",
+    "keluarga": "Kel. Bpk. Suryo Atmojo & Kel. Bpk. Hartono"
+  },
+  "kredit": "Undangan digital oleh Studio Anda"
+}
