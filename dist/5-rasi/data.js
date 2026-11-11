@@ -8,7 +8,7 @@ window.UNDANGAN = {
   },
   "sampul": {
     "label": "Di bawah langit yang sama",
-    "foto": ""
+    "foto": "../aset/contoh-pasangan.webp"
   },
   "pembuka": {
     "kutipan": "Dari sekian banyak bintang, kami menemukan satu yang membuat langit terasa seperti rumah.",
@@ -23,7 +23,7 @@ window.UNDANGAN = {
       "ayah": "Bapak I Made Wicaksana",
       "ibu": "Ibu Ni Luh Sekar",
       "instagram": "aryawicaksana",
-      "foto": ""
+      "foto": "../aset/contoh-pria.webp"
     },
     "wanita": {
       "panggilan": "Kanya",
@@ -32,7 +32,7 @@ window.UNDANGAN = {
       "ayah": "Bapak Bayu Prakoso",
       "ibu": "Ibu Dewi Maheswari",
       "instagram": "kanyamaheswari",
-      "foto": ""
+      "foto": "../aset/contoh-wanita.webp"
     }
   },
   "acara": [
@@ -81,12 +81,12 @@ window.UNDANGAN = {
     }
   ],
   "galeri": [
-    "",
-    "",
-    "",
-    "",
-    "",
-    ""
+    "../aset/contoh-galeri-1.webp",
+    "../aset/contoh-galeri-2.webp",
+    "../aset/contoh-galeri-3.webp",
+    "../aset/contoh-galeri-4.webp",
+    "../aset/contoh-galeri-5.webp",
+    "../aset/contoh-galeri-6.webp"
   ],
   "video": "",
   "hadiah": {

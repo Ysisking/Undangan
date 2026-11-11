@@ -10,7 +10,7 @@ window.UNDANGAN = {
   },
   "sampul": {
     "label": "Boarding pass pernikahan",
-    "foto": "",
+    "foto": "../aset/contoh-pasangan.webp",
     "tombol": "Boarding sekarang"
   },
   "perjalanan": {
@@ -36,7 +36,7 @@ window.UNDANGAN = {
       "ayah": "Bapak I Made Wicaksana",
       "ibu": "Ibu Ni Luh Sekar",
       "instagram": "aryawicaksana",
-      "foto": ""
+      "foto": "../aset/contoh-pria.webp"
     },
     "wanita": {
       "panggilan": "Kanya",
@@ -45,7 +45,7 @@ window.UNDANGAN = {
       "ayah": "Bapak Bayu Prakoso",
       "ibu": "Ibu Dewi Maheswari",
       "instagram": "kanyamaheswari",
-      "foto": ""
+      "foto": "../aset/contoh-wanita.webp"
     }
   },
   "acara": [
@@ -137,19 +137,19 @@ window.UNDANGAN = {
   ],
   "galeri": [
     {
-      "src": "",
+      "src": "../aset/contoh-galeri-1.webp",
       "ket": ""
     },
     {
-      "src": "",
+      "src": "../aset/contoh-galeri-2.webp",
       "ket": ""
     },
     {
-      "src": "",
+      "src": "../aset/contoh-galeri-3.webp",
       "ket": ""
     },
     {
-      "src": "",
+      "src": "../aset/contoh-galeri-4.webp",
       "ket": ""
     }
   ],
@@ -192,7 +192,7 @@ window.UNDANGAN = {
     ]
   },
   "penutup": {
-    "foto": "",
+    "foto": "../aset/contoh-galeri-2.webp",
     "judul": "Sampai jumpa di tujuan",
     "teks": "Merupakan suatu kebahagiaan bagi kami apabila Bapak/Ibu/Saudara/i berkenan hadir dan memberikan doa restu.",
     "keluarga": "Kel. Bpk. I Made Wicaksana & Kel. Bpk. Bayu Prakoso"

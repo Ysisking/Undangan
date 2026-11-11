@@ -17,7 +17,7 @@
     "petunjuk": "Ketuk untuk mencabut kayon"
   },
   "sampul": {
-    "foto": ""
+    "foto": "../aset/contoh-pasangan.webp"
   },
   "wayang": {
     "pria": "../aset/wayang-arjuna.webp",
@@ -44,7 +44,7 @@
       "ayah": "Bapak Hadi Prasetyo",
       "ibu": "Ibu Endang Sulistyowati",
       "instagram": "damarwicak",
-      "foto": ""
+      "foto": "../aset/contoh-pria.webp"
     },
     "wanita": {
       "panggilan": "Kinanthi",
@@ -53,7 +53,7 @@
       "ayah": "Bapak Bambang Sutrisno",
       "ibu": "Ibu Sri Hartini",
       "instagram": "kinanthiayu",
-      "foto": ""
+      "foto": "../aset/contoh-wanita.webp"
     }
   },
   "acara": [
@@ -129,23 +129,23 @@
   ],
   "galeri": [
     {
-      "src": "",
+      "src": "../aset/contoh-galeri-1.webp",
       "ket": ""
     },
     {
-      "src": "",
+      "src": "../aset/contoh-galeri-2.webp",
       "ket": ""
     },
     {
-      "src": "",
+      "src": "../aset/contoh-galeri-3.webp",
       "ket": ""
     },
     {
-      "src": "",
+      "src": "../aset/contoh-galeri-4.webp",
       "ket": ""
     },
     {
-      "src": "",
+      "src": "../aset/contoh-galeri-5.webp",
       "ket": ""
     }
   ],

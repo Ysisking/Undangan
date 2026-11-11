@@ -4,24 +4,53 @@
 
 | Untuk | Link |
 |---|---|
-| Editor (Anda) | `https://ysisking.github.io/Undangan/editor/` |
-| Undangan tamu | `https://ysisking.github.io/Undangan/?u=NAMA-LINK&to=Nama+Tamu` |
-| Contoh template | `https://ysisking.github.io/Undangan/?u=contoh&t=sage` (`dusty-rose`, `ivory`, `sage`, `monokrom`, `pasir`, `malam`) |
+| Etalase (untuk calon pemesan) | `https://ysisking.github.io/Undangan/` |
+| Editor / ruang kerja (Anda) | `https://ysisking.github.io/Undangan/editor/` |
+| Undangan tamu | `https://ysisking.github.io/Undangan/?u=ALAMAT-LINK&to=Nama+Tamu` |
+| Satu desain di etalase | `https://ysisking.github.io/Undangan/etalase/#7-zamrud` (ganti kodenya) |
+
+## Etalase
+
+Halaman publik berisi semua desain. Calon pemesan bisa menyaring per kategori, mencari, membuka **demo langsung di bingkai ponsel**, dan mencoba dengan nama tamunya sendiri. Pasang link etalase di lynk.id atau bio Instagram.
+
+Atur lewat **Ruang kerja → tab Etalase**:
+
+- **Nama studio** dan **kalimat pembuka**.
+- **Nomor WhatsApp**: bila diisi, muncul tombol *Pesan desain ini* dan *Tanya lewat WhatsApp*.
+- **Teks pesan WhatsApp**: `{nama}` dan `{link}` diganti otomatis.
+- **Sembunyikan / tampilkan desain**: menu ⋯ pada kartu template.
+- Versi Anda dari sebuah template tampil di etalase setelah dibuka untuk umum lewat menu ⋯ → *Bagikan*.
+
+Bila Anda sedang masuk, setiap desain di etalase punya tombol **Pakai di editor**.
+
+## Ruang kerja
+
+Setelah masuk, ada empat tab:
+
+- **Undangan**: semua undangan klien. *Edit*, *Bagikan*, dan menu ⋯ (*Lihat sebagai tamu*, *Duplikat*, *Hapus*).
+- **Template**: 17 template bawaan, bisa disaring per kategori. Klik **Pakai** sekali, undangan langsung dibuat dan terbuka di editor. Klik gambarnya untuk pratinjau.
+- **Template saya**: template hasil duplikat yang sudah Anda ubah.
+- **Etalase**: pengaturan halaman publik.
+
+**Alamat link** undangan baru dibuat otomatis (mis. `zamrud-k3f9`). Ganti di panel kiri → tab **Undangan** → *Alamat link*, sebelum link dibagikan ke tamu. Setelah diganti, link lama tidak berlaku.
+
+**Foto contoh**: setiap template sudah berisi foto stok bebas pakai supaya tampil utuh. Ketuk foto untuk menggantinya dengan foto mempelai.
+
+**Draf**: undangan yang belum diterbitkan tetap bisa Anda lihat lewat *Lihat sebagai tamu* selama Anda masuk; orang lain tidak bisa membukanya.
 
 ## Dua jenis template
 
-- **Template desain** (Sekar Jagad, Rol Film, Surat Kebun, Mihrab, Rasi, Dusty Rose): animasi pembuka dan tata letak khas. Di editor bisa diubah: semua tulisan, foto, video, musik, warna, huruf, gambar latar tiap bagian, urutan bagian, sembunyikan bagian, serta tambah/hapus acara, cerita, foto galeri, dan rekening (tombol *+ Tambah* di undangan).
-- **Template susun bebas**: bagian bisa ditambah dan disusun sesuka hati, termasuk ornamen dan bentuk bingkai foto.
-
-Contoh template desain: `https://ysisking.github.io/Undangan/klasik/1-sekar-jagad/` (ganti nama foldernya).
+- **Desain bertema** (Pagelaran, Zamrud, Kabar Bahagia, Lintas, Gonjong, Sekar Jagad, Mihrab, Rasi, Surat Kebun, Rol Film, Dusty Rose): animasi pembuka dan tata letak khas. Di editor bisa diubah: semua tulisan, foto, video, musik, warna, huruf, gambar latar tiap bagian, urutan bagian, sembunyikan bagian, serta tambah/hapus acara, cerita, foto galeri, dan rekening.
+- **Susun bebas** (Mawar Lapang, Ivory Minimal, Sage Eucalyptus, Monokrom Editorial, Lengkung Pasir, Langit Malam): bagian bisa ditambah dan disusun sesuka hati, termasuk ornamen dan bentuk bingkai foto.
 
 ## Template induk, Template saya, dan Mode desain
 
-- **Edit template**: mengubah template bawaan menjadi versi Anda. Undangan baru dari template itu langsung memakai versi Anda. Tombol **Kembalikan ke asli** membuang perubahan.
-- **Duplikat**: membuat salinan template di bagian **Template saya** untuk diubah sesuka hati (bisa diedit, dipakai, diduplikat lagi, atau dihapus).
-- **Mode desain** (template desain): klik tombol *Mode desain*, ketuk elemen apa pun di undangan, lalu **seret** untuk memindah. Di tab **Elemen** atur skala, ukuran huruf, lebar, jarak atas/bawah, perataan, warna, atau **hapus elemen**. Elemen yang dihapus bisa ditampilkan lagi dari daftar di tab yang sama.
-- **Tambah bagian baru** (tab Bagian): teks, gambar, video, kutipan, atau jarak kosong. Bagian tambahan bisa dihapus.
-- **Hapus**: undangan dan template punya tombol Hapus di halaman utama; isi daftar (acara, foto, rekening, dsb.) punya tombol Hapus saat kursor diarahkan ke butirnya.
+Semua ada di menu ⋯ pada kartu template:
+
+- **Edit template**: mengubah template bawaan menjadi versi Anda. Undangan baru dari template itu langsung memakai versi Anda. **Kembalikan ke asli** membuang perubahan.
+- **Duplikat ke Template saya**: membuat salinan untuk diubah sesuka hati (bisa diedit, dipakai, diduplikat lagi, atau dihapus).
+- **Mode desain** (desain bertema): klik tombol *Mode desain* di editor, ketuk elemen apa pun, lalu **seret** untuk memindah. Di tab **Elemen** atur skala, ukuran huruf, lebar, jarak, perataan, warna, atau **hapus elemen**. Elemen yang dihapus bisa ditampilkan lagi dari daftar di tab yang sama.
+- **Tambah bagian baru** (tab Bagian): teks, gambar, video, kutipan, atau jarak kosong.
 
 ## Cara mengedit
 
@@ -36,7 +65,7 @@ Semua diedit langsung di atas undangan, seperti di Canva:
 - **Panel kiri**:
   - *Tema*: template, warna, huruf, ornamen (bawaan, tanpa, atau gambar PNG sendiri), latar halaman, animasi pembuka, musik.
   - *Bagian*: urutan semua bagian.
-  - *Undangan*: link, terbitkan/sembunyikan, tanggal utama, link tamu + pesan WhatsApp, daftar ucapan & RSVP.
+  - *Undangan*: alamat link, terbitkan/sembunyikan, tanggal utama, link tamu + pesan WhatsApp, daftar ucapan & RSVP.
 - Perubahan **tersimpan otomatis**. *Urungkan* (Ctrl+Z) dan *Ulangi* tersedia.
 
 ## Mode demo vs. mode sungguhan
@@ -65,14 +94,21 @@ Kuota gratis Supabase: database 500 MB dan penyimpanan berkas 1 GB, cukup untuk 
 ## Struktur berkas
 
 ```
-docs/                 ← situs (GitHub Pages)
-├── index.html        ← halaman undangan untuk tamu
-├── editor/           ← editor
-└── app/
-    ├── undangan.js   ← mesin undangan: bagian, template, animasi
-    ├── undangan.css  ← tampilan
-    ├── store.js      ← penyimpanan (Supabase / demo)
-    └── config.js     ← kunci Supabase
-supabase/setup.sql    ← penyiapan database
-src/, build.mjs       ← template statis versi lama (tidak dipakai editor)
+docs/                   ← situs (GitHub Pages)
+├── index.html          ← halaman undangan untuk tamu (tanpa ?u= diarahkan ke etalase)
+├── etalase/            ← etalase publik
+├── editor/             ← ruang kerja dan editor
+├── app/
+│   ├── katalog.js      ← daftar template: nama, kategori, keterangan (dipakai etalase & editor)
+│   ├── undangan.js     ← mesin template susun bebas
+│   ├── undangan.css
+│   ├── store.js        ← penyimpanan (Supabase / demo)
+│   └── config.js       ← kunci Supabase
+└── klasik/
+    ├── <template>/     ← halaman tiap desain bertema (hasil build)
+    ├── pratinjau/      ← gambar kartu template
+    ├── aset/           ← foto contoh dan foto wayang (sumber & lisensi: KREDIT.md)
+    └── muat.js
+src/templates/          ← sumber desain bertema; jalankan `node build.mjs` setelah mengubahnya
+supabase/setup.sql      ← penyiapan database
 ```

@@ -40,7 +40,10 @@
     window.UNDANGAN_TUNGGU = (async () => {
       try {
         const u = await window.Simpanan.ambil(slug);
-        if (!u || u.terbit === false || !u.data || !u.data.isi) { pesan('Undangan tidak ditemukan', 'Periksa kembali link yang Anda terima.'); return new Promise(() => {}); }
+        // Draf (belum terbit) hanya bisa dibuka pemiliknya yang sedang masuk.
+        const draf = !!u && u.terbit === false;
+        const pemilik = draf ? await window.Simpanan.sesi().catch(() => null) : null;
+        if (!u || (draf && !pemilik) || !u.data || !u.data.isi) { pesan('Undangan tidak ditemukan', 'Periksa kembali link yang Anda terima.'); return new Promise(() => {}); }
         window.UNDANGAN = u.data.isi; gaya = u.data.gaya || {};
         if (u.data.peran !== 'template') window.UNDANGAN_STORE = { slug, store: window.Simpanan };
       } catch (e) { pesan('Undangan belum bisa dibuka', 'Periksa koneksi internet Anda, lalu muat ulang halaman.'); return new Promise(() => {}); }

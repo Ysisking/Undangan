@@ -20,7 +20,7 @@
     "penulis": "Redaksi: kedua keluarga"
   },
   "sampul": {
-    "foto": ""
+    "foto": "../aset/contoh-pasangan.webp"
   },
   "pembuka": {
     "salam": "Assalamu'alaikum Warahmatullahi Wabarakatuh",
@@ -37,7 +37,7 @@
       "ayah": "Bapak Suryo Atmojo",
       "ibu": "Ibu Wahyuni",
       "instagram": "bimaaryasatya",
-      "foto": "",
+      "foto": "../aset/contoh-pria.webp",
       "profil": "Arsitek yang bisa menggambar denah rumah dalam lima menit, tapi butuh lima tahun untuk berani melamar."
     },
     "wanita": {
@@ -47,7 +47,7 @@
       "ayah": "Bapak Hartono",
       "ibu": "Ibu Sri Rahayu",
       "instagram": "larasatipramesti",
-      "foto": "",
+      "foto": "../aset/contoh-wanita.webp",
       "profil": "Penulis lepas dan pecinta kopi tubruk. Selalu tahu buku apa yang harus dibaca Bima berikutnya."
     }
   },
@@ -114,19 +114,19 @@
   ],
   "galeri": [
     {
-      "src": "",
+      "src": "../aset/contoh-galeri-1.webp",
       "ket": ""
     },
     {
-      "src": "",
+      "src": "../aset/contoh-galeri-2.webp",
       "ket": ""
     },
     {
-      "src": "",
+      "src": "../aset/contoh-galeri-3.webp",
       "ket": ""
     },
     {
-      "src": "",
+      "src": "../aset/contoh-galeri-4.webp",
       "ket": ""
     }
   ],

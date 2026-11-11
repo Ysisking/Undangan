@@ -20,6 +20,10 @@
       async buat(slug, data) { cek(await sb.from('undangan').insert({ slug, data })); },
       async simpan(slug, data, terbit) { cek(await sb.from('undangan').update({ data, terbit, diubah: new Date().toISOString() }).eq('slug', slug)); },
       async hapus(slug) { cek(await sb.from('undangan').delete().eq('slug', slug)); },
+      // Ganti alamat link. Ucapan ikut pindah (foreign key on update cascade).
+      async gantiSlug(lama, baru) { cek(await sb.from('undangan').update({ slug: baru }).eq('slug', lama)); },
+      // Template yang dibuka untuk umum (dipakai etalase). Hanya kolom ringan.
+      async templatPublik() { return cek(await sb.from('undangan').select('slug,nama:data->>nama,jenis:data->>jenis,template:data->>template,asal:data->>asal').like('slug', 'tpl-%').eq('terbit', true)); },
       async unggah(slug, berkas, ekstensi) {
         const jalur = `${slug}/${Date.now().toString(36)}${Math.random().toString(36).slice(2, 6)}.${ekstensi}`;
         cek(await sb.storage.from('media').upload(jalur, berkas, { contentType: berkas.type || undefined, cacheControl: '31536000', upsert: false }));
@@ -46,6 +50,12 @@
       async buat(slug, data) { const o = baca(); if (o[slug]) throw new Error('Alamat link itu sudah dipakai.'); o[slug] = { data, terbit: true, diubah: new Date().toISOString() }; tulis(o); },
       async simpan(slug, data, terbit) { const o = baca(); o[slug] = { data, terbit, diubah: new Date().toISOString() }; tulis(o); },
       async hapus(slug) { const o = baca(); delete o[slug]; tulis(o); },
+      async gantiSlug(lama, baru) {
+        const o = baca(); if (o[baru]) throw new Error('Alamat link itu sudah dipakai.'); if (!o[lama]) throw new Error('Undangan tidak ditemukan.');
+        o[baru] = o[lama]; delete o[lama]; tulis(o);
+        try { const u = localStorage.getItem('ucapan:' + lama); if (u) { localStorage.setItem('ucapan:' + baru, u); localStorage.removeItem('ucapan:' + lama); } } catch (e) { /* abaikan */ }
+      },
+      async templatPublik() { const o = baca(); return Object.keys(o).filter((k) => k.startsWith('tpl-') && o[k].terbit).map((k) => { const d = o[k].data || {}; return { slug: k, nama: d.nama, jenis: d.jenis, template: d.template, asal: d.asal }; }); },
       async unggah(slug, berkas) {
         if (berkas.size > 1.5 * 1024 * 1024) throw new Error('Di mode demo berkas maksimal 1,5 MB. Untuk lagu dan video, tempel link saja atau pasang Supabase.');
         return bacaDataUrl(berkas);
@@ -58,7 +68,7 @@
 
   function gagalStore() {
     const galat = () => { throw new Error('Tidak bisa terhubung ke server. Periksa koneksi internet, lalu muat ulang halaman.'); };
-    return { mode: 'galat', async sesi() { return null; }, masuk: galat, keluar: async () => {}, daftar: galat, ambil: galat, buat: galat, simpan: galat, hapus: galat, unggah: galat, ucapanDaftar: galat, ucapanKirim: galat, ucapanHapus: galat };
+    return { mode: 'galat', async sesi() { return null; }, masuk: galat, keluar: async () => {}, daftar: galat, ambil: galat, buat: galat, simpan: galat, hapus: galat, gantiSlug: galat, templatPublik: async () => [], unggah: galat, ucapanDaftar: galat, ucapanKirim: galat, ucapanHapus: galat };
   }
   const adaKonfig = !!(K.supabaseUrl && K.supabaseKey);
   window.Simpanan = pakaiSupabase ? supabaseStore() : adaKonfig ? gagalStore() : demoStore();

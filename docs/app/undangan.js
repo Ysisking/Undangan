@@ -68,7 +68,13 @@
   };
 
   /* ---------------- contoh isi ---------------- */
+  // Foto contoh (stok bebas pakai) di klasik/aset/. Alamatnya dihitung dari lokasi berkas ini
+  // supaya benar baik saat dibuka dari halaman tamu maupun dari editor.
+  const ASET = (function () { try { return new URL('../klasik/aset/', document.currentScript.src).href; } catch (e) { return 'klasik/aset/'; } })();
+  U.fotoContoh = (nama) => ASET + 'contoh-' + nama + '.webp';
+  const SAMPUL_CONTOH = { ivory: 'galeri-6', sage: 'wanita', monokrom: 'pria', pasir: 'galeri-2', malam: 'galeri-1' };
   U.contoh = function (preset) {
+    const F = U.fotoContoh;
     const p = U.PRESET[preset] || U.PRESET['dusty-rose'];
     const g = p.gaya || {};
     const D = {
@@ -78,12 +84,12 @@
       tanggalUtama: '2026-12-12T08:00:00+07:00',
       mempelai: {
         urutan: 'pria-dulu',
-        pria: { panggilan: 'Raka', nama: 'Raka Aditya Pratama', keterangan: 'Putra dari', ayah: 'Bpk. Hadi Wibowo', ibu: 'Ibu Sri Lestari', instagram: 'rakaaditya', foto: '' },
-        wanita: { panggilan: 'Nadia', nama: 'Nadia Kusumawardani', keterangan: 'Putri dari', ayah: 'Bpk. Bambang Kusumo', ibu: 'Ibu Endang Sulastri', instagram: 'nadiakusuma', foto: '' },
+        pria: { panggilan: 'Raka', nama: 'Raka Aditya Pratama', keterangan: 'Putra dari', ayah: 'Bpk. Hadi Wibowo', ibu: 'Ibu Sri Lestari', instagram: 'rakaaditya', foto: F('pria') },
+        wanita: { panggilan: 'Nadia', nama: 'Nadia Kusumawardani', keterangan: 'Putri dari', ayah: 'Bpk. Bambang Kusumo', ibu: 'Ibu Endang Sulastri', instagram: 'nadiakusuma', foto: F('wanita') },
       },
-      sampul: { pembuka: 'Bersama keluarga, kami mengundang Anda', label: 'Pernikahan', foto: '', bentuk: 'oval', kepada: 'Kepada Yth.', tombol: 'Buka Undangan', latar: '' },
+      sampul: { pembuka: 'Bersama keluarga, kami mengundang Anda', label: 'Pernikahan', foto: F(SAMPUL_CONTOH[preset] || 'pasangan'), bentuk: 'oval', kepada: 'Kepada Yth.', tombol: 'Buka Undangan', latar: '' },
       bagian: [
-        { tipe: 'hero', judul: 'The Wedding of', foto: '', bentuk: 'lengkung' },
+        { tipe: 'hero', judul: 'The Wedding of', foto: F(SAMPUL_CONTOH[preset] ? 'pasangan' : 'galeri-2'), bentuk: 'lengkung' },
         { tipe: 'kutipan', teks: 'Dan di antara tanda-tanda kebesaran-Nya ialah Dia menciptakan pasangan-pasangan untukmu dari jenismu sendiri, agar kamu merasa tenteram kepadanya, dan Dia menjadikan di antaramu rasa kasih dan sayang.', sumber: 'QS. Ar-Rum : 21' },
         { tipe: 'mempelai', label: 'Mempelai', teks: 'Dengan memohon rahmat dan ridha Allah SWT, kami bermaksud menyelenggarakan pernikahan putra-putri kami:', bentuk: 'lengkung', garis: true },
         { tipe: 'hitung', label: 'Menuju hari bahagia' },
@@ -96,7 +102,7 @@
           { tahun: '2023', judul: 'Lamaran', cerita: 'Di hadapan dua keluarga, Raka meminta restu dengan suara yang sedikit bergetar.' },
           { tahun: '2026', judul: 'Hari bahagia', cerita: 'Kami memilih untuk melangkah bersama, dan ingin Anda menjadi bagian dari hari itu.' },
         ] },
-        { tipe: 'galeri', label: 'Galeri', judul: 'Potret kami', tata: 'mozaik', foto: [U.BARU.foto(), U.BARU.foto(), U.BARU.foto(), U.BARU.foto(), U.BARU.foto(), U.BARU.foto()] },
+        { tipe: 'galeri', label: 'Galeri', judul: 'Potret kami', tata: 'mozaik', foto: [1, 2, 3, 4, 5, 6].map((n) => ({ src: F('galeri-' + n), ket: '' })) },
         { tipe: 'rsvp', label: 'RSVP', judul: 'Konfirmasi kehadiran', garis: true },
         { tipe: 'hadiah', label: 'Tanda kasih', teks: 'Doa restu Anda adalah hadiah terindah bagi kami. Bila ingin memberi tanda kasih, dapat melalui:', rekening: [
           { bank: 'BCA', nomor: '0371234567', atasNama: 'Raka Aditya Pratama' },

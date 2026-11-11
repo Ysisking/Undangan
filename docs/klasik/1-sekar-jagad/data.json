@@ -8,7 +8,7 @@
   },
   "sampul": {
     "label": "Pawiwahan",
-    "foto": ""
+    "foto": "../aset/contoh-pasangan.webp"
   },
   "pembuka": {
     "salam": "Sugeng rawuh",
@@ -26,7 +26,7 @@
       "ayah": "Bapak Hadi Wibowo",
       "ibu": "Ibu Sri Lestari",
       "instagram": "galihprasetyo",
-      "foto": ""
+      "foto": "../aset/contoh-pria.webp"
     },
     "wanita": {
       "panggilan": "Ratri",
@@ -35,7 +35,7 @@
       "ayah": "Bapak Bambang Kusumo",
       "ibu": "Ibu Endang Sulastri",
       "instagram": "ratrikusuma",
-      "foto": ""
+      "foto": "../aset/contoh-wanita.webp"
     }
   },
   "acara": [
@@ -78,12 +78,12 @@
     }
   ],
   "galeri": [
-    "",
-    "",
-    "",
-    "",
-    "",
-    ""
+    "../aset/contoh-galeri-1.webp",
+    "../aset/contoh-galeri-2.webp",
+    "../aset/contoh-galeri-3.webp",
+    "../aset/contoh-galeri-4.webp",
+    "../aset/contoh-galeri-5.webp",
+    "../aset/contoh-galeri-6.webp"
   ],
   "video": "",
   "hadiah": {

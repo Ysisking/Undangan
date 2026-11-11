@@ -8,7 +8,7 @@ window.UNDANGAN = {
   },
   "sampul": {
     "label": "Rol 01 · 36 eksp · ISO 400",
-    "foto": ""
+    "foto": "../aset/contoh-pasangan.webp"
   },
   "pembuka": {
     "teks": "Kami tidak menunggu momen yang sempurna. Kami memilih satu sama lain, lalu momen itu datang sendiri.",
@@ -23,7 +23,7 @@ window.UNDANGAN = {
       "ayah": "Bapak Ir. Teguh Nugraha",
       "ibu": "Ibu Ratna Dewi",
       "instagram": "dimasarya",
-      "foto": ""
+      "foto": "../aset/contoh-pria.webp"
     },
     "wanita": {
       "panggilan": "Kirana",
@@ -32,7 +32,7 @@ window.UNDANGAN = {
       "ayah": "Bapak Andi Larasati",
       "ibu": "Ibu Melati Sari",
       "instagram": "kiranaputri",
-      "foto": ""
+      "foto": "../aset/contoh-wanita.webp"
     }
   },
   "acara": [
@@ -82,13 +82,13 @@ window.UNDANGAN = {
     }
   ],
   "galeri": [
-    "",
-    "",
-    "",
-    "",
-    "",
-    "",
-    ""
+    "../aset/contoh-galeri-1.webp",
+    "../aset/contoh-galeri-2.webp",
+    "../aset/contoh-galeri-3.webp",
+    "../aset/contoh-galeri-4.webp",
+    "../aset/contoh-galeri-5.webp",
+    "../aset/contoh-galeri-6.webp",
+    "../aset/contoh-pasangan.webp"
   ],
   "video": "",
   "hadiah": {

@@ -9,7 +9,7 @@
   "sampul": {
     "pembuka": "Bersama keluarga, kami mengundang Anda",
     "label": "Pernikahan",
-    "foto": ""
+    "foto": "../aset/contoh-pasangan.webp"
   },
   "pembuka": {
     "kutipan": "Dan di antara tanda-tanda kebesaran-Nya ialah Dia menciptakan pasangan-pasangan untukmu dari jenismu sendiri, agar kamu merasa tenteram kepadanya, dan Dia menjadikan di antaramu rasa kasih dan sayang.",
@@ -25,7 +25,7 @@
       "ayah": "Bpk. Hadi Wibowo",
       "ibu": "Ibu Sri Lestari",
       "instagram": "rakaaditya",
-      "foto": ""
+      "foto": "../aset/contoh-pria.webp"
     },
     "wanita": {
       "panggilan": "Nadia",
@@ -34,7 +34,7 @@
       "ayah": "Bpk. Bambang Kusumo",
       "ibu": "Ibu Endang Sulastri",
       "instagram": "nadiakusuma",
-      "foto": ""
+      "foto": "../aset/contoh-wanita.webp"
     }
   },
   "acara": [
@@ -77,12 +77,12 @@
     }
   ],
   "galeri": [
-    "",
-    "",
-    "",
-    "",
-    "",
-    ""
+    "../aset/contoh-galeri-1.webp",
+    "../aset/contoh-galeri-2.webp",
+    "../aset/contoh-galeri-3.webp",
+    "../aset/contoh-galeri-4.webp",
+    "../aset/contoh-galeri-5.webp",
+    "../aset/contoh-galeri-6.webp"
   ],
   "video": "",
   "hadiah": {

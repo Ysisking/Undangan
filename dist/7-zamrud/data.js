@@ -10,7 +10,7 @@ window.UNDANGAN = {
   },
   "sampul": {
     "label": "Kami akan menikah",
-    "foto": ""
+    "foto": "../aset/contoh-pasangan.webp"
   },
   "pembuka": {
     "salam": "Assalamu'alaikum Warahmatullahi Wabarakatuh",
@@ -27,7 +27,7 @@ window.UNDANGAN = {
       "ayah": "Bapak Hadi Wibowo",
       "ibu": "Ibu Sri Lestari",
       "instagram": "rakaaditya",
-      "foto": ""
+      "foto": "../aset/contoh-pria.webp"
     },
     "wanita": {
       "panggilan": "Nadia",
@@ -36,7 +36,7 @@ window.UNDANGAN = {
       "ayah": "Bapak Bambang Kusumo",
       "ibu": "Ibu Endang Sulastri",
       "instagram": "nadiakusuma",
-      "foto": ""
+      "foto": "../aset/contoh-wanita.webp"
     }
   },
   "acara": [
@@ -135,23 +135,23 @@ window.UNDANGAN = {
   ],
   "galeri": [
     {
-      "src": "",
+      "src": "../aset/contoh-galeri-1.webp",
       "ket": ""
     },
     {
-      "src": "",
+      "src": "../aset/contoh-galeri-2.webp",
       "ket": ""
     },
     {
-      "src": "",
+      "src": "../aset/contoh-galeri-3.webp",
       "ket": ""
     },
     {
-      "src": "",
+      "src": "../aset/contoh-galeri-4.webp",
       "ket": ""
     },
     {
-      "src": "",
+      "src": "../aset/contoh-galeri-5.webp",
       "ket": ""
     }
   ],
@@ -212,7 +212,7 @@ window.UNDANGAN = {
     ]
   },
   "penutup": {
-    "foto": "",
+    "foto": "../aset/contoh-galeri-2.webp",
     "kutipan": "Di antara semua jalan, kami memilih untuk berjalan bersama.",
     "teks": "Merupakan suatu kehormatan dan kebahagiaan bagi kami apabila Bapak/Ibu/Saudara/i berkenan hadir dan memberikan doa restu.",
     "salam": "Dengan cinta,",

@@ -8,7 +8,7 @@
   },
   "sampul": {
     "label": "Undangan Pernikahan",
-    "foto": ""
+    "foto": "../aset/contoh-pasangan.webp"
   },
   "pembuka": {
     "kutipan": "Demikianlah mereka bukan lagi dua, melainkan satu. Karena itu, apa yang telah dipersatukan Allah, tidak boleh diceraikan manusia.",
@@ -24,7 +24,7 @@
       "ayah": "Bapak Yohanes Wijaya",
       "ibu": "Ibu Maria Lestiani",
       "instagram": "adriannatanael",
-      "foto": ""
+      "foto": "../aset/contoh-pria.webp"
     },
     "wanita": {
       "panggilan": "Gracia",
@@ -33,7 +33,7 @@
       "ayah": "Bapak Daniel Hartono",
       "ibu": "Ibu Ruth Kristanti",
       "instagram": "graciaanindita",
-      "foto": ""
+      "foto": "../aset/contoh-wanita.webp"
     }
   },
   "acara": [
@@ -76,12 +76,12 @@
     }
   ],
   "galeri": [
-    "",
-    "",
-    "",
-    "",
-    "",
-    ""
+    "../aset/contoh-galeri-1.webp",
+    "../aset/contoh-galeri-2.webp",
+    "../aset/contoh-galeri-3.webp",
+    "../aset/contoh-galeri-4.webp",
+    "../aset/contoh-galeri-5.webp",
+    "../aset/contoh-galeri-6.webp"
   ],
   "video": "",
   "hadiah": {

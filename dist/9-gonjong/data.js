@@ -11,7 +11,7 @@ window.UNDANGAN = {
   "sampul": {
     "label": "Baralek Gadang",
     "pembuka": "The Wedding of",
-    "foto": ""
+    "foto": "../aset/contoh-pasangan.webp"
   },
   "pembuka": {
     "salam": "Assalamu'alaikum Warahmatullahi Wabarakatuh",
@@ -28,7 +28,7 @@ window.UNDANGAN = {
       "ayah": "Bapak H. Syamsul Bahri",
       "ibu": "Ibu Hj. Rosmaniar",
       "instagram": "fajarramadhan",
-      "foto": ""
+      "foto": "../aset/contoh-pria.webp"
     },
     "wanita": {
       "panggilan": "Salsabila",
@@ -37,7 +37,7 @@ window.UNDANGAN = {
       "ayah": "Bapak Dt. Rajo Mangkuto",
       "ibu": "Ibu Nurhayati",
       "instagram": "salsabilaannisa",
-      "foto": ""
+      "foto": "../aset/contoh-wanita.webp"
     }
   },
   "acara": [
@@ -98,19 +98,19 @@ window.UNDANGAN = {
   ],
   "galeri": [
     {
-      "src": "",
+      "src": "../aset/contoh-galeri-1.webp",
       "ket": ""
     },
     {
-      "src": "",
+      "src": "../aset/contoh-galeri-2.webp",
       "ket": ""
     },
     {
-      "src": "",
+      "src": "../aset/contoh-galeri-3.webp",
       "ket": ""
     },
     {
-      "src": "",
+      "src": "../aset/contoh-galeri-4.webp",
       "ket": ""
     }
   ],
