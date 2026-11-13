@@ -2,14 +2,14 @@
 
 ## Alamat penting
 
-Ganti `DOMAIN` dengan alamat situs di Vercel (mis. `undangan-studio.vercel.app` atau domain sendiri). Situs lama di `ysisking.github.io/Undangan/` tetap berjalan sebagai cadangan.
+Situs utama di Vercel: **undangan-studio-theta.vercel.app**. Situs lama di `ysisking.github.io/Undangan/` tetap berjalan sebagai cadangan. Bila nanti memakai domain sendiri, ganti alamat di tabel ini.
 
 | Untuk | Link |
 |---|---|
-| Etalase (untuk calon pemesan) | `https://DOMAIN/` |
-| Editor / ruang kerja (Anda) | `https://DOMAIN/editor/` |
-| Undangan tamu | `https://DOMAIN/?u=ALAMAT-LINK&to=Nama+Tamu` |
-| Satu desain di etalase | `https://DOMAIN/etalase/#7-zamrud` (ganti kodenya) |
+| Etalase (untuk calon pemesan) | `https://undangan-studio-theta.vercel.app/` |
+| Editor / ruang kerja (Anda) | `https://undangan-studio-theta.vercel.app/editor/` |
+| Undangan tamu | `https://undangan-studio-theta.vercel.app/?u=ALAMAT-LINK&to=Nama+Tamu` |
+| Satu desain di etalase | `https://undangan-studio-theta.vercel.app/etalase/#7-zamrud` (ganti kodenya) |
 
 ## Hosting di Vercel
 
