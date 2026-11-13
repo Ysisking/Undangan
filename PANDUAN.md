@@ -2,12 +2,27 @@
 
 ## Alamat penting
 
+Ganti `DOMAIN` dengan alamat situs di Vercel (mis. `undangan-studio.vercel.app` atau domain sendiri). Situs lama di `ysisking.github.io/Undangan/` tetap berjalan sebagai cadangan.
+
 | Untuk | Link |
 |---|---|
-| Etalase (untuk calon pemesan) | `https://ysisking.github.io/Undangan/` |
-| Editor / ruang kerja (Anda) | `https://ysisking.github.io/Undangan/editor/` |
-| Undangan tamu | `https://ysisking.github.io/Undangan/?u=ALAMAT-LINK&to=Nama+Tamu` |
-| Satu desain di etalase | `https://ysisking.github.io/Undangan/etalase/#7-zamrud` (ganti kodenya) |
+| Etalase (untuk calon pemesan) | `https://DOMAIN/` |
+| Editor / ruang kerja (Anda) | `https://DOMAIN/editor/` |
+| Undangan tamu | `https://DOMAIN/?u=ALAMAT-LINK&to=Nama+Tamu` |
+| Satu desain di etalase | `https://DOMAIN/etalase/#7-zamrud` (ganti kodenya) |
+
+## Hosting di Vercel
+
+Situs di-host sebagai proyek Vercel tersendiri (terpisah dari proyek lain seperti mycash). Pengaturannya ada di `vercel.json`: Vercel menyajikan folder `docs/` apa adanya, tanpa proses build.
+
+Pemasangan (sekali saja):
+
+1. Buka **vercel.com/new** → *Import Git Repository* → pilih **Ysisking/Undangan**. Bila repo tidak muncul, klik *Adjust GitHub App Permissions* dan beri akses ke repo itu.
+2. **Project Name**: mis. `undangan-studio`. Ini proyek baru, jadi domainnya terpisah dari mycash.
+3. **Framework Preset**: *Other*. Root Directory, Build, dan Output dibiarkan bawaan (sudah diatur `vercel.json`).
+4. Klik **Deploy**.
+
+Setiap push ke cabang `main` otomatis ter-deploy ulang. Domain sendiri bisa ditambahkan di *Project → Settings → Domains*.
 
 ## Merek
 
