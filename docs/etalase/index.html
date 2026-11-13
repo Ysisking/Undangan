@@ -11,14 +11,18 @@
 <meta property="og:image" content="https://ysisking.github.io/Undangan/klasik/pratinjau/7-zamrud.jpg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400;0,6..96,500;1,6..96,400;1,6..96,500&family=Karla:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap">
+<link rel="icon" type="image/svg+xml" href="../app/merek/undangan-ikon.svg">
+<link rel="icon" type="image/png" sizes="32x32" href="../app/merek/favicon-32.png">
+<link rel="apple-touch-icon" href="../app/merek/ikon-180.png">
+<meta name="theme-color" content="#f7f7f7">
 <style>
-/* Etalase: meja contoh undangan. Kertas hangat, tinta cokelat tua, satu aksen mawar pudar.
-   Kartu desain berupa lembar tegak; ketuk untuk mencoba demonya di bingkai ponsel. */
+/* Etalase "Undangan": mengikuti identitas usaha induk. Abu terang, tinta hitam, satu aksen oranye pita.
+   Goresan pita (oranye, ujung membulat, bercelah) dipakai sebagai elemen grafis berulang. */
 :root {
-  --kertas: #f1ece6; --kertas-2: #e6dfd7; --putih: #fbf8f4; --tinta: #2a2322; --redup: #6b5f5c; --garis: #d8cdc5;
-  --aksen: #7d5f60; --aksen-tua: #5c4344; --emas: #a2865a;
-  --f: 'Karla', 'Helvetica Neue', Arial, sans-serif; --fj: 'Bodoni Moda', 'Didot', Georgia, serif;
+  --kertas: #f7f7f7; --kertas-2: #ececec; --putih: #ffffff; --tinta: #111111; --redup: #5c5c5c; --garis: #e0e0e0;
+  --aksen: #e53e14; --aksen-tua: #c4320c; --emas: #e53e14;
+  --f: 'Plus Jakarta Sans', 'Helvetica Neue', Arial, sans-serif; --fj: var(--f);
   --tepi: max(20px, env(safe-area-inset-left, 0px));
   color-scheme: light;
 }
@@ -36,15 +40,19 @@ a { color: inherit; }
 
 /* ---------- kepala ---------- */
 .atas { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding-block: 18px; }
-.merek { font: italic 500 22px/1 var(--fj); text-decoration: none; }
+.merek { display: inline-flex; align-items: center; gap: 10px; text-decoration: none; color: var(--tinta); }
+.merek .logo-undangan { width: 50px; height: auto; }
+.merek b { font: 800 21px/1 var(--f); letter-spacing: -.03em; }
+.logo-undangan, .logo-induk { display: block; overflow: visible; }
 .atas a.masuk { font-size: 13px; color: var(--redup); text-decoration: none; border-bottom: 1px solid var(--garis); padding-bottom: 2px; }
 .atas a.masuk:hover { color: var(--tinta); border-color: var(--tinta); }
 
 .pembuka { display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(0, .95fr); gap: 32px; align-items: center; padding-block: 26px 54px; }
 .pembuka .mata { display: inline-flex; align-items: center; gap: 10px; font: 600 12px/1 var(--f); letter-spacing: .18em; text-transform: uppercase; color: var(--aksen-tua); }
 .pembuka .mata::before { content: ""; width: 34px; height: 1px; background: currentColor; }
-.pembuka h1 { margin: 16px 0 14px; font: 400 clamp(38px, 6.2vw, 68px)/1.02 var(--fj); letter-spacing: -.01em; text-wrap: balance; }
-.pembuka h1 em { font-style: italic; color: var(--aksen-tua); }
+.pembuka h1 { margin: 16px 0 16px; font: 800 clamp(36px, 5.8vw, 64px)/1.04 var(--f); letter-spacing: -.035em; text-wrap: balance; }
+.pembuka h1 em { position: relative; font-style: normal; color: var(--aksen); white-space: nowrap; }
+.pembuka h1 em::after { content: ""; position: absolute; left: -2%; right: -4%; bottom: -.2em; height: .32em; background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 300 30' preserveAspectRatio='none'%3E%3Cpath d='M6 22C80 10 190 6 294 9' fill='none' stroke='%23e53e14' stroke-width='6' stroke-linecap='round'/%3E%3C/svg%3E") no-repeat center / 100% 100%; }
 .pembuka p { margin: 0; max-width: 46ch; font-size: 17px; color: var(--redup); text-wrap: pretty; }
 .pembuka .ringkas { margin-top: 22px; display: flex; flex-wrap: wrap; gap: 8px 18px; font-size: 13.5px; color: var(--tinta); }
 .pembuka .ringkas span { display: inline-flex; align-items: center; gap: 8px; }
@@ -90,7 +98,7 @@ a { color: inherit; }
 main { padding-block: 34px 70px; }
 .kelompok + .kelompok { margin-top: 56px; }
 .kelompok-kepala { display: flex; align-items: baseline; justify-content: space-between; gap: 16px; flex-wrap: wrap; margin-bottom: 22px; padding-bottom: 12px; border-bottom: 1px solid var(--garis); }
-.kelompok-kepala h2 { margin: 0; font: 400 clamp(26px, 3.4vw, 34px)/1.1 var(--fj); }
+.kelompok-kepala h2 { margin: 0; font: 800 clamp(24px, 3vw, 32px)/1.1 var(--f); letter-spacing: -.03em; }
 .kelompok-kepala p { margin: 0; max-width: 52ch; font-size: 14px; color: var(--redup); }
 .rak { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 208px), 1fr)); gap: 34px 22px; }
 @media (max-width: 520px) { .rak { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 26px 14px; } }
@@ -104,23 +112,32 @@ main { padding-block: 34px 70px; }
 .kartu:hover .coba, .kartu:focus-visible .coba { opacity: 1; transform: none; }
 @media (hover: none) { .kartu .lembar .coba { opacity: 1; transform: none; min-height: 34px; font-size: 12px; } }
 .kartu .no { font: 500 11px/1 var(--f); letter-spacing: .16em; color: var(--emas); font-variant-numeric: tabular-nums; }
-.kartu h3 { margin: 4px 0 2px; font: italic 400 23px/1.1 var(--fj); overflow-wrap: anywhere; }
+.kartu h3 { margin: 6px 0 2px; font: 700 19px/1.15 var(--f); letter-spacing: -.02em; overflow-wrap: anywhere; }
 .kartu p { margin: 0; font-size: 13.5px; line-height: 1.4; color: var(--redup); }
 .kartu .tanda { display: flex; flex-wrap: wrap; gap: 4px; margin-top: 8px; }
 .tanda span { padding: 3px 8px; border: 1px solid var(--garis); border-radius: 999px; font-size: 11px; line-height: 1.3; color: var(--redup); }
 .kosong { padding: 60px 0; text-align: center; color: var(--redup); }
-.kosong b { display: block; font: italic 400 26px/1.2 var(--fj); color: var(--tinta); margin-bottom: 6px; }
+.kosong b { display: block; font: 800 22px/1.2 var(--f); letter-spacing: -.02em; color: var(--tinta); margin-bottom: 6px; }
 
 /* ---------- cara pesan ---------- */
 .cara { border-top: 1px solid var(--garis); background: var(--kertas-2); }
 .cara .lebar { padding-block: 46px; display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 26px 34px; }
-.cara h2 { grid-column: 1 / -1; margin: 0; font: 400 clamp(26px, 3.4vw, 34px)/1.1 var(--fj); }
+.cara h2 { grid-column: 1 / -1; margin: 0; font: 800 clamp(24px, 3vw, 32px)/1.1 var(--f); letter-spacing: -.03em; }
 .cara li { list-style: none; display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 4px 14px; }
-.cara ol { display: contents; margin: 0; padding: 0; counter-reset: c; }
-.cara li::before { counter-increment: c; content: counter(c, decimal-leading-zero); grid-row: span 2; font: italic 400 34px/1 var(--fj); color: var(--aksen); }
+.cara .lebar { counter-reset: c; }
+.cara ol { display: contents; margin: 0; padding: 0; }
+.cara li::before { counter-increment: c; content: counter(c, decimal-leading-zero); grid-row: span 2; font: 800 30px/1 var(--f); letter-spacing: -.03em; color: var(--aksen); }
 .cara li b { font-weight: 600; }
 .cara li span { font-size: 14.5px; color: var(--redup); }
-footer { padding: 26px var(--tepi) calc(26px + env(safe-area-inset-bottom, 0px)); text-align: center; font-size: 13px; color: var(--redup); background: var(--kertas-2); }
+footer { background: var(--tinta); color: #cfcfcf; }
+footer .lebar { padding-right: calc(var(--tepi) + 70px); display: flex; align-items: center; justify-content: space-between; gap: 18px 28px; flex-wrap: wrap; padding-block: 30px calc(30px + env(safe-area-inset-bottom, 0px)); }
+.kaki-induk { display: flex; align-items: center; gap: 14px; color: #fff; text-decoration: none; }
+.kaki-induk .logo-induk { width: 44px; height: auto; color: #fff; }
+.kaki-induk small { display: block; font-size: 11px; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; color: #9a9a9a; }
+.kaki-induk b { display: block; margin-top: 3px; font: 800 17px/1.1 var(--f); letter-spacing: -.02em; }
+.kaki-tautan { display: flex; gap: 6px 18px; flex-wrap: wrap; font-size: 13.5px; }
+.kaki-tautan a { color: #cfcfcf; text-decoration: none; }
+.kaki-tautan a:hover { color: #fff; }
 
 /* ---------- detail desain ---------- */
 .detail { position: fixed; inset: 0; z-index: 60; display: grid; grid-template-columns: minmax(0, 1fr) minmax(330px, 430px); background: var(--kertas-2); animation: detail-masuk .35s ease; }
@@ -128,7 +145,7 @@ footer { padding: 26px var(--tepi) calc(26px + env(safe-area-inset-bottom, 0px))
 .panggung { position: relative; display: grid; place-items: center; min-width: 0; min-height: 0; overflow: hidden; background: radial-gradient(ellipse at 50% 40%, #efe8e0, #dcd3ca); }
 .ponsel { position: relative; width: calc(390px * var(--skala, 1)); height: calc(844px * var(--skala, 1)); border-radius: calc(38px * var(--skala, 1)); background: #1c1716; box-shadow: 0 40px 80px rgba(42,35,34,.35), 0 0 0 calc(9px * var(--skala, 1)) #1c1716, 0 0 0 calc(10.5px * var(--skala, 1)) #4a3f3c; overflow: hidden; }
 .ponsel iframe { position: absolute; left: 0; top: 0; width: 390px; height: 844px; border: 0; transform: scale(var(--skala, 1)); transform-origin: 0 0; background: #fff; }
-.ponsel .memuat { position: absolute; inset: 0; display: grid; place-items: center; background: var(--kertas-2); font: italic 400 20px/1 var(--fj); color: var(--redup); transition: opacity .4s; }
+.ponsel .memuat { position: absolute; inset: 0; display: grid; place-items: center; background: var(--kertas-2); font: 600 15px/1 var(--f); color: var(--redup); transition: opacity .4s; }
 .ponsel.siap .memuat { opacity: 0; pointer-events: none; }
 .geser { position: absolute; top: 50%; width: 46px; height: 46px; margin-top: -23px; border: 1px solid var(--garis); border-radius: 50%; background: rgba(251,248,244,.9); display: grid; place-items: center; transition: border-color .2s, transform .2s; }
 .geser:hover { border-color: var(--tinta); }
@@ -141,7 +158,7 @@ footer { padding: 26px var(--tepi) calc(26px + env(safe-area-inset-bottom, 0px))
 .tutup:hover { border-color: var(--tinta); }
 .tutup svg { width: 16px; height: 16px; stroke: var(--tinta); fill: none; stroke-width: 1.8; }
 .info-isi { flex: 1; min-height: 0; overflow-y: auto; padding: 22px 22px 26px; display: grid; gap: 20px; align-content: start; }
-.info h2 { margin: 6px 0 4px; font: italic 400 40px/1.02 var(--fj); overflow-wrap: anywhere; }
+.info h2 { margin: 8px 0 4px; font: 800 34px/1.05 var(--f); letter-spacing: -.035em; overflow-wrap: anywhere; }
 .info .slogan { margin: 0; font-weight: 600; color: var(--aksen-tua); }
 .info .ket { margin: 8px 0 0; color: var(--redup); text-wrap: pretty; }
 .info h3 { margin: 0 0 8px; font: 600 12px/1 var(--f); letter-spacing: .16em; text-transform: uppercase; color: var(--redup); }
@@ -170,7 +187,7 @@ footer { padding: 26px var(--tepi) calc(26px + env(safe-area-inset-bottom, 0px))
   .info-kepala { display: none; }
   .lembar-kepala { display: grid; grid-template-columns: auto minmax(0, 1fr) auto auto; align-items: center; gap: 10px; min-height: 66px; padding: 8px 12px calc(8px + env(safe-area-inset-bottom, 0px)); border: 0; background: none; text-align: left; width: 100%; }
   .info.buka .lembar-kepala { padding-bottom: 8px; border-bottom: 1px solid var(--garis); }
-  .lembar-kepala b { display: block; font: italic 400 21px/1.1 var(--fj); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .lembar-kepala b { display: block; font: 700 17px/1.2 var(--f); letter-spacing: -.02em; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
   .lembar-kepala span.kecil { display: block; font-size: 12px; color: var(--redup); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
   .lembar-kepala .pil { display: inline-flex; align-items: center; min-height: 40px; padding: 0 14px; border-radius: 999px; background: var(--tinta); color: var(--putih); font: 600 13px/1 var(--f); }
   .lembar-kepala .tutup { width: 40px; height: 40px; }
@@ -202,7 +219,7 @@ body.terkunci .wa-chat { display: none; }
 <body>
 
 <header class="lebar atas">
-  <a class="merek" href="./" id="merek">Studio Undangan</a>
+  <a class="merek" href="./" aria-label="Undangan, beranda etalase"><svg class="logo-undangan" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="34 122 732 546"><mask id="m-undangan" maskUnits="userSpaceOnUse" x="0" y="0" width="800" height="800"><rect width="800" height="800" fill="#fff"/><path d="M120 566L330 420M680 566L470 420" stroke="#000" stroke-width="14"/><path d="M70 196C170 220 300 290 400 404C431 455 449 498 449 548C449 592 428 630 400 630C372 630 351 592 351 548C351 498 369 455 400 404C450 323 590 236 736 158" fill="none" stroke="#000" stroke-width="70" stroke-linecap="round" stroke-linejoin="round"/></mask><path d="M120 232H680V566H120Z" fill="currentColor" mask="url(#m-undangan)"/><path d="M70 196C170 220 300 290 400 404C431 455 449 498 449 548C449 592 428 630 400 630C372 630 351 592 351 548C351 498 369 455 400 404C450 323 590 236 736 158" fill="none" stroke="#e53e14" stroke-width="42" stroke-linecap="round" stroke-linejoin="round"/></svg><b>Undangan</b></a>
   <a class="masuk" href="../editor/">Masuk editor</a>
 </header>
 
@@ -236,7 +253,12 @@ body.terkunci .wa-chat { display: none; }
     </ol>
   </div>
 </section>
-<footer><span id="kaki">Studio Undangan</span></footer>
+<footer>
+  <div class="lebar">
+    <div class="kaki-induk"><svg class="logo-induk" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="56 56 688 660"><mask id="m-induk" maskUnits="userSpaceOnUse" x="0" y="0" width="800" height="800"><rect width="800" height="800" fill="#fff"/><path d="M92 243C170 243 255 300 331 405C371 467 389 520 389 580C389 632 365 679 327 679C289 679 268 632 268 580C268 528 292 462 331 405C412 290 560 165 708 91" fill="none" stroke="#000" stroke-width="70" stroke-linecap="round" stroke-linejoin="round"/></mask><path d="M224 153H657V334H425V616H224Z" fill="currentColor" mask="url(#m-induk)"/><path d="M92 243C170 243 255 300 331 405C371 467 389 520 389 580C389 632 365 679 327 679C289 679 268 632 268 580C268 528 292 462 331 405C412 290 560 165 708 91" fill="none" stroke="#e53e14" stroke-width="42" stroke-linecap="round" stroke-linejoin="round"/></svg><span><small>Undangan adalah layanan dari</small><b id="kaki">Studio Undangan</b></span></div>
+    <nav class="kaki-tautan" aria-label="Tautan"><a href="#desain">Semua desain</a><a id="kaki-wa" target="_blank" rel="noopener" hidden>WhatsApp</a><a href="../editor/">Masuk editor</a></nav>
+  </div>
+</footer>
 
 <a class="wa-chat" id="wa-chat" target="_blank" rel="noopener" aria-label="Chat WhatsApp untuk pesan undangan" hidden>
   <span class="bulat"><svg viewBox="0 0 32 32" aria-hidden="true"><path d="M16.04 3C8.86 3 3.03 8.82 3.03 16c0 2.3.6 4.53 1.74 6.5L3 29l6.68-1.75A12.95 12.95 0 0 0 16.04 29C23.2 29 29 23.18 29 16S23.2 3 16.04 3Zm0 23.8c-1.98 0-3.92-.53-5.61-1.53l-.4-.24-3.96 1.04 1.06-3.86-.26-.4A10.76 10.76 0 0 1 5.2 16c0-5.97 4.86-10.82 10.84-10.82 5.97 0 10.8 4.85 10.8 10.82 0 5.96-4.84 10.8-10.8 10.8Zm5.93-8.1c-.33-.16-1.93-.95-2.23-1.06-.3-.11-.52-.16-.73.17-.22.32-.84 1.05-1.03 1.27-.19.22-.38.24-.7.08-.33-.16-1.38-.51-2.62-1.62-.97-.86-1.62-1.93-1.81-2.25-.19-.33-.02-.5.14-.66.15-.15.33-.38.49-.57.16-.19.22-.33.33-.54.1-.22.05-.41-.03-.57-.08-.16-.73-1.76-1-2.41-.26-.63-.53-.55-.73-.56h-.62c-.22 0-.57.08-.87.41-.3.32-1.14 1.11-1.14 2.71s1.17 3.15 1.33 3.36c.16.22 2.3 3.5 5.56 4.91.78.34 1.39.54 1.86.69.78.25 1.49.21 2.05.13.63-.1 1.93-.79 2.2-1.55.27-.76.27-1.41.19-1.55-.08-.13-.3-.21-.62-.37Z"/></svg></span>
@@ -397,12 +419,13 @@ body.terkunci .wa-chat { display: none; }
   $('#cari').addEventListener('input', (e) => { clearTimeout(tCari); tCari = setTimeout(() => { S.q = e.target.value.trim().toLowerCase(); if (S.q && S.kat !== 'semua') { S.kat = 'semua'; gambarChip(); } gambarRak(); }, 140); });
 
   function terapkanPengaturan() {
-    $('#merek').textContent = P.merek; $('#kaki').textContent = P.merek;
-    document.title = 'Etalase Undangan Digital · ' + P.merek;
+    $('#kaki').textContent = P.merek;
+    document.title = 'Undangan · Etalase desain · ' + P.merek;
     if (P.tagline) $('#tagline').textContent = P.tagline;
     $('#jumlah-desain').textContent = daftar.length + ' desain';
     const tanya = urlPesan(null); const b = $('#btn-tanya'); b.hidden = !tanya; if (tanya) b.href = tanya;
     const wa = $('#wa-chat'); wa.hidden = !tanya; if (tanya) wa.href = tanya;
+    const kw = $('#kaki-wa'); kw.hidden = !tanya; if (tanya) kw.href = tanya;
     if (tanya && !terapkanPengaturan.sudah) { terapkanPengaturan.sudah = true; setTimeout(() => { wa.classList.add('sapa'); setTimeout(() => wa.classList.remove('sapa'), 4500); }, 2500); }
   }
   (async function mulai() {

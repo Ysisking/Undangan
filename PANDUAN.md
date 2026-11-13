@@ -9,6 +9,10 @@
 | Undangan tamu | `https://ysisking.github.io/Undangan/?u=ALAMAT-LINK&to=Nama+Tamu` |
 | Satu desain di etalase | `https://ysisking.github.io/Undangan/etalase/#7-zamrud` (ganti kodenya) |
 
+## Merek
+
+Logo usaha induk dan logo anakan **Undangan** (amplop dengan pita oranye bersimpul) ada di `docs/app/merek/`, lengkap dengan versi latar gelap, ikon aplikasi, favicon, dan aturan keluarga logo (`README.md`). Logo Undangan tampil di etalase, editor, dan sebagai ikon tab undangan tamu; logo induk tampil di kaki etalase dan halaman masuk.
+
 ## Etalase
 
 Halaman publik berisi semua desain. Calon pemesan bisa menyaring per kategori, mencari, membuka **demo langsung di bingkai ponsel**, dan mencoba dengan nama tamunya sendiri. Pasang link etalase di lynk.id atau bio Instagram.

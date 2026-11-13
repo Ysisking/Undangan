@@ -72,7 +72,8 @@ ${engine}</script>`;
     const [kh, kb] = k.split('<!--@BODY-->');
     const KLASIK = path.join(ROOT, 'docs', 'klasik', slug);
     fs.mkdirSync(KLASIK, { recursive: true });
-    fs.writeFileSync(path.join(KLASIK, 'index.html'), bungkus(kh, kb, title, desc));
+    const ikon = '<link rel="icon" type="image/svg+xml" href="../../app/merek/undangan-ikon.svg">\n<link rel="apple-touch-icon" href="../../app/merek/ikon-180.png">\n';
+    fs.writeFileSync(path.join(KLASIK, 'index.html'), bungkus(ikon + kh, kb, title, desc));
     fs.writeFileSync(path.join(KLASIK, 'data.json'), JSON.stringify(D, null, 2));
   }
   daftar.push(slug);
