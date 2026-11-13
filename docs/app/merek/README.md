@@ -22,4 +22,8 @@ Setiap produk di bawah usaha induk memakai unsur yang sama:
   celah ini transparan, jadi logo aman di latar apa pun.
 - Huruf: **Plus Jakarta Sans** tebal (800), jarak huruf rapat.
 
-Untuk produk baru, ganti bentuk blok hitamnya saja dan pertahankan pita, celah, dan simpulnya.
+Logo induk menampilkan pita secara utuh. Logo produk menampilkan **potongan** pita saja:
+pita dipotong rapi oleh tepi blok hitam dan tidak keluar dari kotaknya (pada Undangan,
+lengan pita menjadi tutup amplop dan simpulnya terpotong tepi bawah).
+
+Untuk produk baru, ganti bentuk blok hitamnya dan potong pita di dalam bentuk itu.
