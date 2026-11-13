@@ -184,6 +184,18 @@ footer { padding: 26px var(--tepi) calc(26px + env(safe-area-inset-bottom, 0px))
   .cari:focus-within input { padding-right: 12px; }
   .cari:focus-within input::placeholder { color: inherit; }
 }
+/* ---------- tombol chat WhatsApp ---------- */
+.wa-chat { position: fixed; right: max(18px, env(safe-area-inset-right, 0px)); bottom: calc(18px + env(safe-area-inset-bottom, 0px)); z-index: 50; display: flex; align-items: center; gap: 10px; text-decoration: none; }
+.wa-chat .bulat { position: relative; display: grid; place-items: center; width: 58px; height: 58px; border-radius: 50%; background: #25d366; box-shadow: 0 10px 26px rgba(18,140,74,.38), 0 2px 6px rgba(0,0,0,.15); transition: transform .25s cubic-bezier(.2,.8,.2,1), box-shadow .25s; }
+.wa-chat .bulat::after { content: ""; position: absolute; inset: 0; border-radius: 50%; border: 2px solid #25d366; animation: wa-denyut 2.6s ease-out infinite; }
+@keyframes wa-denyut { 0% { transform: scale(1); opacity: .7; } 80%, 100% { transform: scale(1.55); opacity: 0; } }
+.wa-chat svg { width: 32px; height: 32px; fill: #fff; }
+.wa-chat:hover .bulat { transform: scale(1.07); box-shadow: 0 14px 32px rgba(18,140,74,.45); }
+.wa-chat .label { order: -1; padding: 9px 14px; border-radius: 999px; background: var(--putih); color: var(--tinta); font: 600 13.5px/1 var(--f); white-space: nowrap; box-shadow: 0 8px 22px rgba(42,35,34,.16); opacity: 0; transform: translateX(8px); pointer-events: none; transition: opacity .3s, transform .3s; }
+.wa-chat:hover .label, .wa-chat:focus-visible .label, .wa-chat.sapa .label { opacity: 1; transform: none; }
+body.terkunci .wa-chat { display: none; }
+@media (max-width: 520px) { .wa-chat .bulat { width: 54px; height: 54px; } .wa-chat svg { width: 30px; height: 30px; } }
+
 @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation: none !important; transition: none !important; } }
 </style>
 </head>
@@ -226,6 +238,11 @@ footer { padding: 26px var(--tepi) calc(26px + env(safe-area-inset-bottom, 0px))
 </section>
 <footer><span id="kaki">Studio Undangan</span></footer>
 
+<a class="wa-chat" id="wa-chat" target="_blank" rel="noopener" aria-label="Chat WhatsApp untuk pesan undangan" hidden>
+  <span class="bulat"><svg viewBox="0 0 32 32" aria-hidden="true"><path d="M16.04 3C8.86 3 3.03 8.82 3.03 16c0 2.3.6 4.53 1.74 6.5L3 29l6.68-1.75A12.95 12.95 0 0 0 16.04 29C23.2 29 29 23.18 29 16S23.2 3 16.04 3Zm0 23.8c-1.98 0-3.92-.53-5.61-1.53l-.4-.24-3.96 1.04 1.06-3.86-.26-.4A10.76 10.76 0 0 1 5.2 16c0-5.97 4.86-10.82 10.84-10.82 5.97 0 10.8 4.85 10.8 10.82 0 5.96-4.84 10.8-10.8 10.8Zm5.93-8.1c-.33-.16-1.93-.95-2.23-1.06-.3-.11-.52-.16-.73.17-.22.32-.84 1.05-1.03 1.27-.19.22-.38.24-.7.08-.33-.16-1.38-.51-2.62-1.62-.97-.86-1.62-1.93-1.81-2.25-.19-.33-.02-.5.14-.66.15-.15.33-.38.49-.57.16-.19.22-.33.33-.54.1-.22.05-.41-.03-.57-.08-.16-.73-1.76-1-2.41-.26-.63-.53-.55-.73-.56h-.62c-.22 0-.57.08-.87.41-.3.32-1.14 1.11-1.14 2.71s1.17 3.15 1.33 3.36c.16.22 2.3 3.5 5.56 4.91.78.34 1.39.54 1.86.69.78.25 1.49.21 2.05.13.63-.1 1.93-.79 2.2-1.55.27-.76.27-1.41.19-1.55-.08-.13-.3-.21-.62-.37Z"/></svg></span>
+  <span class="label">Chat untuk pesan</span>
+</a>
+
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.49.4/dist/umd/supabase.min.js"></script>
 <script src="../app/config.js"></script>
 <script src="../app/store.js"></script>
@@ -246,7 +263,7 @@ footer { padding: 26px var(--tepi) calc(26px + env(safe-area-inset-bottom, 0px))
   const IKON = { kiri: '<path d="M15 5l-7 7 7 7"/>', kanan: '<path d="M9 5l7 7-7 7"/>', tutup: '<path d="M6 6l12 12M18 6L6 18"/>' };
 
   /* ---------- pengaturan studio ---------- */
-  const P = { merek: 'Studio Undangan', tagline: '', wa: '', pesan: 'Halo, saya tertarik dengan desain undangan "{nama}".\n{link}', sembunyi: [] };
+  const P = { merek: 'Studio Undangan', tagline: '', wa: '082151185579', pesan: 'Halo, saya tertarik dengan desain undangan "{nama}".\n{link}', sembunyi: [] };
   let daftar = K.template.map((t) => Object.assign({}, t));
   let masuk = false;
   const S = { kat: 'semua', q: '', buka: null };
@@ -385,6 +402,8 @@ footer { padding: 26px var(--tepi) calc(26px + env(safe-area-inset-bottom, 0px))
     if (P.tagline) $('#tagline').textContent = P.tagline;
     $('#jumlah-desain').textContent = daftar.length + ' desain';
     const tanya = urlPesan(null); const b = $('#btn-tanya'); b.hidden = !tanya; if (tanya) b.href = tanya;
+    const wa = $('#wa-chat'); wa.hidden = !tanya; if (tanya) wa.href = tanya;
+    if (tanya && !terapkanPengaturan.sudah) { terapkanPengaturan.sudah = true; setTimeout(() => { wa.classList.add('sapa'); setTimeout(() => wa.classList.remove('sapa'), 4500); }, 2500); }
   }
   (async function mulai() {
     gambarChip(); gambarRak(); gambarKipas();          // tampil dulu dengan data bawaan

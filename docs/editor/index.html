@@ -1412,7 +1412,7 @@ h1, h2, h3 { margin: 0; font-weight: 400; }
      ===================================================================== */
   const KAT = window.KATALOG;
   const R = { tab: 'undangan', kat: 'semua', q: '', qU: '', daftar: [], peta: {}, etalase: null };
-  const ETALASE_BAWAAN = { peran: 'pengaturan', merek: 'Studio Undangan', tagline: '', wa: '', pesan: 'Halo, saya tertarik dengan desain undangan "{nama}".\n{link}', sembunyi: [] };
+  const ETALASE_BAWAAN = { peran: 'pengaturan', merek: 'Studio Undangan', tagline: '', wa: '082151185579', pesan: 'Halo, saya tertarik dengan desain undangan "{nama}".\n{link}', sembunyi: [] };
   const kodeAcak = () => Math.random().toString(36).slice(2, 6).padEnd(4, 'x');
   const urlEtalase = (key) => BASIS + 'etalase/' + (key ? '#' + key : '');
   const bukanUndangan = (u) => !!(u.data && u.data.peran);
@@ -1623,7 +1623,7 @@ h1, h2, h3 { margin: 0; font-weight: 400; }
         h('h2', { text: 'Pengaturan etalase' }),
         h('label', { class: 'e-medan' }, h('span', { text: 'Nama studio' }), merek),
         h('label', { class: 'e-medan' }, h('span', { text: 'Kalimat pembuka' }), tagline),
-        h('label', { class: 'e-medan' }, h('span', { text: 'Nomor WhatsApp untuk pesanan' }), wa, h('small', { text: 'Bila diisi, etalase menampilkan tombol "Pesan desain ini". Kosongkan untuk menyembunyikannya.' })),
+        h('label', { class: 'e-medan' }, h('span', { text: 'Nomor WhatsApp untuk pesanan' }), wa, h('small', { text: 'Dipakai tombol chat WhatsApp mengambang dan tombol "Pesan desain ini" di etalase.' })),
         h('label', { class: 'e-medan' }, h('span', { text: 'Teks pesan WhatsApp' }), pesan, h('small', { text: '{nama} dan {link} diganti otomatis dengan nama dan link desain.' })),
         h('div', { class: 'e-baris' }, h('button', { class: 'e-btn utama', type: 'submit', text: 'Simpan pengaturan' }))),
       h('div', { class: 'e-kartu d-form' },
