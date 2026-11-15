@@ -79,14 +79,14 @@ window.UNDANGAN = {
 /* Tata letak: satu kolom kartu undangan berwarna mawar pudar. Foto dalam bingkai oval dan lengkung,
    garis tipis sebagai pemisah, mawar satu garis yang tergambar sendiri saat muncul. */
 :root {
-  --latar: #f3ebe8;
+  --latar: #f4e9e5;
   --kertas: #f8f3f1;
   --bingkai: #e4d6d2;
-  --garis: #d8c4c1;
-  --mawar: #a88a8a;
-  --mawar-tua: #86696a;
-  --tinta: #4b3c3c;
-  --tinta-2: #6f5b5b;
+  --garis: #d3b8b4;
+  --mawar: #a87574;
+  --mawar-tua: #7d4f52;
+  --tinta: #3a2a2b;
+  --tinta-2: #5f4849;
   --f-judul: 'Bodoni Moda', 'Didot', Georgia, serif;
   --f-tulis: 'Mrs Saint Delafield', 'Snell Roundhand', cursive;
   --f-isi: 'Karla', 'Helvetica Neue', Arial, sans-serif;
@@ -94,6 +94,7 @@ window.UNDANGAN = {
   --ph-fg: var(--tinta-2);
   --ph-font: var(--f-isi);
   --toast-bg: var(--tinta); --toast-fg: var(--kertas); --toast-font: var(--f-isi);
+  --nada-foto: saturate(.78) sepia(.18) brightness(1.03);
   color-scheme: light;
 }
 /* ===== Gaya dasar bersama (fungsi, bukan tampilan tema) ===== */
@@ -113,6 +114,8 @@ a { color: inherit; }
 /* Slot foto: div dengan background-image.
    Bila kosong, tamu melihat monogram (inisial) bergaya template; di editor tampil ajakan menambah foto. */
 .foto { background-size: cover; background-position: center; position: relative; max-width: 100%; }
+/* Nada foto mengikuti palet template (foto asli tetap utuh saat diperbesar). */
+.foto:not([data-empty]) { filter: var(--nada-foto, none); }
 .foto[data-empty] { background: var(--ph-bg, #bbb); overflow: hidden; container-type: inline-size; }
 .foto[data-empty]::before { content: ""; position: absolute; inset: 9px; border: 1px solid var(--ph-fg, #fff); opacity: .28; border-radius: inherit; pointer-events: none; }
 .foto[data-empty]::after {
@@ -169,7 +172,7 @@ html.js.locked:not(.is-opening) .isi { visibility: hidden; }
   *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
 }
 
-body { background: var(--latar); color: var(--tinta); font: 300 16px/1.7 var(--f-isi); }
+body { background: var(--latar); color: var(--tinta); font: 400 16px/1.7 var(--f-isi); }
 
 /* ---------- mawar satu garis ---------- */
 .mawar { fill: none; stroke: var(--mawar); stroke-width: .9; stroke-linecap: round; stroke-linejoin: round; overflow: visible; }

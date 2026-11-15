@@ -118,6 +118,8 @@ a { color: inherit; }
 /* Slot foto: div dengan background-image.
    Bila kosong, tamu melihat monogram (inisial) bergaya template; di editor tampil ajakan menambah foto. */
 .foto { background-size: cover; background-position: center; position: relative; max-width: 100%; }
+/* Nada foto mengikuti palet template (foto asli tetap utuh saat diperbesar). */
+.foto:not([data-empty]) { filter: var(--nada-foto, none); }
 .foto[data-empty] { background: var(--ph-bg, #bbb); overflow: hidden; container-type: inline-size; }
 .foto[data-empty]::before { content: ""; position: absolute; inset: 9px; border: 1px solid var(--ph-fg, #fff); opacity: .28; border-radius: inherit; pointer-events: none; }
 .foto[data-empty]::after {

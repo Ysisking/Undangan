@@ -33,3 +33,11 @@ foto mempelai saat membuat undangan klien.
 | `contoh-galeri-4.webp` | Bride holds wedding bands (Unsplash) |
 | `contoh-galeri-5.webp` | Bride and groom on grass (Unsplash) |
 | `contoh-galeri-6.webp` | Wedding Day (Unsplash) |
+
+## Foto rumah gadang (template Gonjong)
+
+| Berkas | Sumber | Lisensi |
+| --- | --- | --- |
+| `rumah-gadang.webp` (langit dibuang, warna disesuaikan) | "Rumah Gadang Minangkabau PDIKM, Padang Panjang", via Wikimedia Commons | Domain publik |
+
+Foto contoh lain di folder ini sudah disesuaikan warnanya (lebih kalem dan hangat) agar serasi dengan palet template.

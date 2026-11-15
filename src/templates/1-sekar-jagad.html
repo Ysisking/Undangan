@@ -99,6 +99,7 @@ window.UNDANGAN = {
   --toast-bg: var(--soga-tua); --toast-fg: var(--mori); --toast-font: var(--f-isi);
   --kawung: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='44' height='44' viewBox='0 0 44 44'%3E%3Cg fill='none' stroke='%23c79c5e' stroke-width='.8'%3E%3Cellipse cx='22' cy='11.5' rx='6' ry='10'/%3E%3Cellipse cx='22' cy='32.5' rx='6' ry='10'/%3E%3Cellipse cx='11.5' cy='22' rx='10' ry='6'/%3E%3Cellipse cx='32.5' cy='22' rx='10' ry='6'/%3E%3C/g%3E%3Ccircle cx='22' cy='22' r='1.4' fill='%23c79c5e'/%3E%3Ccircle cx='0' cy='0' r='1.4' fill='%23c79c5e'/%3E%3Ccircle cx='44' cy='0' r='1.4' fill='%23c79c5e'/%3E%3Ccircle cx='0' cy='44' r='1.4' fill='%23c79c5e'/%3E%3Ccircle cx='44' cy='44' r='1.4' fill='%23c79c5e'/%3E%3C/svg%3E");
   --parang: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='22' height='22' viewBox='0 0 22 22'%3E%3Cpath d='M-4 26 C2 18 4 14 11 11 S20 4 26 -4' fill='none' stroke='%23c79c5e' stroke-width='3.2'/%3E%3Cpath d='M-4 26 C2 18 4 14 11 11 S20 4 26 -4' fill='none' stroke='%231f140d' stroke-width='1'/%3E%3Ccircle cx='4' cy='4' r='1.6' fill='%23c79c5e'/%3E%3Ccircle cx='18' cy='18' r='1.6' fill='%23c79c5e'/%3E%3C/svg%3E");
+  --nada-foto: sepia(.3) saturate(.86) contrast(1.03);
   color-scheme: light;
 }
 /*@BASE*/
@@ -140,7 +141,8 @@ html.is-opening .pintu.kanan { transform: rotateY(108deg); }
   transition: opacity .6s, transform .8s;
 }
 html.is-opening .sampul-isi { opacity: 0; transform: scale(.96); }
-.sampul-isi .gunungan { width: 74px; animation: goyang 7s ease-in-out infinite; transform-origin: 50% 100%; }
+.gunungan { display: block; height: auto; filter: drop-shadow(0 6px 14px rgba(0,0,0,.45)); }
+.sampul-isi .gunungan { width: 78px; margin-inline: auto; animation: goyang 7s ease-in-out infinite; transform-origin: 50% 100%; }
 .aksara { font: 500 15px/1.6 var(--f-jawa); color: var(--emas); letter-spacing: .08em; }
 .label { font: 400 13px/1 var(--f-judul); letter-spacing: .42em; text-transform: uppercase; color: var(--emas-muda); padding-left: .42em; }
 .sampul-isi h1 { margin: 6px 0 2px; font: 400 clamp(48px, 14vw, 76px)/1.05 var(--f-nama); color: var(--mori); text-wrap: balance; }
@@ -297,7 +299,7 @@ html.is-opening .sampul-isi { opacity: 0; transform: scale(.96); }
 .alamat-kado b { display: block; color: var(--tinta); font-weight: 500; }
 
 /* Penutup */
-.penutup .gunungan { width: 90px; margin: 0 auto 18px; }
+.penutup .gunungan { width: 84px; margin: 0 auto 18px; }
 .penutup h2 { margin: 10px 0; font: 400 58px/1.1 var(--f-nama); color: var(--emas-muda); }
 .kredit { padding: 18px; text-align: center; font: 400 12px/1.4 var(--f-judul); letter-spacing: .2em; color: rgba(239,228,208,.45); background: var(--malam); }
 
@@ -345,7 +347,7 @@ html.musik-on .musik .ikon-putar { display: none; }
   <div class="pintu kiri"></div>
   <div class="pintu kanan"></div>
   <div class="sampul-isi">
-    <svg class="gunungan" viewBox="0 0 120 170" aria-hidden="true"><use href="#gunungan"/></svg>
+    <img class="gunungan" src="../aset/wayang-gunungan.webp" alt="" aria-hidden="true">
     <div class="aksara" lang="jv">ꦱꦸꦒꦼꦁꦫꦮꦸꦃ</div>
     <div class="label" data-k="sampul.label">Pawiwahan</div>
     <h1 data-k="$.pasangan">Galih &amp; Ratri</h1>
@@ -357,7 +359,7 @@ html.musik-on .musik .ikon-putar { display: none; }
 
 <div class="panggung">
   <aside class="panel-kiri" aria-hidden="true">
-    <svg class="gunungan" viewBox="0 0 120 170"><use href="#gunungan"/></svg>
+    <img class="gunungan" src="../aset/wayang-gunungan.webp" alt="">
     <div class="label" data-k="sampul.label"></div>
     <h2 data-k="$.pasangan"></h2>
     <div class="tgl label" data-k="tanggalUtama|titik"></div>
@@ -535,7 +537,7 @@ html.musik-on .musik .ikon-putar { display: none; }
 
     <!-- Penutup -->
     <section class="bagian gelap penutup">
-      <svg class="gunungan" viewBox="0 0 120 170" data-reveal="up" aria-hidden="true"><use href="#gunungan"/></svg>
+      <img class="gunungan" src="../aset/wayang-gunungan.webp" alt="" data-reveal="up" aria-hidden="true">
       <p class="teks" data-reveal data-k="penutup.teks"></p>
       <p class="judul" data-reveal style="margin-top:26px" data-k="penutup.salam"></p>
       <h2 data-reveal data-k="$.pasangan"></h2>

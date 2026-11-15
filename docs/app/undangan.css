@@ -38,6 +38,7 @@
 
 /* ---------- foto ---------- */
 .u-foto { position: relative; background: var(--u-bingkai) center / cover no-repeat; max-width: 100%; }
+.u-foto:not([data-kosong]) { filter: saturate(.86) sepia(.08); }
 .u-foto[data-kosong]::after { content: attr(data-label); position: absolute; inset: 0; display: grid; place-items: center; padding: 8px; font: 400 10px/1.4 var(--u-f-isi); letter-spacing: .22em; text-transform: uppercase; color: var(--u-redup); }
 .u-bentuk-oval { border-radius: 50%; }
 .u-bentuk-lengkung { border-radius: 999px 999px 0 0; }

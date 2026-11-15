@@ -121,6 +121,7 @@ window.UNDANGAN = {
   --ph-mono: var(--f-tulis);
   --toast-bg: var(--hijau); --toast-fg: var(--krem); --toast-font: var(--f-isi);
   --butir: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 .07 0'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E");
+  --nada-foto: saturate(.8) sepia(.18);
   color-scheme: light;
 }
 /* ===== Gaya dasar bersama (fungsi, bukan tampilan tema) ===== */
@@ -140,6 +141,8 @@ a { color: inherit; }
 /* Slot foto: div dengan background-image.
    Bila kosong, tamu melihat monogram (inisial) bergaya template; di editor tampil ajakan menambah foto. */
 .foto { background-size: cover; background-position: center; position: relative; max-width: 100%; }
+/* Nada foto mengikuti palet template (foto asli tetap utuh saat diperbesar). */
+.foto:not([data-empty]) { filter: var(--nada-foto, none); }
 .foto[data-empty] { background: var(--ph-bg, #bbb); overflow: hidden; container-type: inline-size; }
 .foto[data-empty]::before { content: ""; position: absolute; inset: 9px; border: 1px solid var(--ph-fg, #fff); opacity: .28; border-radius: inherit; pointer-events: none; }
 .foto[data-empty]::after {
@@ -423,6 +426,9 @@ html.mode-edit .warna-butir .kode { display: block; }
 .penutup-isi { position: relative; z-index: 1; margin-top: -120px; padding-inline: max(28px, env(safe-area-inset-left, 0px)); }
 .penutup .salam-tutup { margin: 0; font: 400 40px/1 var(--f-tulis); color: var(--emas-2); }
 .penutup .nama-akhir { margin: 6px 0 0; font: 400 22px/1.2 var(--f-judul); letter-spacing: .14em; text-transform: uppercase; }
+.penutup .teks { color: rgba(244,239,229,.84); }
+.penutup .kecil { color: rgba(224,203,155,.85); }
+.penutup-isi { text-align: center; }
 .penutup .kutip { margin: 16px auto 0; max-width: 30ch; font: italic 400 17px/1.5 var(--f-isi); color: rgba(244,239,229,.86); white-space: pre-line; }
 .kredit { padding: 18px 16px calc(96px + env(safe-area-inset-bottom, 0px)); text-align: center; font: 500 9.5px/1.5 var(--f-judul); letter-spacing: .22em; text-transform: uppercase; color: rgba(224,203,155,.6); background: var(--hijau) var(--butir); }
 
