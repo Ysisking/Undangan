@@ -3,10 +3,10 @@ window.UNDANGAN = {
   "tamuBawaan": "Bapak/Ibu/Saudara/i",
   "tanggalUtama": "2027-03-20T09:00:00+07:00",
   "musik": {
-    "url": "",
+    "url": "../aset/musik/vivaldi-musim-semi.mp3",
     "otomatis": true,
-    "judul": "Lagu kenangan kami",
-    "artis": "Radio Kabar Bahagia"
+    "judul": "La Primavera (Musim Semi)",
+    "artis": "Antonio Vivaldi · The Modena Chamber Orchestra"
   },
   "koran": {
     "nama": "Kabar Bahagia",

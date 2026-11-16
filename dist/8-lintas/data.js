@@ -3,14 +3,14 @@ window.UNDANGAN = {
   "tamuBawaan": "Bapak/Ibu/Saudara/i",
   "tanggalUtama": "2027-06-19T16:00:00+08:00",
   "musik": {
-    "url": "",
+    "url": "../aset/musik/pachelbel-canon.mp3",
     "otomatis": true,
-    "judul": "Terbang Bersamamu",
-    "artis": "Lagu perjalanan kami"
+    "judul": "Canon in D",
+    "artis": "Johann Pachelbel · M. Fischer v. Mollard, CC BY 4.0"
   },
   "sampul": {
     "label": "Boarding pass pernikahan",
-    "foto": "../aset/contoh-pasangan.webp",
+    "foto": "../aset/contoh-tebing.webp",
     "tombol": "Boarding sekarang"
   },
   "perjalanan": {

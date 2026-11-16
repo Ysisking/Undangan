@@ -23,7 +23,7 @@ window.UNDANGAN = {
   id: 'dimas-kirana',
   tamuBawaan: 'Teman-teman terkasih',
   tanggalUtama: '2027-01-17T09:00:00+07:00',
-  musik: { url: '', otomatis: true },
+  musik: { url: '../aset/musik/joplin-the-entertainer.mp3', otomatis: true, judul: 'The Entertainer', artis: 'Scott Joplin · piano' },
 
   sampul: { label: 'Rol 01 · 36 eksp · ISO 400', foto: '../aset/contoh-pasangan.webp' },
   pembuka: {
@@ -130,6 +130,25 @@ a { color: inherit; }
 html.mode-edit .foto[data-empty]::after { content: "Ketuk untuk menambah foto"; font: 500 10px/1.5 var(--ph-font, system-ui, sans-serif); letter-spacing: .2em; text-transform: uppercase; opacity: .85; }
 [data-zoom][data-url] { cursor: zoom-in; }
 
+/* ===== Foto yang menyatu dengan halaman (gradasi tepi, bukan sekadar bingkai) =====
+   .lebur-b   : memudar ke bawah        .lebur-a   : memudar ke atas
+   .lebur-ab  : memudar atas & bawah    .lebur-kk  : memudar kiri & kanan
+   .lebur-o   : memudar melingkar (vinyet)
+   Titik pudar bisa diatur per pemakaian: --lb-a (mulai) dan --lb-b (habis). */
+.lebur-b { -webkit-mask-image: linear-gradient(to bottom, #000 var(--lb-a, 55%), transparent var(--lb-b, 100%)); mask-image: linear-gradient(to bottom, #000 var(--lb-a, 55%), transparent var(--lb-b, 100%)); }
+.lebur-a { -webkit-mask-image: linear-gradient(to top, #000 var(--lb-a, 55%), transparent var(--lb-b, 100%)); mask-image: linear-gradient(to top, #000 var(--lb-a, 55%), transparent var(--lb-b, 100%)); }
+.lebur-ab { -webkit-mask-image: linear-gradient(transparent 0, #000 var(--lb-a, 22%), #000 var(--lb-b, 72%), transparent 100%); mask-image: linear-gradient(transparent 0, #000 var(--lb-a, 22%), #000 var(--lb-b, 72%), transparent 100%); }
+.lebur-kk { -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 var(--lb-a, 18%), #000 var(--lb-b, 82%), transparent 100%); mask-image: linear-gradient(90deg, transparent 0, #000 var(--lb-a, 18%), #000 var(--lb-b, 82%), transparent 100%); }
+.lebur-o { -webkit-mask-image: radial-gradient(ellipse 70% 68% at 50% 46%, #000 var(--lb-a, 52%), transparent var(--lb-b, 100%)); mask-image: radial-gradient(ellipse 70% 68% at 50% 46%, #000 var(--lb-a, 52%), transparent var(--lb-b, 100%)); }
+/* Foto lebar yang menembus padding bagian tidak dibatasi lebar wadah */
+.foto[class*="lebur"] { max-width: none; }
+/* Gerak pelan ala sinema (Ken Burns) untuk foto besar */
+.kenburns { animation: kenburns 24s ease-in-out infinite alternate; will-change: transform; }
+@keyframes kenburns { from { transform: scale(1.03); } to { transform: scale(1.13) translate(-1.5%, -1.2%); } }
+html.mode-edit .kenburns { animation: none; }
+/* Foto latar sampul: di halaman tamu disembunyikan bila belum diisi */
+html:not(.mode-edit) .sampul-foto[data-empty], html:not(.mode-edit) .foto-opsional[data-empty] { display: none; }
+
 /* Bagian utama tersembunyi sampai sampul dibuka */
 html.js.locked:not(.is-opening) .isi { visibility: hidden; }
 .isi { overflow-x: clip; }
@@ -181,6 +200,9 @@ body { background: var(--meja); color: var(--tinta); font: 400 18px/1.6 var(--f-
 .butir { position: fixed; inset: 0; z-index: 60; pointer-events: none; opacity: .09; mix-blend-mode: multiply; background-size: 160px; }
 
 /* ---------- SAMPUL ---------- */
+.sampul-foto { position: absolute !important; inset: -30px; filter: grayscale(1) contrast(1.1) brightness(.42) blur(2px) !important; }
+.sampul::before { content: ""; position: absolute; inset: 0; z-index: 1; background: radial-gradient(ellipse at 50% 45%, transparent 35%, rgba(0,0,0,.7) 100%); pointer-events: none; }
+.sampul > .kotak-film { z-index: 2; }
 .sampul { position: fixed; inset: 0; z-index: 50; display: grid; place-items: center; background: var(--meja); color: var(--kertas); overflow: hidden;
   padding: 24px max(20px, env(safe-area-inset-right, 0px)) 24px max(20px, env(safe-area-inset-left, 0px)); }
 html.is-open .sampul { display: none; }
@@ -361,6 +383,7 @@ html.musik-on .musik svg { animation: putar 3s linear infinite; }
 <div class="butir" aria-hidden="true"></div>
 
 <section class="sampul" aria-label="Sampul undangan">
+  <div class="foto sampul-foto kenburns" data-src="sampul.foto"></div>
   <div class="kotak-film">
     <div class="baris"><span>Undangan</span><span data-k="tanggalUtama|titik"></span></div>
     <h1><span data-k="$.a.panggilan">Dimas</span><span>&amp; <span data-k="$.b.panggilan" style="display:inline;padding:0">Kirana</span></span></h1>
@@ -1078,7 +1101,7 @@ html.musik-on .musik svg { animation: putar 3s linear infinite; }
       $$('[data-each]').forEach((l) => {
         const butir = Array.from(l.children).filter((c) => c.tagName !== 'TEMPLATE' && c.dataset.index != null);
         let terlihat = 0;
-        butir.forEach((c) => { const f = c.matches('[data-src]') ? c : c.querySelector('[data-src]'); if (f && f.hasAttribute('data-empty') && f.hasAttribute('data-zoom')) c.hidden = true; else terlihat++; });
+        butir.forEach((c) => { const f = c.matches('[data-src]') ? c : c.querySelector('[data-src]'); if (f && f.hasAttribute('data-empty') && f.hasAttribute('data-zoom') && !f.classList.contains('foto-opsional')) c.hidden = true; else terlihat++; });
         if (butir.length && !terlihat) { const sec = l.closest('section'); if (sec) sec.hidden = true; }
       });
     }

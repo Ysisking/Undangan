@@ -3,15 +3,19 @@
   "tamuBawaan": "Bapak/Ibu/Saudara/i",
   "tanggalUtama": "2027-02-13T08:00:00+07:00",
   "musik": {
-    "url": "",
+    "url": "../aset/musik/romance-anonimo-gitar.mp3",
     "otomatis": true,
-    "judul": "Kampuang Nan Jauh di Mato",
-    "artis": "Instrumen saluang"
+    "judul": "Romance Anónimo",
+    "artis": "Gitar klasik"
   },
   "sampul": {
     "label": "Baralek Gadang",
     "pembuka": "The Wedding of",
-    "foto": "../aset/contoh-pasangan.webp"
+    "foto": "../aset/contoh-galeri-6.webp"
+  },
+  "suasana": {
+    "hitung": "../aset/contoh-galeri-5.webp",
+    "penutup": "../aset/contoh-pasangan.webp"
   },
   "pembuka": {
     "salam": "Assalamu'alaikum Warahmatullahi Wabarakatuh",
@@ -88,12 +92,14 @@
     {
       "tahun": "2020",
       "judul": "Kenal di rantau",
-      "cerita": "Sama-sama merantau ke Jakarta, kami bertemu di acara ikatan keluarga Minang."
+      "cerita": "Sama-sama merantau ke Jakarta, kami bertemu di acara ikatan keluarga Minang.",
+      "foto": "../aset/contoh-galeri-3.webp"
     },
     {
       "tahun": "2025",
       "judul": "Maminang",
-      "cerita": "Keluarga besar Salsabila datang meminang sesuai adat, diterima dengan sirih dan doa."
+      "cerita": "Keluarga besar Salsabila datang meminang sesuai adat, diterima dengan sirih dan doa.",
+      "foto": "../aset/contoh-galeri-4.webp"
     }
   ],
   "galeri": [

@@ -3,12 +3,14 @@ window.UNDANGAN = {
   "tamuBawaan": "Bapak/Ibu/Saudara/i",
   "tanggalUtama": "2026-12-12T08:00:00+07:00",
   "musik": {
-    "url": "",
-    "otomatis": true
+    "url": "../aset/musik/gamelan-ketawang-retna-wigena.mp3",
+    "otomatis": true,
+    "judul": "Ketawang Retna Wigena (pelog nem)",
+    "artis": "Gamelan · Dandung Adityo, CC BY-SA 4.0"
   },
   "sampul": {
     "label": "Pawiwahan",
-    "foto": "../aset/contoh-pasangan.webp"
+    "foto": "../aset/contoh-adat.webp"
   },
   "pembuka": {
     "salam": "Sugeng rawuh",
@@ -64,17 +66,20 @@ window.UNDANGAN = {
     {
       "tahun": "2018",
       "judul": "Satu Kelas Gambar",
-      "cerita": "Kami bertemu di kelas menggambar sketsa bangunan di Kotagede. Galih selalu lupa membawa penghapus, Ratri selalu membawa dua."
+      "cerita": "Kami bertemu di kelas menggambar sketsa bangunan di Kotagede. Galih selalu lupa membawa penghapus, Ratri selalu membawa dua.",
+      "foto": "../aset/contoh-galeri-3.webp"
     },
     {
       "tahun": "2022",
       "judul": "Lamaran Sederhana",
-      "cerita": "Di teras rumah Eyang, disaksikan keluarga dan sepiring jadah tempe, Galih meminta restu."
+      "cerita": "Di teras rumah Eyang, disaksikan keluarga dan sepiring jadah tempe, Galih meminta restu.",
+      "foto": "../aset/contoh-galeri-4.webp"
     },
     {
       "tahun": "2026",
       "judul": "Menuju Pelaminan",
-      "cerita": "Setelah empat tahun saling menunggu dan saling menguatkan, kami memilih untuk melangkah bersama."
+      "cerita": "Setelah empat tahun saling menunggu dan saling menguatkan, kami memilih untuk melangkah bersama.",
+      "foto": "../aset/contoh-galeri-1.webp"
     }
   ],
   "galeri": [

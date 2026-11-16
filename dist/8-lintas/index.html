@@ -72,6 +72,25 @@ a { color: inherit; }
 html.mode-edit .foto[data-empty]::after { content: "Ketuk untuk menambah foto"; font: 500 10px/1.5 var(--ph-font, system-ui, sans-serif); letter-spacing: .2em; text-transform: uppercase; opacity: .85; }
 [data-zoom][data-url] { cursor: zoom-in; }
 
+/* ===== Foto yang menyatu dengan halaman (gradasi tepi, bukan sekadar bingkai) =====
+   .lebur-b   : memudar ke bawah        .lebur-a   : memudar ke atas
+   .lebur-ab  : memudar atas & bawah    .lebur-kk  : memudar kiri & kanan
+   .lebur-o   : memudar melingkar (vinyet)
+   Titik pudar bisa diatur per pemakaian: --lb-a (mulai) dan --lb-b (habis). */
+.lebur-b { -webkit-mask-image: linear-gradient(to bottom, #000 var(--lb-a, 55%), transparent var(--lb-b, 100%)); mask-image: linear-gradient(to bottom, #000 var(--lb-a, 55%), transparent var(--lb-b, 100%)); }
+.lebur-a { -webkit-mask-image: linear-gradient(to top, #000 var(--lb-a, 55%), transparent var(--lb-b, 100%)); mask-image: linear-gradient(to top, #000 var(--lb-a, 55%), transparent var(--lb-b, 100%)); }
+.lebur-ab { -webkit-mask-image: linear-gradient(transparent 0, #000 var(--lb-a, 22%), #000 var(--lb-b, 72%), transparent 100%); mask-image: linear-gradient(transparent 0, #000 var(--lb-a, 22%), #000 var(--lb-b, 72%), transparent 100%); }
+.lebur-kk { -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 var(--lb-a, 18%), #000 var(--lb-b, 82%), transparent 100%); mask-image: linear-gradient(90deg, transparent 0, #000 var(--lb-a, 18%), #000 var(--lb-b, 82%), transparent 100%); }
+.lebur-o { -webkit-mask-image: radial-gradient(ellipse 70% 68% at 50% 46%, #000 var(--lb-a, 52%), transparent var(--lb-b, 100%)); mask-image: radial-gradient(ellipse 70% 68% at 50% 46%, #000 var(--lb-a, 52%), transparent var(--lb-b, 100%)); }
+/* Foto lebar yang menembus padding bagian tidak dibatasi lebar wadah */
+.foto[class*="lebur"] { max-width: none; }
+/* Gerak pelan ala sinema (Ken Burns) untuk foto besar */
+.kenburns { animation: kenburns 24s ease-in-out infinite alternate; will-change: transform; }
+@keyframes kenburns { from { transform: scale(1.03); } to { transform: scale(1.13) translate(-1.5%, -1.2%); } }
+html.mode-edit .kenburns { animation: none; }
+/* Foto latar sampul: di halaman tamu disembunyikan bila belum diisi */
+html:not(.mode-edit) .sampul-foto[data-empty], html:not(.mode-edit) .foto-opsional[data-empty] { display: none; }
+
 /* Bagian utama tersembunyi sampai sampul dibuka */
 html.js.locked:not(.is-opening) .isi { visibility: hidden; }
 .isi { overflow-x: clip; }
@@ -167,7 +186,9 @@ html:not(.mode-edit) .globe .meridian { animation: rotasi 14s linear infinite; t
 
 /* ---------- SAMPUL: boarding pass ---------- */
 .sampul { position: fixed; inset: 0; z-index: 50; overflow: hidden auto; display: grid; place-items: center; background: var(--navy); padding: max(22px, calc(env(safe-area-inset-top, 0px) + 14px)) max(16px, env(safe-area-inset-right, 0px)) max(22px, calc(env(safe-area-inset-bottom, 0px) + 14px)) max(16px, env(safe-area-inset-left, 0px)); transition: background .6s .9s; }
-.sampul::before { content: ""; position: absolute; inset: 0; background: radial-gradient(ellipse at 50% 0%, rgba(255,255,255,.08), transparent 60%); pointer-events: none; }
+.sampul::before { content: ""; position: absolute; inset: 0; z-index: 1; background: radial-gradient(ellipse at 50% 0%, rgba(255,255,255,.1), transparent 60%), linear-gradient(rgba(20,32,62,.55), rgba(20,32,62,.82)); pointer-events: none; }
+.sampul-foto { position: absolute !important; inset: -30px; z-index: 0; filter: blur(6px) saturate(.7) !important; transform: scale(1.05); }
+.sampul > .tiket { z-index: 2; }
 .tiket { position: relative; width: min(360px, 100%); display: grid; }
 .tiket-badan { position: relative; padding: 26px 22px 16px; text-align: center; transition: transform 1.1s cubic-bezier(.6,0,.3,1) .35s, opacity .6s .7s; }
 .tiket-badan, .tiket-sobekan { background: var(--kertas) var(--serat); }
@@ -341,7 +362,7 @@ html.is-open .sampul { visibility: hidden; }
 
 /* Penutup */
 .penutup { padding-bottom: 30px; }
-.penutup .foto { aspect-ratio: 4 / 5; border-radius: 18px; margin-top: 22px; filter: grayscale(.15); }
+.penutup .foto { aspect-ratio: 4 / 5; border-radius: 18px 18px 0 0; margin-top: 22px; filter: grayscale(.15); -webkit-mask-image: linear-gradient(#000 60%, transparent); mask-image: linear-gradient(#000 60%, transparent); }
 .penutup .tulis-besar { margin: 22px 0 0; font: 400 46px/1 var(--f-tulis); color: var(--kertas); }
 .penutup .nama-akhir { margin: 6px 0 0; font: 400 20px/1.2 var(--f-judul); letter-spacing: .14em; text-transform: uppercase; color: var(--kertas); }
 .penutup .cap { margin: 18px auto 0; color: var(--kertas); opacity: .55; }
@@ -386,6 +407,7 @@ html.musik-on .navigasi .ik-putar { display: none; }
 
 <!-- ===== SAMPUL: boarding pass ===== -->
 <section class="sampul" aria-label="Sampul undangan">
+  <div class="foto sampul-foto" data-src="sampul.foto"></div>
   <div class="tiket">
     <div class="tiket-badan gerigi" style="-webkit-mask-size:16px 51%,16px 51%;mask-size:16px 51%,16px 51%">
       <span class="samping" aria-hidden="true">Keberangkatan</span>
@@ -1165,7 +1187,7 @@ html.musik-on .navigasi .ik-putar { display: none; }
       $$('[data-each]').forEach((l) => {
         const butir = Array.from(l.children).filter((c) => c.tagName !== 'TEMPLATE' && c.dataset.index != null);
         let terlihat = 0;
-        butir.forEach((c) => { const f = c.matches('[data-src]') ? c : c.querySelector('[data-src]'); if (f && f.hasAttribute('data-empty') && f.hasAttribute('data-zoom')) c.hidden = true; else terlihat++; });
+        butir.forEach((c) => { const f = c.matches('[data-src]') ? c : c.querySelector('[data-src]'); if (f && f.hasAttribute('data-empty') && f.hasAttribute('data-zoom') && !f.classList.contains('foto-opsional')) c.hidden = true; else terlihat++; });
         if (butir.length && !terlihat) { const sec = l.closest('section'); if (sec) sec.hidden = true; }
       });
     }

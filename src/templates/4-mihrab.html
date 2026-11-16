@@ -12,9 +12,16 @@ window.UNDANGAN = {
   id: 'fikri-aisyah',
   tamuBawaan: 'Bapak/Ibu/Saudara/i',
   tanggalUtama: '2026-12-27T08:00:00+08:00',
-  musik: { url: '', otomatis: true },
+  musik: { url: '../aset/musik/saint-saens-reverie-du-soir.mp3', otomatis: true, judul: 'Rêverie du soir', artis: 'Camille Saint-Saëns · Suite Algérienne' },
 
   sampul: { label: "Walimatul 'Ursy", foto: '../aset/contoh-pasangan.webp' },
+  // Karya seni Islam asli (koleksi museum). Boleh diganti dengan gambar lain.
+  seni: {
+    mihrab: '../aset/islami-mihrab.webp',
+    medali: '../aset/islami-medali.webp',
+    iluminasi: '../aset/islami-iluminasi.webp',
+    kredit: "Mihrab Madrasa Imami, Isfahan 1354 (Metropolitan Museum of Art, CC BY-SA 4.0) · Iluminasi Al-Qur'an Mamluk, Perpustakaan Nasional Mesir (domain publik) · Kaligrafi basmalah: Abdelghani Azzi (domain publik)",
+  },
   pembuka: {
     salam: "Assalamu'alaikum Warahmatullahi Wabarakatuh",
     ayat: 'وَمِنْ آيَاتِهِ أَنْ خَلَقَ لَكُم مِّنْ أَنفُسِكُمْ أَزْوَاجًا لِّتَسْكُنُوا إِلَيْهَا وَجَعَلَ بَيْنَكُم مَّوَدَّةً وَرَحْمَةً ۚ إِنَّ فِي ذَٰلِكَ لَآيَاتٍ لِّقَوْمٍ يَتَفَكَّرُونَ',
@@ -36,7 +43,7 @@ window.UNDANGAN = {
       peta: 'https://maps.google.com/?q=Pettarani+Makassar' },
   ],
   kisah: [
-    { tahun: '2023', judul: "Ta'aruf", cerita: 'Diperkenalkan oleh guru mengaji kami. Pertemuan pertama ditemani keluarga, dengan teh hangat dan banyak rasa canggung.' },
+    { tahun: '2023', judul: "Ta'aruf", cerita: 'Diperkenalkan oleh guru mengaji kami. Pertemuan pertama ditemani keluarga, dengan teh hangat dan banyak rasa canggung.', foto: '../aset/contoh-galeri-3.webp' },
     { tahun: '2025', judul: 'Khitbah', cerita: 'Keluarga besar Fikri datang ke rumah Aisyah untuk melamar. Bismillah, lamaran diterima.' },
     { tahun: '2026', judul: 'Akad', cerita: 'Insya Allah kami akan mengikat janji suci di hadapan Allah dan keluarga.' },
   ],
@@ -91,39 +98,42 @@ window.UNDANGAN = {
   --toast-bg: var(--zamrud); --toast-fg: var(--sampanye-2); --toast-font: var(--f-isi);
   --lengkung: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 140' preserveAspectRatio='none'%3E%3Cpath d='M0 140V52C0 30 22 14 50 0C78 14 100 30 100 52V140Z'/%3E%3C/svg%3E");
   --bintang: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='64' height='64' viewBox='0 0 64 64'%3E%3Cg fill='none' stroke='%23d4bc93' stroke-width='.9'%3E%3Crect x='19' y='19' width='26' height='26'/%3E%3Crect x='19' y='19' width='26' height='26' transform='rotate(45 32 32)'/%3E%3Cpath d='M32 0V13.6M32 50.4V64M0 32H13.6M50.4 32H64M0 0L13 13M64 0L51 13M0 64L13 51M64 64L51 51'/%3E%3Ccircle cx='32' cy='32' r='6'/%3E%3C/g%3E%3C/svg%3E");
-  --nada-foto: saturate(.8) sepia(.16);
+  --nada-foto: saturate(.86) sepia(.1);
+  --pola: linear-gradient(rgba(15,58,53,.9), rgba(15,58,53,.9)), url("../aset/islami-iluminasi.webp") center / 340px;
+  --kaligrafi: url("../aset/islami-basmalah.png");
   color-scheme: light;
 }
 /*@BASE*/
 body { background: var(--zamrud); color: var(--tinta); font: 400 16px/1.7 var(--f-isi); }
 .arab { font-family: var(--f-arab); direction: rtl; }
 
-/* ---------- SAMPUL ---------- */
-.sampul { position: fixed; inset: 0; z-index: 50; display: grid; place-items: center; overflow: hidden; background: var(--zamrud);
-  padding: 20px max(20px, env(safe-area-inset-right, 0px)) 20px max(20px, env(safe-area-inset-left, 0px)); transition: opacity .6s .7s, visibility 0s 1.3s; }
-.sampul::before { content: ""; position: absolute; inset: -50%; background: var(--bintang) 0 0 / 64px; opacity: .14; animation: putar 240s linear infinite; }
+/* ---------- SAMPUL: kaligrafi basmalah, mihrab keramik Isfahan, lalu tamu melangkah masuk ---------- */
+.sampul { position: fixed; inset: 0; z-index: 50; overflow: hidden auto; background: var(--pola); color: var(--sampanye-2); transition: opacity .7s .8s, visibility 0s 1.5s; }
+.sampul::before { content: ""; position: absolute; inset: 0; background: radial-gradient(ellipse 80% 55% at 50% 38%, rgba(36,103,95,.55), transparent 70%), linear-gradient(transparent 55%, rgba(8,32,29,.85)); pointer-events: none; }
 html.is-opening .sampul { opacity: 0; visibility: hidden; }
-.gerbang { position: relative; width: min(330px, 100%); height: min(560px, calc(100vh - 60px)); height: min(560px, calc(100dvh - 60px)); display: grid; transition: transform 1.3s cubic-bezier(.6,0,.4,1); }
-html.is-opening .gerbang { transform: scale(4.5); }
-.gerbang .luar, .gerbang .dalam { position: absolute; -webkit-mask: var(--lengkung) center / 100% 100% no-repeat; mask: var(--lengkung) center / 100% 100% no-repeat; }
-.gerbang .luar { inset: 0; background: linear-gradient(var(--sampanye), #a88b5c); }
-.gerbang .dalam { inset: 7px; background: radial-gradient(ellipse at 50% 20%, #24675f, var(--zamrud-2) 45%, #0b2d29); }
-.gerbang .isi-gerbang { position: relative; display: grid; align-content: center; justify-items: center; gap: 10px; padding: 70px 26px 30px; text-align: center; color: var(--sampanye-2); }
+.gerbang { position: relative; min-height: 100%; display: grid; align-content: center; justify-items: center; gap: 8px; text-align: center;
+  padding: max(26px, env(safe-area-inset-top, 0px)) max(22px, env(safe-area-inset-right, 0px)) max(24px, env(safe-area-inset-bottom, 0px)) max(22px, env(safe-area-inset-left, 0px)); }
+.gerbang > :not(.seni-mihrab) { position: relative; z-index: 1; }
+.kaligrafi { width: 64px; aspect-ratio: 420 / 576; background: var(--sampanye); -webkit-mask: var(--kaligrafi) center / contain no-repeat; mask: var(--kaligrafi) center / contain no-repeat; filter: drop-shadow(0 2px 10px rgba(212,188,147,.35)); }
+.seni-mihrab { position: relative; width: min(230px, 58vw); aspect-ratio: 720 / 1082; margin: 6px 0 -34px; transition: transform 1.4s cubic-bezier(.6,0,.4,1), opacity 1.2s; }
+.seni-mihrab .foto { position: absolute; inset: 0; filter: saturate(1.05) drop-shadow(0 20px 40px rgba(0,0,0,.45)); --lb-a: 62%; --lb-b: 100%; }
+html.is-opening .seni-mihrab { transform: scale(2.6) translateY(8%); opacity: 0; }
 .basmalah { font: 400 26px/1.6 var(--f-arab); color: var(--sampanye); }
 .label { font: 600 11px/1.3 var(--f-isi); letter-spacing: .34em; text-transform: uppercase; color: var(--sampanye); padding-left: .34em; }
-.gerbang h1 { margin: 8px 0 4px; font: 400 clamp(40px, 12vw, 52px)/1.05 var(--f-judul); color: var(--putih); text-wrap: balance; }
+.gerbang h1 { position: relative; margin: 2px 0 2px; font: 400 clamp(42px, 12.5vw, 56px)/1.05 var(--f-judul); color: var(--putih); text-wrap: balance; text-shadow: 0 2px 24px rgba(0,0,0,.4); }
 .gerbang .tgl { font: 400 15px/1 var(--f-judul); letter-spacing: .24em; color: var(--sampanye-2); }
-.kepada { margin-top: 16px; font-size: 13px; color: rgba(239,226,200,.75); }
+.kepada { margin-top: 12px; font-size: 13px; color: rgba(239,226,200,.75); }
 .kepada b { display: block; margin-top: 4px; font: 600 18px/1.3 var(--f-isi); color: var(--putih); }
-.btn-buka { margin-top: 16px; padding: 12px 26px; border-radius: 999px; border: 1px solid var(--sampanye); background: var(--sampanye); color: var(--zamrud); font: 600 13px/1 var(--f-isi); letter-spacing: .14em; text-transform: uppercase; transition: background .2s; }
+.btn-buka { margin-top: 12px; padding: 14px 30px; border-radius: 999px; border: 1px solid var(--sampanye); background: var(--sampanye); color: var(--zamrud); font: 600 12.5px/1 var(--f-isi); letter-spacing: .16em; text-transform: uppercase; box-shadow: 0 10px 30px rgba(212,188,147,.25); transition: background .2s; }
 .btn-buka:hover { background: var(--sampanye-2); }
+html.is-opening .gerbang > :not(.seni-mihrab) { opacity: 0; transition: opacity .5s; }
 
 /* ---------- KERANGKA ---------- */
 .isi { position: relative; max-width: 540px; margin: 0 auto; background: var(--putih); }
-@media (min-width: 600px) { body { background: var(--bintang) 0 0 / 64px, var(--zamrud); } }
+@media (min-width: 600px) { body { background: var(--pola); } }
 .bagian { position: relative; padding-block: 74px; padding-left: max(26px, env(safe-area-inset-left, 0px)); padding-right: max(26px, env(safe-area-inset-right, 0px)); text-align: center; }
-.bagian.hijau { background: var(--zamrud); color: var(--sampanye-2); overflow: hidden; }
-.bagian.hijau::before { content: ""; position: absolute; inset: 0; background: var(--bintang) 0 0 / 64px; opacity: .1; pointer-events: none; }
+.bagian.hijau { background: var(--pola); color: var(--sampanye-2); overflow: hidden; }
+.bagian.hijau::before { content: ""; position: absolute; inset: 0; background: radial-gradient(ellipse 80% 50% at 50% 0%, rgba(36,103,95,.5), transparent 70%); pointer-events: none; }
 .bagian.hijau > * { position: relative; }
 .kecil { margin: 0 0 8px; font: 600 11px/1.3 var(--f-isi); letter-spacing: .32em; text-transform: uppercase; color: #a3895c; padding-left: .32em; }
 .hijau .kecil { color: var(--sampanye); }
@@ -132,17 +142,20 @@ html.is-opening .gerbang { transform: scale(4.5); }
 .teks { max-width: 36ch; margin: 0 auto; color: var(--tinta-2); text-wrap: pretty; }
 .hijau .teks { color: rgba(239,226,200,.82); }
 .pembatas { display: block; width: 140px; height: 18px; margin: 22px auto; }
+.medali { display: block; width: 72px; aspect-ratio: 1; margin: 0 auto 18px; border-radius: 50%; background: center / cover no-repeat; box-shadow: 0 0 0 1px rgba(212,188,147,.7), 0 0 0 5px rgba(212,188,147,.12), 0 10px 26px rgba(0,0,0,.25); }
+html:not(.mode-edit) .medali.putar { animation: putar 90s linear infinite; }
+.medali.foto::before, .medali.foto::after { display: none; }
 
 /* lengkung untuk foto */
 .mihrab { position: relative; -webkit-mask: var(--lengkung) center / 100% 100% no-repeat; mask: var(--lengkung) center / 100% 100% no-repeat; }
-.bingkai { position: relative; padding: 6px; }
+.bingkai { position: relative; padding: 6px; -webkit-mask-image: linear-gradient(#000 58%, transparent 98%); mask-image: linear-gradient(#000 58%, transparent 98%); }
 .bingkai::before { content: ""; position: absolute; inset: 0; background: linear-gradient(var(--sampanye), #a88b5c); -webkit-mask: var(--lengkung) center / 100% 100% no-repeat; mask: var(--lengkung) center / 100% 100% no-repeat; }
 
 /* Hero */
 .hero { padding-top: 56px; }
-.hero .bingkai { width: min(280px, 76%); margin: 22px auto 0; }
+.hero .bingkai { width: min(330px, 86%); margin: 22px auto 0; }
 .hero .foto { aspect-ratio: 5 / 7; }
-.hero h2 { margin: 28px 0 6px; font: 400 clamp(44px, 13vw, 60px)/1.05 var(--f-judul); color: var(--zamrud); }
+.hero h2 { position: relative; margin: -40px 0 6px; font: 400 clamp(44px, 13vw, 60px)/1.05 var(--f-judul); color: var(--zamrud); }
 .dua-tgl { display: inline-grid; grid-template-columns: auto auto; gap: 0; margin-top: 8px; border: 1px solid var(--sampanye); }
 .dua-tgl div { padding: 10px 16px; font: 400 16px/1.3 var(--f-judul); color: var(--tinta); }
 .dua-tgl div + div { border-left: 1px solid var(--sampanye); }
@@ -154,10 +167,10 @@ html.is-opening .gerbang { transform: scale(4.5); }
 .sumber { margin-top: 16px; font: 600 11px/1 var(--f-isi); letter-spacing: .3em; text-transform: uppercase; color: var(--sampanye); }
 
 /* Mempelai */
-.duo { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; margin-top: 34px; align-items: start; }
-.orang .bingkai { width: 100%; max-width: 200px; margin: 0 auto; }
+.duo { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 30px; align-items: start; }
+.orang .bingkai { width: 100%; max-width: 220px; margin: 0 auto; }
 .orang .foto { aspect-ratio: 3 / 4.4; }
-.orang h3 { margin: 18px 0 2px; font: 400 32px/1.1 var(--f-judul); color: var(--zamrud); }
+.orang h3 { position: relative; margin: -22px 0 4px; font: 400 32px/1.1 var(--f-judul); color: var(--zamrud); }
 .orang .nl { font: 600 14px/1.4 var(--f-isi); color: var(--tinta); }
 .orang p { margin: 8px 0 0; font-size: 13.5px; line-height: 1.55; color: var(--tinta-2); }
 .orang a { display: inline-block; margin-top: 10px; font: 600 12px/1 var(--f-isi); color: #8a6f43; text-decoration: none; border-bottom: 1px solid currentColor; padding-bottom: 2px; }
@@ -166,7 +179,7 @@ html.is-opening .gerbang { transform: scale(4.5); }
 
 /* Hitung mundur: jendela kecil */
 .hitung { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; max-width: 360px; margin: 0 auto; }
-.hitung div { aspect-ratio: 3 / 4; display: grid; align-content: end; padding-bottom: 12px; background: rgba(212,188,147,.12); border: 1px solid rgba(212,188,147,.5); -webkit-mask: var(--lengkung) center / 100% 100% no-repeat; mask: var(--lengkung) center / 100% 100% no-repeat; position: relative; }
+.hitung div { aspect-ratio: 3 / 4; display: grid; align-content: end; padding-bottom: 12px; background: rgba(8,32,29,.55); border: 1px solid rgba(212,188,147,.5); -webkit-mask: var(--lengkung) center / 100% 100% no-repeat; mask: var(--lengkung) center / 100% 100% no-repeat; position: relative; }
 .hitung div::before { content: ""; position: absolute; inset: 0; background: linear-gradient(var(--sampanye), transparent 70%); opacity: .15; }
 .hitung b { position: relative; font: 400 30px/1 var(--f-judul); color: var(--putih); font-variant-numeric: tabular-nums; }
 .hitung span { position: relative; margin-top: 4px; font: 600 9px/1 var(--f-isi); letter-spacing: .2em; text-transform: uppercase; color: var(--sampanye); }
@@ -177,7 +190,7 @@ html.is-opening .gerbang { transform: scale(4.5); }
 .kartu::before { content: ""; position: absolute; inset: 0; background: linear-gradient(var(--sampanye), #a88b5c); -webkit-mask: var(--lengkung) center / 100% 100% no-repeat; mask: var(--lengkung) center / 100% 100% no-repeat; }
 .kartu::after { content: ""; position: absolute; inset: 2px; background: var(--putih); -webkit-mask: var(--lengkung) center / 100% 100% no-repeat; mask: var(--lengkung) center / 100% 100% no-repeat; }
 .kartu > * { position: relative; z-index: 1; }
-.kartu .bintang-kecil { position: absolute; top: 34px; left: 50%; width: 34px; height: 34px; margin-left: -17px; }
+.kartu .medali { position: absolute; top: 28px; left: 50%; width: 50px; margin: 0 0 0 -25px; }
 .kartu h3 { margin: 0; font: 400 32px/1.1 var(--f-judul); color: var(--zamrud); }
 .kartu .masehi { margin: 14px 0 2px; font: 600 15px/1.4 var(--f-isi); color: var(--tinta); }
 .kartu .hijri { font: 400 17px/1.3 var(--f-arab); color: #8a6f43; }
@@ -196,11 +209,13 @@ html.is-opening .gerbang { transform: scale(4.5); }
 .kisah .th { width: 58px; height: 74px; display: grid; place-items: end center; padding-bottom: 10px; background: var(--zamrud); color: var(--sampanye-2); font: 400 15px/1 var(--f-judul); -webkit-mask: var(--lengkung) center / 100% 100% no-repeat; mask: var(--lengkung) center / 100% 100% no-repeat; }
 .kisah h4 { margin: 0 0 4px; font: 400 23px/1.2 var(--f-judul); color: var(--zamrud); }
 .kisah p { margin: 0; font-size: 14.5px; color: var(--tinta-2); }
+.kisah { border-radius: 18px; }
+.kisah .foto { grid-column: 1 / -1; aspect-ratio: 16 / 9; margin: -18px -18px 0; border-radius: 18px 18px 0 0; --lb-a: 60%; --lb-b: 100%; }
 
 /* Galeri */
 .galeri { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
-.galeri .foto { aspect-ratio: 1; }
-.galeri .foto:nth-of-type(1) { grid-column: span 2; aspect-ratio: 4 / 3; }
+.galeri .foto { aspect-ratio: 1; border-radius: 10px; }
+.galeri .foto:nth-of-type(1) { grid-column: span 2; justify-self: stretch; aspect-ratio: 1; width: calc(100% + 2 * max(26px, env(safe-area-inset-left, 0px))); margin: 0 calc(-1 * max(26px, env(safe-area-inset-left, 0px))) 4px; -webkit-mask-image: linear-gradient(transparent, #000 14%, #000 72%, transparent); mask-image: linear-gradient(transparent, #000 14%, #000 72%, transparent); max-width: none; }
 .galeri .foto:nth-of-type(3n+2), .galeri .foto:nth-of-type(3n+3) { aspect-ratio: 3 / 4; -webkit-mask: var(--lengkung) center / 100% 100% no-repeat; mask: var(--lengkung) center / 100% 100% no-repeat; }
 .video-bingkai { margin-top: 18px; border: 1px solid var(--sampanye); padding: 6px; }
 
@@ -235,17 +250,19 @@ html.is-opening .gerbang { transform: scale(4.5); }
 /* Hadiah */
 .rek-list { display: grid; gap: 14px; max-width: 380px; margin: 0 auto; }
 .rek { position: relative; padding: 22px 20px; text-align: left; border-radius: 14px; overflow: hidden; background: var(--zamrud); color: var(--sampanye-2); }
-.rek::before { content: ""; position: absolute; inset: 0; background: var(--bintang) 0 0 / 48px; opacity: .12; }
+.rek::before { content: ""; position: absolute; inset: 0; background: url("../aset/islami-iluminasi.webp") center / 260px; opacity: .14; mix-blend-mode: luminosity; }
 .rek > * { position: relative; }
 .rek .bank { font: 400 22px/1 var(--f-judul); color: var(--sampanye); }
 .rek .no { margin: 14px 0 2px; font: 600 21px/1.2 var(--f-isi); letter-spacing: .08em; color: var(--putih); font-variant-numeric: tabular-nums; overflow-wrap: anywhere; }
 .rek .an { font-size: 14px; color: rgba(239,226,200,.8); }
 .rek .btn { position: absolute; top: 18px; right: 18px; padding: 8px 14px; background: var(--sampanye); color: var(--zamrud); border-color: var(--sampanye); }
-.kado { max-width: 380px; margin: 14px auto 0; padding: 18px 20px; border: 1px dashed #a3895c; color: var(--tinta-2); font-size: 15px; }
+.kado { max-width: 380px; margin: 14px auto 0; padding: 18px 20px; border: 1px dashed #a3895c; border-radius: 14px; color: var(--tinta-2); font-size: 15px; }
 .kado b { display: block; color: var(--tinta); }
 
 /* Penutup */
 .penutup h2 { margin: 18px 0 8px; font: 400 52px/1.05 var(--f-judul); color: var(--putih); }
+.penutup .kaligrafi { width: 84px; margin: 0 auto 18px; }
+.kredit-seni { margin: 22px auto 0; max-width: 40ch; font: 400 10.5px/1.5 var(--f-isi); color: rgba(239,226,200,.45); }
 .kredit { padding: 18px; text-align: center; font: 600 10px/1.4 var(--f-isi); letter-spacing: .2em; text-transform: uppercase; color: rgba(239,226,200,.5); background: #0b2d29; }
 
 /* Musik */
@@ -266,16 +283,13 @@ html.musik-on .musik .cahaya { animation: nyala 2s ease-in-out infinite; }
 
 <section class="sampul" aria-label="Sampul undangan">
   <div class="gerbang">
-    <div class="luar"></div>
-    <div class="dalam"></div>
-    <div class="isi-gerbang">
-      <div class="basmalah arab" lang="ar">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</div>
-      <div class="label" data-k="sampul.label"></div>
-      <h1 data-k="$.pasangan"></h1>
-      <div class="tgl" data-k="tanggalUtama|titik"></div>
-      <div class="kepada">Kepada Yth.<b data-k="$.tamu"></b></div>
-      <button class="btn-buka" type="button" data-open>Buka Undangan</button>
-    </div>
+    <div class="kaligrafi" role="img" aria-label="Bismillahirrahmanirrahim"></div>
+    <div class="seni-mihrab"><div class="foto lebur-b" data-src="seni.mihrab"></div></div>
+    <div class="label" data-k="sampul.label"></div>
+    <h1 data-k="$.pasangan"></h1>
+    <div class="tgl" data-k="tanggalUtama|titik"></div>
+    <div class="kepada">Kepada Yth.<b data-k="$.tamu"></b></div>
+    <button class="btn-buka" type="button" data-open>Buka Undangan</button>
   </div>
 </section>
 
@@ -291,8 +305,8 @@ html.musik-on .musik .cahaya { animation: nyala 2s ease-in-out infinite; }
   </section>
 
   <section class="bagian hijau">
+    <div class="medali foto putar" data-src="seni.medali" data-reveal="zoom" aria-hidden="true"></div>
     <p class="kecil" data-reveal data-k="pembuka.salam"></p>
-    <svg class="pembatas" data-reveal aria-hidden="true"><use href="#pembatas"/></svg>
     <p class="ayat arab" lang="ar" data-reveal data-k="pembuka.ayat"></p>
     <p class="arti" data-reveal data-k="pembuka.arti"></p>
     <p class="sumber" data-reveal data-k="pembuka.sumber"></p>
@@ -335,7 +349,7 @@ html.musik-on .musik .cahaya { animation: nyala 2s ease-in-out infinite; }
     <div class="acara-list" data-each="acara">
       <template>
         <article class="kartu" data-reveal="up">
-          <svg class="bintang-kecil" aria-hidden="true"><use href="#bintang8"/></svg>
+          <div class="medali foto" data-src="seni.medali" aria-hidden="true"></div>
           <h3 data-k=".nama"></h3>
           <p class="masehi" data-k=".tanggal|panjang"></p>
           <div class="hijri" data-k=".tanggal|hijriah"></div>
@@ -353,7 +367,7 @@ html.musik-on .musik .cahaya { animation: nyala 2s ease-in-out infinite; }
     <p class="kecil" data-reveal>Perjalanan</p>
     <h2 class="judul" data-reveal>Kisah Kami</h2>
     <div class="kisah-list" data-each="kisah">
-      <template><article class="kisah" data-reveal="up" style="--d:calc(var(--i) * 100ms)"><div class="th" data-k=".tahun"></div><div><h4 data-k=".judul"></h4><p data-k=".cerita"></p></div></article></template>
+      <template><article class="kisah" data-reveal="up" style="--d:calc(var(--i) * 100ms)"><div class="foto foto-opsional lebur-b" data-src=".foto" data-zoom></div><div class="th" data-k=".tahun"></div><div><h4 data-k=".judul"></h4><p data-k=".cerita"></p></div></article></template>
     </div>
   </section>
 
@@ -409,11 +423,12 @@ html.musik-on .musik .cahaya { animation: nyala 2s ease-in-out infinite; }
   </section>
 
   <section class="bagian hijau penutup">
-    <svg class="pembatas" data-reveal aria-hidden="true"><use href="#pembatas"/></svg>
+    <div class="kaligrafi" data-reveal="zoom" role="img" aria-label="Bismillahirrahmanirrahim"></div>
     <p class="teks" data-reveal data-k="penutup.teks"></p>
     <p class="kecil" data-reveal data-k="penutup.salam" style="margin-top:26px"></p>
     <h2 data-reveal data-k="$.pasangan"></h2>
     <p class="teks" data-reveal data-k="penutup.keluarga" style="font-size:14px"></p>
+    <p class="kredit-seni" data-if="seni.kredit" data-k="seni.kredit"></p>
   </section>
   <div class="kredit" data-k="kredit"></div>
 </main>

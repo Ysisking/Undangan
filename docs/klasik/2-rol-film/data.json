@@ -3,8 +3,10 @@
   "tamuBawaan": "Teman-teman terkasih",
   "tanggalUtama": "2027-01-17T09:00:00+07:00",
   "musik": {
-    "url": "",
-    "otomatis": true
+    "url": "../aset/musik/joplin-the-entertainer.mp3",
+    "otomatis": true,
+    "judul": "The Entertainer",
+    "artis": "Scott Joplin · piano"
   },
   "sampul": {
     "label": "Rol 01 · 36 eksp · ISO 400",

@@ -3,13 +3,19 @@ window.UNDANGAN = {
   "tamuBawaan": "Bapak/Ibu/Saudara/i",
   "tanggalUtama": "2026-12-12T08:00:00+07:00",
   "musik": {
-    "url": "",
-    "otomatis": true
+    "url": "../aset/musik/chopin-nocturne-op9-2.mp3",
+    "otomatis": true,
+    "judul": "Nocturne Op. 9 No. 2",
+    "artis": "Frédéric Chopin · piano Peter Johnston"
   },
   "sampul": {
     "pembuka": "Bersama keluarga, kami mengundang Anda",
     "label": "Pernikahan",
-    "foto": "../aset/contoh-pasangan.webp"
+    "foto": "../aset/contoh-rumput.webp"
+  },
+  "suasana": {
+    "hitung": "../aset/contoh-galeri-1.webp",
+    "penutup": "../aset/contoh-galeri-6.webp"
   },
   "pembuka": {
     "kutipan": "Dan di antara tanda-tanda kebesaran-Nya ialah Dia menciptakan pasangan-pasangan untukmu dari jenismu sendiri, agar kamu merasa tenteram kepadanya, dan Dia menjadikan di antaramu rasa kasih dan sayang.",

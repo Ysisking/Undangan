@@ -13,7 +13,7 @@
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=UnifrakturMaguntia&family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=Old+Standard+TT:ital,wght@0,400;0,700;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=UnifrakturMaguntia&family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;0,8..60,700;1,8..60,400;1,8..60,600&family=IBM+Plex+Mono:wght@400;500&display=swap">
 
 <!-- =====================================================================
      ISI UNDANGAN — semua bisa diubah lewat editor.
@@ -23,7 +23,7 @@ window.UNDANGAN = {
   id: 'bima-laras',
   tamuBawaan: 'Bapak/Ibu/Saudara/i',
   tanggalUtama: '2027-03-20T09:00:00+07:00',
-  musik: { url: '', otomatis: true, judul: 'Lagu kenangan kami', artis: 'Radio Kabar Bahagia' },
+  musik: { url: '../aset/musik/vivaldi-musim-semi.mp3', otomatis: true, judul: 'La Primavera (Musim Semi)', artis: 'Antonio Vivaldi · The Modena Chamber Orchestra' },
 
   koran: {
     nama: 'Kabar Bahagia',
@@ -116,7 +116,7 @@ window.UNDANGAN = {
   --meja: #3a332b;
   --f-mast: 'UnifrakturMaguntia', 'Old English Text MT', serif;
   --f-judul: 'Playfair Display', Georgia, serif;
-  --f-isi: 'Old Standard TT', 'Times New Roman', serif;
+  --f-isi: 'Source Serif 4', 'Times New Roman', serif;
   --f-mono: 'IBM Plex Mono', ui-monospace, Menlo, monospace;
   --ph-bg: repeating-linear-gradient(45deg, #d6cfbf 0 6px, #cdc5b3 6px 12px);
   --ph-fg: #3a362f;
@@ -155,6 +155,25 @@ a { color: inherit; }
 }
 html.mode-edit .foto[data-empty]::after { content: "Ketuk untuk menambah foto"; font: 500 10px/1.5 var(--ph-font, system-ui, sans-serif); letter-spacing: .2em; text-transform: uppercase; opacity: .85; }
 [data-zoom][data-url] { cursor: zoom-in; }
+
+/* ===== Foto yang menyatu dengan halaman (gradasi tepi, bukan sekadar bingkai) =====
+   .lebur-b   : memudar ke bawah        .lebur-a   : memudar ke atas
+   .lebur-ab  : memudar atas & bawah    .lebur-kk  : memudar kiri & kanan
+   .lebur-o   : memudar melingkar (vinyet)
+   Titik pudar bisa diatur per pemakaian: --lb-a (mulai) dan --lb-b (habis). */
+.lebur-b { -webkit-mask-image: linear-gradient(to bottom, #000 var(--lb-a, 55%), transparent var(--lb-b, 100%)); mask-image: linear-gradient(to bottom, #000 var(--lb-a, 55%), transparent var(--lb-b, 100%)); }
+.lebur-a { -webkit-mask-image: linear-gradient(to top, #000 var(--lb-a, 55%), transparent var(--lb-b, 100%)); mask-image: linear-gradient(to top, #000 var(--lb-a, 55%), transparent var(--lb-b, 100%)); }
+.lebur-ab { -webkit-mask-image: linear-gradient(transparent 0, #000 var(--lb-a, 22%), #000 var(--lb-b, 72%), transparent 100%); mask-image: linear-gradient(transparent 0, #000 var(--lb-a, 22%), #000 var(--lb-b, 72%), transparent 100%); }
+.lebur-kk { -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 var(--lb-a, 18%), #000 var(--lb-b, 82%), transparent 100%); mask-image: linear-gradient(90deg, transparent 0, #000 var(--lb-a, 18%), #000 var(--lb-b, 82%), transparent 100%); }
+.lebur-o { -webkit-mask-image: radial-gradient(ellipse 70% 68% at 50% 46%, #000 var(--lb-a, 52%), transparent var(--lb-b, 100%)); mask-image: radial-gradient(ellipse 70% 68% at 50% 46%, #000 var(--lb-a, 52%), transparent var(--lb-b, 100%)); }
+/* Foto lebar yang menembus padding bagian tidak dibatasi lebar wadah */
+.foto[class*="lebur"] { max-width: none; }
+/* Gerak pelan ala sinema (Ken Burns) untuk foto besar */
+.kenburns { animation: kenburns 24s ease-in-out infinite alternate; will-change: transform; }
+@keyframes kenburns { from { transform: scale(1.03); } to { transform: scale(1.13) translate(-1.5%, -1.2%); } }
+html.mode-edit .kenburns { animation: none; }
+/* Foto latar sampul: di halaman tamu disembunyikan bila belum diisi */
+html:not(.mode-edit) .sampul-foto[data-empty], html:not(.mode-edit) .foto-opsional[data-empty] { display: none; }
 
 /* Bagian utama tersembunyi sampai sampul dibuka */
 html.js.locked:not(.is-opening) .isi { visibility: hidden; }
@@ -202,7 +221,7 @@ html.js.locked:not(.is-opening) .isi { visibility: hidden; }
   *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
 }
 
-body { background: var(--meja); color: var(--tinta); font: 400 15.5px/1.55 var(--f-isi); }
+body { background: var(--meja); color: var(--tinta); font: 400 15.5px/1.6 var(--f-isi); font-optical-sizing: auto; }
 .kertas { background: var(--kertas) var(--serat); }
 
 /* ---------- unsur koran ---------- */
@@ -210,11 +229,11 @@ body { background: var(--meja); color: var(--tinta); font: 400 15.5px/1.55 var(-
 .rubrik::before { content: ""; width: 9px; height: 9px; background: var(--biru); flex: none; }
 .rubrik span:last-child { margin-left: auto; color: var(--tinta-2); letter-spacing: .1em; }
 .judul-koran { margin: 0 0 8px; font: 900 30px/1.05 var(--f-judul); letter-spacing: -.01em; text-wrap: balance; }
-.lead { margin: 0; font: italic 400 16px/1.5 var(--f-isi); color: var(--tinta-2); text-wrap: pretty; white-space: pre-line; }
-.teks { margin: 0; font-size: 15.5px; line-height: 1.6; text-wrap: pretty; white-space: pre-line; }
-.dropcap::first-letter { float: left; margin: 4px 8px 0 0; font: 900 52px/.8 var(--f-judul); color: var(--biru); }
+.lead { margin: 0; font: italic 400 17px/1.5 var(--f-isi); color: var(--tinta-2); text-wrap: pretty; white-space: pre-line; }
+.teks { margin: 0; font-size: 15.5px; line-height: 1.62; text-wrap: pretty; white-space: pre-line; hyphens: auto; -webkit-hyphens: auto; }
+.dropcap::first-letter { float: left; margin: 5px 9px 0 0; font: 900 58px/.78 var(--f-judul); color: var(--biru); }
 .garis-ganda { height: 6px; border-top: 1px solid var(--garis); border-bottom: 1px solid var(--garis); margin: 22px 0; }
-.foto-cetak { position: relative; filter: grayscale(1) contrast(1.12) brightness(1.03); }
+.foto-cetak, .foto.foto-cetak:not([data-empty]) { position: relative; filter: grayscale(1) contrast(1.15) brightness(1.04); mix-blend-mode: multiply; }
 .foto-cetak:not([data-empty])::after { content: ""; position: absolute; inset: 0; background: var(--raster); mix-blend-mode: multiply; pointer-events: none; opacity: .55; }
 .keterangan { margin: 6px 0 0; font: 400 12.5px/1.4 var(--f-mono); color: var(--tinta-2); }
 .keterangan::before { content: "▲ "; color: var(--biru); }
@@ -225,9 +244,14 @@ body { background: var(--meja); color: var(--tinta); font: 400 15.5px/1.55 var(-
 
 /* ---------- SAMPUL: koran terlipat di meja ---------- */
 .sampul { position: fixed; inset: 0; z-index: 50; display: grid; place-items: center; overflow: hidden; perspective: 1600px;
-  background: radial-gradient(ellipse at 50% 40%, #51473c, var(--meja) 70%); padding: 20px max(16px, env(safe-area-inset-right, 0px)) 20px max(16px, env(safe-area-inset-left, 0px)); transition: opacity .6s .9s, visibility 0s 1.5s; }
+  background: var(--meja); padding: 20px max(16px, env(safe-area-inset-right, 0px)) 20px max(16px, env(safe-area-inset-left, 0px)); transition: opacity .6s .9s, visibility 0s 1.5s; }
 html.is-opening .sampul { opacity: 0; visibility: hidden; }
-.lipatan { position: relative; width: min(350px, 100%); transform: rotate(-3deg); transform-style: preserve-3d; transition: transform 1.2s cubic-bezier(.5,0,.2,1); }
+.sampul-foto { position: absolute; inset: -40px; filter: blur(16px) brightness(.5) saturate(.8) !important; }
+.sampul::before { content: ""; position: absolute; inset: 0; background: radial-gradient(ellipse at 50% 45%, transparent 30%, rgba(30,26,22,.65) 90%); pointer-events: none; }
+.sampul > div:not(.foto) { position: relative; z-index: 1; }
+.foto-sampul-koran { margin-top: 12px; aspect-ratio: 16 / 10; }
+.ket-sampul { margin: 5px 0 0; font: 400 9.5px/1.35 var(--f-mono); color: var(--tinta-2); }
+.lipatan { position: relative; width: min(352px, 100%); transform: rotate(-2.4deg); transform-style: preserve-3d; transition: transform 1.2s cubic-bezier(.5,0,.2,1); }
 html.is-opening .lipatan { transform: rotate(0) scale(1.15) translateY(-6%); }
 .lembar-atas { position: relative; padding: 18px 18px 14px; box-shadow: 0 30px 50px rgba(0,0,0,.45); }
 .lembar-bawah { position: absolute; left: 0; right: 0; top: 100%; height: 100%; padding: 14px 18px; transform-origin: top; transform: rotateX(178deg); backface-visibility: hidden; transition: transform 1s cubic-bezier(.5,0,.25,1) .1s; box-shadow: 0 30px 50px rgba(0,0,0,.4); }
@@ -237,10 +261,10 @@ html.is-opening .lembar-bawah { transform: rotateX(0); }
 .mast { margin: 8px 0 6px; text-align: center; font: 400 clamp(40px, 12vw, 52px)/1 var(--f-mast); }
 .mast-baris { display: flex; justify-content: space-between; gap: 8px; padding: 5px 0; border-top: 3px solid var(--garis); border-bottom: 1px solid var(--garis); font: 500 9.5px/1.3 var(--f-mono); letter-spacing: .06em; text-transform: uppercase; }
 .judul-sampul { margin: 12px 0 0; font: 900 27px/1.02 var(--f-judul); letter-spacing: -.01em; text-wrap: balance; }
-.label-pelanggan { position: absolute; right: -10px; bottom: -60px; z-index: 3; width: 200px; padding: 10px 12px; background: #fbf8f1; border: 1px dashed #8a857c; transform: rotate(4deg); box-shadow: 0 6px 14px rgba(0,0,0,.25); font: 400 11px/1.4 var(--f-mono); }
+.label-pelanggan { position: absolute; right: -8px; bottom: -52px; z-index: 3; width: 200px; padding: 10px 12px; background: #fbf8f1; border: 1px dashed #8a857c; transform: rotate(4deg); box-shadow: 0 6px 14px rgba(0,0,0,.25); font: 400 11px/1.4 var(--f-mono); }
 .label-pelanggan small { display: block; font-size: 9px; letter-spacing: .14em; text-transform: uppercase; color: var(--tinta-2); }
 .label-pelanggan b { display: block; margin-top: 2px; font: 700 15px/1.25 var(--f-isi); overflow-wrap: anywhere; }
-.sampul .bawah-sampul { margin-top: 70px; display: grid; justify-items: center; gap: 10px; transition: opacity .4s; }
+.sampul .bawah-sampul { margin-top: 74px; display: grid; justify-items: center; gap: 10px; transition: opacity .4s; }
 html.is-opening .sampul .bawah-sampul { opacity: 0; }
 .sampul .btn { min-height: 46px; padding: 0 22px; background: var(--kertas); color: var(--tinta); border-color: var(--kertas); }
 .sampul .btn:hover { background: #fff; }
@@ -259,12 +283,13 @@ html.is-opening .sampul .bawah-sampul { opacity: 0; }
 .depan .lead { margin-top: 12px; }
 .penulis { margin: 10px 0 14px; font: 500 10.5px/1 var(--f-mono); letter-spacing: .12em; text-transform: uppercase; color: var(--tinta-2); }
 .foto-depan { aspect-ratio: 4 / 3; border: 1px solid var(--garis); }
-.dua-kolom { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0 18px; margin-top: 16px; }
+.dua-kolom { display: grid; gap: 18px; margin-top: 18px; }
 .dua-kolom > * { min-width: 0; }
-.dua-kolom > * + * { border-left: 1px solid var(--garis); padding-left: 18px; }
-.kotak-kutipan { margin: 0; padding: 0; }
-.kotak-kutipan p { margin: 0; font: italic 700 17px/1.35 var(--f-judul); }
-.kotak-kutipan cite { display: block; margin-top: 8px; font: 500 10px/1 var(--f-mono); font-style: normal; letter-spacing: .14em; color: var(--biru); }
+.dua-kolom .teks { text-align: left; }
+.kotak-kutipan { position: relative; margin: 0; padding: 18px 8px 16px; border-top: 3px solid var(--garis); border-bottom: 1px solid var(--garis); text-align: center; }
+.kotak-kutipan::before { content: "\201C"; position: absolute; left: 50%; top: -22px; transform: translateX(-50%); padding: 0 10px; background: var(--kertas); font: 900 44px/1 var(--f-judul); color: var(--biru); }
+.kotak-kutipan p { margin: 0; font: italic 600 19px/1.42 var(--f-isi); text-wrap: balance; }
+.kotak-kutipan cite { display: block; margin-top: 10px; font: 500 10px/1 var(--f-mono); font-style: normal; letter-spacing: .14em; color: var(--biru); }
 
 /* Ticker */
 .ticker { position: relative; overflow: hidden; background: var(--tinta); color: var(--kertas); border-block: 3px double var(--kertas); }
@@ -282,7 +307,7 @@ html:not(.mode-edit) .ticker .jalan { animation: ticker 26s linear infinite; }
 .profil .foto { aspect-ratio: 3 / 4; border: 1px solid var(--garis); }
 .profil h3 { margin: 10px 0 2px; font: 900 26px/1 var(--f-judul); }
 .profil .nl { font: 500 10.5px/1.35 var(--f-mono); letter-spacing: .06em; text-transform: uppercase; }
-.profil p { margin: 8px 0 0; font-size: 14px; line-height: 1.5; }
+.profil p { margin: 8px 0 0; font-size: 14px; line-height: 1.55; text-wrap: pretty; }
 .profil .ortu { font-size: 13px; color: var(--tinta-2); }
 .ig { display: inline-block; margin-top: 8px; font: 500 11px/1 var(--f-mono); color: var(--biru); text-decoration: none; border-bottom: 1px solid currentColor; padding-bottom: 2px; overflow-wrap: anywhere; }
 
@@ -416,6 +441,7 @@ html.musik-on .navigasi .tombol-musik .gelombang { animation: siar 1.4s ease-in-
 
 <!-- ===== SAMPUL: koran terlipat ===== -->
 <section class="sampul" aria-label="Sampul undangan">
+  <div class="foto sampul-foto" data-src="sampul.foto"></div>
   <div>
     <div class="lipatan">
       <div class="lembar-atas kertas">
@@ -423,6 +449,8 @@ html.musik-on .navigasi .tombol-musik .gelombang { animation: siar 1.4s ease-in-
         <div class="mast" data-k="koran.nama"></div>
         <div class="mast-baris"><span data-k="koran.kota"></span><span data-k="tanggalUtama|panjang"></span></div>
         <h1 class="judul-sampul" data-k="koran.judul"></h1>
+        <div class="foto foto-cetak foto-sampul-koran" data-src="sampul.foto"></div>
+        <p class="ket-sampul" data-k="koran.keterangan"></p>
         <div class="label-pelanggan"><small>Kepada pelanggan setia</small><b data-k="$.tamu"></b></div>
       </div>
       <div class="lembar-bawah kertas" aria-hidden="true"><div class="foto foto-cetak" data-src="sampul.foto" style="height:100%"></div></div>
@@ -1166,7 +1194,7 @@ html.musik-on .navigasi .tombol-musik .gelombang { animation: siar 1.4s ease-in-
       $$('[data-each]').forEach((l) => {
         const butir = Array.from(l.children).filter((c) => c.tagName !== 'TEMPLATE' && c.dataset.index != null);
         let terlihat = 0;
-        butir.forEach((c) => { const f = c.matches('[data-src]') ? c : c.querySelector('[data-src]'); if (f && f.hasAttribute('data-empty') && f.hasAttribute('data-zoom')) c.hidden = true; else terlihat++; });
+        butir.forEach((c) => { const f = c.matches('[data-src]') ? c : c.querySelector('[data-src]'); if (f && f.hasAttribute('data-empty') && f.hasAttribute('data-zoom') && !f.classList.contains('foto-opsional')) c.hidden = true; else terlihat++; });
         if (butir.length && !terlihat) { const sec = l.closest('section'); if (sec) sec.hidden = true; }
       });
     }

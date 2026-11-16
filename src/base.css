@@ -27,6 +27,25 @@ a { color: inherit; }
 html.mode-edit .foto[data-empty]::after { content: "Ketuk untuk menambah foto"; font: 500 10px/1.5 var(--ph-font, system-ui, sans-serif); letter-spacing: .2em; text-transform: uppercase; opacity: .85; }
 [data-zoom][data-url] { cursor: zoom-in; }
 
+/* ===== Foto yang menyatu dengan halaman (gradasi tepi, bukan sekadar bingkai) =====
+   .lebur-b   : memudar ke bawah        .lebur-a   : memudar ke atas
+   .lebur-ab  : memudar atas & bawah    .lebur-kk  : memudar kiri & kanan
+   .lebur-o   : memudar melingkar (vinyet)
+   Titik pudar bisa diatur per pemakaian: --lb-a (mulai) dan --lb-b (habis). */
+.lebur-b { -webkit-mask-image: linear-gradient(to bottom, #000 var(--lb-a, 55%), transparent var(--lb-b, 100%)); mask-image: linear-gradient(to bottom, #000 var(--lb-a, 55%), transparent var(--lb-b, 100%)); }
+.lebur-a { -webkit-mask-image: linear-gradient(to top, #000 var(--lb-a, 55%), transparent var(--lb-b, 100%)); mask-image: linear-gradient(to top, #000 var(--lb-a, 55%), transparent var(--lb-b, 100%)); }
+.lebur-ab { -webkit-mask-image: linear-gradient(transparent 0, #000 var(--lb-a, 22%), #000 var(--lb-b, 72%), transparent 100%); mask-image: linear-gradient(transparent 0, #000 var(--lb-a, 22%), #000 var(--lb-b, 72%), transparent 100%); }
+.lebur-kk { -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 var(--lb-a, 18%), #000 var(--lb-b, 82%), transparent 100%); mask-image: linear-gradient(90deg, transparent 0, #000 var(--lb-a, 18%), #000 var(--lb-b, 82%), transparent 100%); }
+.lebur-o { -webkit-mask-image: radial-gradient(ellipse 70% 68% at 50% 46%, #000 var(--lb-a, 52%), transparent var(--lb-b, 100%)); mask-image: radial-gradient(ellipse 70% 68% at 50% 46%, #000 var(--lb-a, 52%), transparent var(--lb-b, 100%)); }
+/* Foto lebar yang menembus padding bagian tidak dibatasi lebar wadah */
+.foto[class*="lebur"] { max-width: none; }
+/* Gerak pelan ala sinema (Ken Burns) untuk foto besar */
+.kenburns { animation: kenburns 24s ease-in-out infinite alternate; will-change: transform; }
+@keyframes kenburns { from { transform: scale(1.03); } to { transform: scale(1.13) translate(-1.5%, -1.2%); } }
+html.mode-edit .kenburns { animation: none; }
+/* Foto latar sampul: di halaman tamu disembunyikan bila belum diisi */
+html:not(.mode-edit) .sampul-foto[data-empty], html:not(.mode-edit) .foto-opsional[data-empty] { display: none; }
+
 /* Bagian utama tersembunyi sampai sampul dibuka */
 html.js.locked:not(.is-opening) .isi { visibility: hidden; }
 .isi { overflow-x: clip; }

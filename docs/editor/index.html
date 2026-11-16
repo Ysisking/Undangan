@@ -723,7 +723,7 @@ h1, h2, h3 { margin: 0; font-weight: 400; }
     // musik
     const linkMusik = h('input', { type: 'url', placeholder: 'atau tempel link MP3', value: T.musik.url && !T.musik.url.startsWith('data:') ? T.musik.url : '' });
     p.appendChild(grup('Musik latar',
-      berkasBaris('Belum ada lagu', T.musik.url, 'musik', async () => { const u = await unggahBerkas('audio/mpeg,audio/mp4,audio/*', 'mp3', 15, 'Lagu'); if (u) { T.musik.url = u; gambarPanel(); berubah(); } }, () => { T.musik.url = ''; gambarPanel(); berubah(); },
+      berkasBaris('Memakai musik bawaan template', T.musik.url, 'musik', async () => { const u = await unggahBerkas('audio/mpeg,audio/mp4,audio/*', 'mp3', 15, 'Lagu'); if (u) { T.musik.url = u; gambarPanel(); berubah(); } }, () => { T.musik.url = ''; gambarPanel(); berubah(); },
         T.musik.url ? h('button', { class: 'e-btn kecil', type: 'button', text: 'Dengar', onclick: (e) => { const a = (panelTema.audio = panelTema.audio || new Audio()); if (!a.paused) { a.pause(); e.currentTarget.textContent = 'Dengar'; return; } a.src = T.musik.url; a.play(); e.currentTarget.textContent = 'Berhenti'; } }) : null),
       h('div', { class: 'e-baris', style: { flexWrap: 'nowrap' } }, linkMusik, h('button', { class: 'e-btn kecil', type: 'button', text: 'Pakai', onclick: () => { T.musik.url = linkMusik.value.trim(); gambarPanel(); berubah(); } })),
       h('small', { class: 'e-redup', text: 'Musik mulai saat tamu menekan tombol Buka Undangan. Maksimal 15 MB.' })));
@@ -1090,7 +1090,7 @@ h1, h2, h3 { margin: 0; font-weight: 400; }
     const M = S.data.isi.musik || (S.data.isi.musik = { url: '' });
     const linkMusik = h('input', { type: 'url', placeholder: 'atau tempel link MP3', value: M.url && !M.url.startsWith('data:') ? M.url : '' });
     p.appendChild(grup('Musik latar',
-      berkasBaris('Belum ada lagu (memakai kotak musik bawaan)', M.url, 'musik', async () => { const u = await unggahBerkas('audio/mpeg,audio/mp4,audio/*', 'mp3', 15, 'Lagu'); if (u) { M.url = u; gambarPanel(); berubah(); kMuat(); } }, () => { M.url = ''; gambarPanel(); berubah(); kMuat(); }),
+      berkasBaris('Belum ada lagu (memakai nada bawaan)', M.url, 'musik', async () => { const u = await unggahBerkas('audio/mpeg,audio/mp4,audio/*', 'mp3', 15, 'Lagu'); if (u) { M.url = u; gambarPanel(); berubah(); kMuat(); } }, () => { M.url = ''; gambarPanel(); berubah(); kMuat(); }),
       h('div', { class: 'e-baris', style: { flexWrap: 'nowrap' } }, linkMusik, h('button', { class: 'e-btn kecil', type: 'button', text: 'Pakai', onclick: () => { M.url = linkMusik.value.trim(); gambarPanel(); berubah(); kMuat(); } })),
       h('small', { class: 'e-redup', text: 'Musik mulai saat tamu menekan tombol buka undangan. Maksimal 15 MB.' })));
   }

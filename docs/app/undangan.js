@@ -72,6 +72,10 @@
   // supaya benar baik saat dibuka dari halaman tamu maupun dari editor.
   const ASET = (function () { try { return new URL('../klasik/aset/', document.currentScript.src).href; } catch (e) { return 'klasik/aset/'; } })();
   U.fotoContoh = (nama) => ASET + 'contoh-' + nama + '.webp';
+  // Musik bawaan tiap preset (rekaman bebas pakai). Dipakai bila pengguna belum memasang lagu sendiri.
+  const MUSIK = { 'dusty-rose': 'chopin-nocturne-op9-2', ivory: 'satie-gymnopedie-1', sage: 'romance-anonimo-gitar', monokrom: 'bach-air', pasir: 'pachelbel-canon', malam: 'debussy-clair-de-lune' };
+  U.musikBawaan = (preset) => ASET + 'musik/' + (MUSIK[preset] || MUSIK['dusty-rose']) + '.mp3';
+  U.urlMusik = (D) => { const m = (D.tema && D.tema.musik) || {}; return m.url || (m.mati ? '' : U.musikBawaan(D.tema && D.tema.preset)); };
   const SAMPUL_CONTOH = { ivory: 'galeri-6', sage: 'wanita', monokrom: 'pria', pasir: 'galeri-2', malam: 'galeri-1' };
   U.contoh = function (preset) {
     const F = U.fotoContoh;
@@ -234,8 +238,7 @@
     root.appendChild(isi);
 
     /* ---- musik ---- */
-    const musik = (D.tema && D.tema.musik) || {};
-    if (musik.url) root.appendChild(h('button', { class: 'u-musik', type: 'button', 'data-musik': '', 'aria-label': 'Putar musik', 'aria-pressed': 'false' },
+    if (U.urlMusik(D)) root.appendChild(h('button', { class: 'u-musik', type: 'button', 'data-musik': '', 'aria-label': 'Putar musik', 'aria-pressed': 'false' },
       (() => { const s = svgMawar(); s.querySelectorAll('path')[1].remove(); s.querySelectorAll('path')[3] && s.querySelectorAll('path')[3].remove(); return s; })()));
 
     /* ---------------- penggambar setiap bagian ---------------- */
@@ -397,7 +400,7 @@
   function hidupkan(root, D, opsi) {
     const reduce = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
     document.documentElement.style.overflow = 'hidden';
-    const audio = (D.tema && D.tema.musik && D.tema.musik.url) ? new Audio(D.tema.musik.url) : null;
+    const audio = U.urlMusik(D) ? new Audio(U.urlMusik(D)) : null;
     if (audio) { audio.loop = true; audio.volume = 0.7; }
     const tombolMusik = root.querySelector('[data-musik]');
     const setMusik = (on) => { root.classList.toggle('u-musik-on', on); if (tombolMusik) { tombolMusik.setAttribute('aria-pressed', String(on)); tombolMusik.setAttribute('aria-label', on ? 'Hentikan musik' : 'Putar musik'); } };

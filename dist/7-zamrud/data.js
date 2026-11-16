@@ -3,14 +3,18 @@ window.UNDANGAN = {
   "tamuBawaan": "Bapak/Ibu/Saudara/i",
   "tanggalUtama": "2026-12-12T08:00:00+07:00",
   "musik": {
-    "url": "",
+    "url": "../aset/musik/bach-air.mp3",
     "otomatis": true,
-    "judul": "Bawalah Cintaku",
-    "artis": "Putar lagu selama membuka undangan"
+    "judul": "Air on the G String",
+    "artis": "Johann Sebastian Bach"
   },
   "sampul": {
     "label": "Kami akan menikah",
-    "foto": "../aset/contoh-pasangan.webp"
+    "foto": "../aset/contoh-galeri-2.webp"
+  },
+  "suasana": {
+    "pembuka": "../aset/contoh-galeri-6.webp",
+    "hitung": "../aset/contoh-galeri-1.webp"
   },
   "pembuka": {
     "salam": "Assalamu'alaikum Warahmatullahi Wabarakatuh",
@@ -120,17 +124,20 @@ window.UNDANGAN = {
     {
       "tahun": "2019",
       "judul": "Pertama bertemu",
-      "cerita": "Kami berkenalan di sebuah toko buku kecil di Bogor, berebut buku terakhir di rak yang sama."
+      "cerita": "Kami berkenalan di sebuah toko buku kecil di Bogor, berebut buku terakhir di rak yang sama.",
+      "foto": "../aset/contoh-galeri-3.webp"
     },
     {
       "tahun": "2023",
       "judul": "Lamaran",
-      "cerita": "Di hadapan dua keluarga, Raka meminta restu dengan suara yang sedikit bergetar."
+      "cerita": "Di hadapan dua keluarga, Raka meminta restu dengan suara yang sedikit bergetar.",
+      "foto": "../aset/contoh-galeri-4.webp"
     },
     {
       "tahun": "2026",
       "judul": "Hari bahagia",
-      "cerita": "Kami memilih untuk melangkah bersama, dan ingin Anda menjadi bagian dari hari itu."
+      "cerita": "Kami memilih untuk melangkah bersama, dan ingin Anda menjadi bagian dari hari itu.",
+      "foto": "../aset/contoh-galeri-5.webp"
     }
   ],
   "galeri": [
@@ -212,7 +219,7 @@ window.UNDANGAN = {
     ]
   },
   "penutup": {
-    "foto": "../aset/contoh-galeri-2.webp",
+    "foto": "../aset/contoh-pasangan.webp",
     "kutipan": "Di antara semua jalan, kami memilih untuk berjalan bersama.",
     "teks": "Merupakan suatu kehormatan dan kebahagiaan bagi kami apabila Bapak/Ibu/Saudara/i berkenan hadir dan memberikan doa restu.",
     "salam": "Dengan cinta,",

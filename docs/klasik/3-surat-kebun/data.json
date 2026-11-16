@@ -3,12 +3,17 @@
   "tamuBawaan": "Bapak/Ibu/Saudara/i",
   "tanggalUtama": "2027-02-20T10:00:00+07:00",
   "musik": {
-    "url": "",
-    "otomatis": true
+    "url": "../aset/musik/satie-gymnopedie-1.mp3",
+    "otomatis": true,
+    "judul": "Gymnopédie No. 1",
+    "artis": "Erik Satie · piano"
   },
   "sampul": {
     "label": "Undangan Pernikahan",
-    "foto": "../aset/contoh-pasangan.webp"
+    "foto": "../aset/contoh-taman.webp"
+  },
+  "suasana": {
+    "penutup": "../aset/contoh-galeri-6.webp"
   },
   "pembuka": {
     "kutipan": "Demikianlah mereka bukan lagi dua, melainkan satu. Karena itu, apa yang telah dipersatukan Allah, tidak boleh diceraikan manusia.",

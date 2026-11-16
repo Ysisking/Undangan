@@ -530,7 +530,7 @@
       $$('[data-each]').forEach((l) => {
         const butir = Array.from(l.children).filter((c) => c.tagName !== 'TEMPLATE' && c.dataset.index != null);
         let terlihat = 0;
-        butir.forEach((c) => { const f = c.matches('[data-src]') ? c : c.querySelector('[data-src]'); if (f && f.hasAttribute('data-empty') && f.hasAttribute('data-zoom')) c.hidden = true; else terlihat++; });
+        butir.forEach((c) => { const f = c.matches('[data-src]') ? c : c.querySelector('[data-src]'); if (f && f.hasAttribute('data-empty') && f.hasAttribute('data-zoom') && !f.classList.contains('foto-opsional')) c.hidden = true; else terlihat++; });
         if (butir.length && !terlihat) { const sec = l.closest('section'); if (sec) sec.hidden = true; }
       });
     }

@@ -3,12 +3,20 @@ window.UNDANGAN = {
   "tamuBawaan": "Bapak/Ibu/Saudara/i",
   "tanggalUtama": "2026-12-27T08:00:00+08:00",
   "musik": {
-    "url": "",
-    "otomatis": true
+    "url": "../aset/musik/saint-saens-reverie-du-soir.mp3",
+    "otomatis": true,
+    "judul": "Rêverie du soir",
+    "artis": "Camille Saint-Saëns · Suite Algérienne"
   },
   "sampul": {
     "label": "Walimatul 'Ursy",
     "foto": "../aset/contoh-pasangan.webp"
+  },
+  "seni": {
+    "mihrab": "../aset/islami-mihrab.webp",
+    "medali": "../aset/islami-medali.webp",
+    "iluminasi": "../aset/islami-iluminasi.webp",
+    "kredit": "Mihrab Madrasa Imami, Isfahan 1354 (Metropolitan Museum of Art, CC BY-SA 4.0) · Iluminasi Al-Qur'an Mamluk, Perpustakaan Nasional Mesir (domain publik) · Kaligrafi basmalah: Abdelghani Azzi (domain publik)"
   },
   "pembuka": {
     "salam": "Assalamu'alaikum Warahmatullahi Wabarakatuh",
@@ -64,7 +72,8 @@ window.UNDANGAN = {
     {
       "tahun": "2023",
       "judul": "Ta'aruf",
-      "cerita": "Diperkenalkan oleh guru mengaji kami. Pertemuan pertama ditemani keluarga, dengan teh hangat dan banyak rasa canggung."
+      "cerita": "Diperkenalkan oleh guru mengaji kami. Pertemuan pertama ditemani keluarga, dengan teh hangat dan banyak rasa canggung.",
+      "foto": "../aset/contoh-galeri-3.webp"
     },
     {
       "tahun": "2025",

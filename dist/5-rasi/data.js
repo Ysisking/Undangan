@@ -3,12 +3,18 @@ window.UNDANGAN = {
   "tamuBawaan": "Bapak/Ibu/Saudara/i",
   "tanggalUtama": "2027-01-30T16:00:00+08:00",
   "musik": {
-    "url": "",
-    "otomatis": true
+    "url": "../aset/musik/debussy-clair-de-lune.mp3",
+    "otomatis": true,
+    "judul": "Clair de Lune",
+    "artis": "Claude Debussy · piano"
   },
   "sampul": {
     "label": "Di bawah langit yang sama",
     "foto": "../aset/contoh-pasangan.webp"
+  },
+  "langit": {
+    "bulan": "../aset/bulan.webp",
+    "penutup": "../aset/contoh-galeri-6.webp"
   },
   "pembuka": {
     "kutipan": "Dari sekian banyak bintang, kami menemukan satu yang membuat langit terasa seperti rumah.",

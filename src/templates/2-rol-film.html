@@ -12,7 +12,7 @@ window.UNDANGAN = {
   id: 'dimas-kirana',
   tamuBawaan: 'Teman-teman terkasih',
   tanggalUtama: '2027-01-17T09:00:00+07:00',
-  musik: { url: '', otomatis: true },
+  musik: { url: '../aset/musik/joplin-the-entertainer.mp3', otomatis: true, judul: 'The Entertainer', artis: 'Scott Joplin · piano' },
 
   sampul: { label: 'Rol 01 · 36 eksp · ISO 400', foto: '../aset/contoh-pasangan.webp' },
   pembuka: {
@@ -96,6 +96,9 @@ body { background: var(--meja); color: var(--tinta); font: 400 18px/1.6 var(--f-
 .butir { position: fixed; inset: 0; z-index: 60; pointer-events: none; opacity: .09; mix-blend-mode: multiply; background-size: 160px; }
 
 /* ---------- SAMPUL ---------- */
+.sampul-foto { position: absolute !important; inset: -30px; filter: grayscale(1) contrast(1.1) brightness(.42) blur(2px) !important; }
+.sampul::before { content: ""; position: absolute; inset: 0; z-index: 1; background: radial-gradient(ellipse at 50% 45%, transparent 35%, rgba(0,0,0,.7) 100%); pointer-events: none; }
+.sampul > .kotak-film { z-index: 2; }
 .sampul { position: fixed; inset: 0; z-index: 50; display: grid; place-items: center; background: var(--meja); color: var(--kertas); overflow: hidden;
   padding: 24px max(20px, env(safe-area-inset-right, 0px)) 24px max(20px, env(safe-area-inset-left, 0px)); }
 html.is-open .sampul { display: none; }
@@ -273,6 +276,7 @@ html.musik-on .musik svg { animation: putar 3s linear infinite; }
 <div class="butir" aria-hidden="true"></div>
 
 <section class="sampul" aria-label="Sampul undangan">
+  <div class="foto sampul-foto kenburns" data-src="sampul.foto"></div>
   <div class="kotak-film">
     <div class="baris"><span>Undangan</span><span data-k="tanggalUtama|titik"></span></div>
     <h1><span data-k="$.a.panggilan">Dimas</span><span>&amp; <span data-k="$.b.panggilan" style="display:inline;padding:0">Kirana</span></span></h1>

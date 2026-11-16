@@ -3,10 +3,10 @@ window.UNDANGAN = {
   "tamuBawaan": "Bapak/Ibu/Saudara/i",
   "tanggalUtama": "2027-05-15T08:00:00+07:00",
   "musik": {
-    "url": "",
+    "url": "../aset/musik/gamelan-ketawang-mijil.mp3",
     "otomatis": true,
-    "judul": "Gendhing pambuka",
-    "artis": "Iringan gamelan"
+    "judul": "Ketawang Mijil Wigaringtyas (pelog nem)",
+    "artis": "Gamelan · Dandung Adityo, CC BY-SA 4.0"
   },
   "pagelaran": {
     "aksara": "ꦱꦸꦒꦼꦁꦫꦮꦸꦃ",
@@ -18,6 +18,10 @@ window.UNDANGAN = {
   },
   "sampul": {
     "foto": "../aset/contoh-pasangan.webp"
+  },
+  "suasana": {
+    "acara": "../aset/contoh-galeri-2.webp",
+    "penutup": "../aset/contoh-galeri-6.webp"
   },
   "wayang": {
     "pria": "../aset/wayang-arjuna.webp",
@@ -151,24 +155,24 @@ window.UNDANGAN = {
   ],
   "video": "",
   "dresscode": {
-    "label": "Batik & nuansa sogan",
+    "label": "Batik & nuansa malam pagelaran",
     "teks": "Kami mengundang Anda mengenakan batik, lurik, atau kebaya dalam warna-warna berikut:",
     "warna": [
       {
-        "nama": "Sogan",
-        "warna": "#7a4f2e"
+        "nama": "Biru malam",
+        "warna": "#232b52"
       },
       {
         "nama": "Gading",
-        "warna": "#e8dcc0"
+        "warna": "#efe6d2"
       },
       {
-        "nama": "Hijau pupus",
-        "warna": "#7d8a5f"
+        "nama": "Terakota",
+        "warna": "#b9583c"
       },
       {
-        "nama": "Hitam",
-        "warna": "#211a15"
+        "nama": "Emas",
+        "warna": "#d4a24c"
       }
     ]
   },
