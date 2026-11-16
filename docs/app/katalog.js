@@ -8,8 +8,10 @@
    ===================================================================== */
 (function () {
   'use strict';
-  const klasik = (key, nama, kat, slogan, ket, fitur) => ({ key, nama, kat, slogan, ket, fitur, jenis: 'desain', demo: `klasik/${key}/`, gambar: `klasik/pratinjau/${key}.jpg` });
-  const studio = (preset, nama, kat, slogan, ket) => ({ key: 'studio-' + preset, nama, kat: kat.concat('bebas'), slogan, ket, fitur: ['Bagian bisa ditambah, dihapus, dan diurutkan', 'Bentuk bingkai foto dan ornamen bisa dipilih', 'Warna dan huruf bebas diganti', 'RSVP, ucapan, amplop digital'], jenis: 'bebas', demo: `?u=contoh&t=${preset}`, gambar: `klasik/pratinjau/studio-${preset}.jpg` });
+  // Naikkan setiap kali gambar pratinjau dibuat ulang, supaya peramban tidak memakai gambar lama.
+  const VERSI = '20261116b';
+  const klasik = (key, nama, kat, slogan, ket, fitur) => ({ key, nama, kat, slogan, ket, fitur, jenis: 'desain', demo: `klasik/${key}/`, gambar: `klasik/pratinjau/${key}.jpg?v=${VERSI}`, gulir: `klasik/pratinjau/gulir/${key}.webp?v=${VERSI}` });
+  const studio = (preset, nama, kat, slogan, ket) => ({ key: 'studio-' + preset, nama, kat: kat.concat('bebas'), slogan, ket, fitur: ['Bagian bisa ditambah, dihapus, dan diurutkan', 'Bentuk bingkai foto dan ornamen bisa dipilih', 'Warna dan huruf bebas diganti', 'RSVP, ucapan, amplop digital'], jenis: 'bebas', demo: `?u=contoh&t=${preset}`, gambar: `klasik/pratinjau/studio-${preset}.jpg?v=${VERSI}`, gulir: `klasik/pratinjau/gulir/studio-${preset}.webp?v=${VERSI}` });
 
   window.KATALOG = {
     kategori: [

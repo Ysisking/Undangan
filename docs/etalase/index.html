@@ -102,20 +102,42 @@ main { padding-block: 34px 70px; }
 .kelompok-kepala p { margin: 0; max-width: 52ch; font-size: 14px; color: var(--redup); }
 .rak { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 208px), 1fr)); gap: 34px 22px; }
 @media (max-width: 520px) { .rak { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 26px 14px; } }
-.kartu { display: grid; align-content: start; gap: 12px; padding: 0; border: 0; background: none; text-align: left; min-width: 0; animation: muncul .6s cubic-bezier(.2,.8,.2,1) backwards; animation-delay: calc(var(--i, 0) * 40ms); }
+.kartu { position: relative; display: grid; align-content: start; gap: 10px; min-width: 0; animation: muncul .6s cubic-bezier(.2,.8,.2,1) backwards; animation-delay: calc(var(--i, 0) * 40ms); }
 @keyframes muncul { from { opacity: 0; transform: translateY(16px); } }
-.kartu .lembar { position: relative; aspect-ratio: 480 / 935; border-radius: 16px; overflow: hidden; background: var(--kertas-2); box-shadow: 0 1px 0 rgba(255,255,255,.6) inset, 0 10px 24px rgba(42,35,34,.13); transition: transform .45s cubic-bezier(.2,.8,.2,1), box-shadow .45s; }
-.kartu .lembar img { display: block; width: 100%; height: 100%; object-fit: cover; }
-.kartu .lembar .coba { position: absolute; left: 10px; right: 10px; bottom: 10px; display: flex; align-items: center; justify-content: center; gap: 6px; min-height: 40px; border-radius: 999px; background: rgba(251,248,244,.95); color: var(--tinta); font: 600 13px/1 var(--f); opacity: 0; transform: translateY(8px); transition: opacity .25s, transform .25s; }
-.kartu:hover .lembar, .kartu:focus-visible .lembar { transform: translateY(-6px) rotate(-.7deg); box-shadow: 0 22px 44px rgba(42,35,34,.22); }
-.kartu:nth-child(even):hover .lembar { transform: translateY(-6px) rotate(.7deg); }
-.kartu:hover .coba, .kartu:focus-visible .coba { opacity: 1; transform: none; }
-@media (hover: none) { .kartu .lembar .coba { opacity: 1; transform: none; min-height: 34px; font-size: 12px; } }
-.kartu .no { font: 500 11px/1 var(--f); letter-spacing: .16em; color: var(--emas); font-variant-numeric: tabular-nums; }
-.kartu h3 { margin: 6px 0 2px; font: 700 19px/1.15 var(--f); letter-spacing: -.02em; overflow-wrap: anywhere; }
-.kartu p { margin: 0; font-size: 13.5px; line-height: 1.4; color: var(--redup); }
-.kartu .tanda { display: flex; flex-wrap: wrap; gap: 4px; margin-top: 8px; }
-.tanda span { padding: 3px 8px; border: 1px solid var(--garis); border-radius: 999px; font-size: 11px; line-height: 1.3; color: var(--redup); }
+.kartu .lembar { position: relative; display: block; width: 100%; aspect-ratio: 480 / 935; padding: 0; border: 0; border-radius: 22px; overflow: hidden; background: #1b1b1b; text-align: left; color: #fff; isolation: isolate;
+  box-shadow: 0 1px 2px rgba(0,0,0,.08), 0 14px 30px rgba(17,17,17,.16); transition: transform .45s cubic-bezier(.2,.8,.2,1), box-shadow .45s; }
+.kartu .lembar img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: top; z-index: -3; }
+/* pratinjau bergulir: sampul lalu isi undangan, pelan-pelan dari atas ke bawah */
+.kartu .gulir { position: absolute; inset: 0; z-index: -2; background: var(--gulir) 50% 0 / 100% auto no-repeat; opacity: 0; transition: opacity .6s; }
+.kartu.siap .gulir { opacity: 1; }
+.kartu.jalan .gulir { animation: gulir 18s cubic-bezier(.45,0,.55,1) infinite alternate; }
+.kartu:hover .gulir { animation-duration: 9s; }
+@keyframes gulir { 0%, 14% { background-position: 50% 0; } 86%, 100% { background-position: 50% 100%; } }
+.kartu .lembar::after { content: ""; position: absolute; inset: 0; z-index: -1; pointer-events: none;
+  background: linear-gradient(180deg, rgba(0,0,0,.42) 0%, transparent 18%, transparent 52%, rgba(0,0,0,.55) 72%, rgba(0,0,0,.88) 100%); }
+.kartu .atas-kartu { position: absolute; left: 10px; right: 10px; top: 10px; display: flex; justify-content: space-between; align-items: center; gap: 6px; }
+.lencana { display: inline-flex; align-items: center; gap: 5px; min-height: 24px; padding: 0 9px; border-radius: 999px; font: 600 10.5px/1 var(--f); letter-spacing: .02em; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px); }
+.lencana.kat { min-width: 0; background: rgba(255,255,255,.88); color: var(--tinta); }
+.lencana.musik { flex: none; background: rgba(17,17,17,.55); color: #fff; }
+.lencana.musik i { display: inline-block; width: 2px; height: 9px; border-radius: 2px; background: #fff; transform-origin: 50% 100%; animation: eq 1s ease-in-out infinite; }
+.lencana.musik i:nth-child(2) { animation-delay: -.35s; } .lencana.musik i:nth-child(3) { animation-delay: -.7s; margin-right: 2px; }
+@keyframes eq { 0%, 100% { transform: scaleY(.35); } 50% { transform: scaleY(1); } }
+.kartu .tirai { position: absolute; left: 0; right: 0; bottom: 0; padding: 0 14px 14px; }
+.kartu .no { display: block; font: 700 10.5px/1 var(--f); letter-spacing: .18em; color: #ffb59f; font-variant-numeric: tabular-nums; }
+.kartu h3 { margin: 6px 0 3px; font: 800 clamp(18px, 4.6vw, 22px)/1.1 var(--f); letter-spacing: -.02em; color: #fff; overflow-wrap: anywhere; text-shadow: 0 1px 12px rgba(0,0,0,.4); }
+.kartu p { margin: 0; font-size: 12.5px; line-height: 1.35; color: rgba(255,255,255,.82); display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+.kartu:hover .lembar, .kartu:focus-within .lembar { transform: translateY(-5px); box-shadow: 0 1px 2px rgba(0,0,0,.08), 0 24px 46px rgba(17,17,17,.26); }
+.kartu .aksi-kartu { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 6px; }
+.kartu .aksi-kartu > * { display: inline-flex; align-items: center; justify-content: center; gap: 6px; min-height: 40px; padding: 0 8px; border-radius: 999px; font: 600 13px/1 var(--f); text-decoration: none; white-space: nowrap; transition: background .2s, border-color .2s, transform .15s; }
+.kartu .aksi-kartu > :active { transform: scale(.97); }
+.kartu .demo { border: 1px solid var(--garis); background: var(--putih); color: var(--tinta); }
+.kartu .demo:hover { border-color: var(--tinta); }
+.kartu .pesan { border: 1px solid #1fa855; background: #1fa855; color: #fff; }
+.kartu .pesan:hover { background: #178a45; border-color: #178a45; }
+.kartu .pesan svg { width: 16px; height: 16px; fill: currentColor; flex: none; }
+.kartu .aksi-kartu > :only-child { grid-column: 1 / -1; }
+@media (max-width: 380px) { .kartu .aksi-kartu > * { font-size: 12px; } .lencana.kat { display: none; } .kartu .atas-kartu { justify-content: flex-end; } }
+@media (prefers-reduced-motion: reduce) { .kartu.jalan .gulir, .lencana.musik i { animation: none; } }
 .kosong { padding: 60px 0; text-align: center; color: var(--redup); }
 .kosong b { display: block; font: 800 22px/1.2 var(--f); letter-spacing: -.02em; color: var(--tinta); margin-bottom: 6px; }
 
@@ -314,12 +336,31 @@ body.terkunci .wa-chat { display: none; }
 
   /* ---------- tampilan daftar ---------- */
   const cocok = (t) => (S.kat === 'semua' || t.kat.includes(S.kat)) && (!S.q || [t.nama, t.slogan, t.ket, t.kat.map(K.namaKategori).join(' ')].join(' ').toLowerCase().includes(S.q));
+  const IKON_WA = 'M16.04 3C8.86 3 3.03 8.82 3.03 16c0 2.3.6 4.53 1.74 6.5L3 29l6.68-1.75A12.95 12.95 0 0 0 16.04 29C23.2 29 29 23.18 29 16S23.2 3 16.04 3Zm0 23.8c-1.98 0-3.92-.53-5.61-1.53l-.4-.24-3.96 1.04 1.06-3.86-.26-.4A10.76 10.76 0 0 1 5.2 16c0-5.97 4.86-10.82 10.84-10.82 5.97 0 10.8 4.85 10.8 10.82 0 5.96-4.84 10.8-10.8 10.8Zm5.93-8.1c-.33-.16-1.93-.95-2.23-1.06-.3-.11-.52-.16-.73.17-.22.32-.84 1.05-1.03 1.27-.19.22-.38.24-.7.08-.33-.16-1.38-.51-2.62-1.62-.97-.86-1.62-1.93-1.81-2.25-.19-.33-.02-.5.14-.66.15-.15.33-.38.49-.57.16-.19.22-.33.33-.54.11-.22.05-.41-.03-.57-.08-.16-.73-1.76-1-2.41-.26-.63-.53-.55-.73-.56h-.62c-.22 0-.57.08-.87.41-.3.32-1.14 1.11-1.14 2.71s1.17 3.15 1.33 3.36c.16.22 2.3 3.5 5.56 4.91.78.34 1.38.54 1.86.69.78.25 1.49.21 2.05.13.63-.09 1.93-.79 2.2-1.55.27-.76.27-1.41.19-1.55-.08-.14-.3-.22-.62-.38Z';
+  // Pratinjau bergulir hanya dimuat dan dijalankan saat kartu terlihat di layar
+  const amati = 'IntersectionObserver' in window ? new IntersectionObserver((es) => es.forEach((e) => {
+    const k = e.target;
+    if (e.isIntersecting && !k.dataset.dimuat && k.dataset.gulir) {
+      k.dataset.dimuat = '1';
+      const im = new Image(); im.onload = () => { k.querySelector('.gulir').style.setProperty('--gulir', `url("${im.src}")`); k.classList.add('siap'); }; im.src = k.dataset.gulir;
+    }
+    k.classList.toggle('jalan', e.isIntersecting);
+  }), { rootMargin: '120px 0px' }) : null;
   function kartu(t, i) {
     const no = String(daftar.indexOf(t) + 1).padStart(2, '0');
-    return h('button', { class: 'kartu', type: 'button', style: { '--i': i }, 'aria-label': `${t.nama}. ${t.slogan}. Buka demo.`, onclick: () => bukaDetail(t.key) },
-      h('div', { class: 'lembar' }, h('img', { src: AKAR + t.gambar, alt: '', loading: 'lazy', width: 480, height: 935 }), h('span', { class: 'coba', text: 'Coba demo' })),
-      h('div', {}, h('span', { class: 'no', text: 'No. ' + no }), h('h3', { text: t.nama }), h('p', { text: t.slogan }),
-        h('div', { class: 'tanda' }, t.kat.map((k) => h('span', { text: K.namaKategori(k) })))));
+    const wa = urlPesan(t);
+    const ikonWa = () => { const s = document.createElementNS('http://www.w3.org/2000/svg', 'svg'); s.setAttribute('viewBox', '0 0 32 32'); s.setAttribute('aria-hidden', 'true'); s.innerHTML = `<path d="${IKON_WA}"/>`; return s; };
+    const el = h('article', { class: 'kartu', style: { '--i': i }, 'data-gulir': t.gulir ? AKAR + t.gulir : null },
+      h('button', { class: 'lembar', type: 'button', 'aria-label': `${t.nama}. ${t.slogan}. Lihat demo.`, onclick: () => bukaDetail(t.key) },
+        h('img', { src: AKAR + t.gambar, alt: '', loading: 'lazy', width: 480, height: 935 }),
+        h('span', { class: 'gulir', 'aria-hidden': 'true' }),
+        h('span', { class: 'atas-kartu' }, h('span', { class: 'lencana kat', text: ({ adat: 'Adat', islami: 'Islami', elegan: 'Elegan', kreatif: 'Kreatif', bebas: 'Susun bebas' })[t.kat[0]] || K.namaKategori(t.kat[0]) }), h('span', { class: 'lencana musik' }, h('i'), h('i'), h('i'), 'Musik')),
+        h('span', { class: 'tirai' }, h('span', { class: 'no', text: 'NO. ' + no }), h('h3', { text: t.nama }), h('p', { text: t.slogan }))),
+      h('div', { class: 'aksi-kartu' },
+        h('button', { class: 'demo', type: 'button', onclick: () => bukaDetail(t.key), text: 'Lihat demo' }),
+        wa ? h('a', { class: 'pesan', href: wa, target: '_blank', rel: 'noopener', 'aria-label': 'Pesan desain ' + t.nama + ' lewat WhatsApp' }, ikonWa(), 'Pesan') : null));
+    if (amati) amati.observe(el);
+    return el;
   }
   function gambarChip() {
     const w = $('#chip'); w.textContent = '';
